@@ -1,0 +1,281 @@
+{
+  "name": "My First Game",
+  "id": "",
+  "pointUnit": "$",
+  "pointMultiplier": 200,
+  "buzzerLock": true,
+  "completedAnswerCounter": 0,
+  "type": "single",
+  "categories": ["The Food Chain", "Stately Bodies of Water", "Hammer", "From B to C", "I sing the body", "Electric"],
+  "answers": [{
+    "category": 0,
+    "item": 0,
+    "answerText": "The $6 Footlong sub of the day",
+    "questionText": "What is Subway?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 0,
+    "item": 1,
+    "answerText": "The 1,090-Calorie Dave's Triple",
+    "questionText": "What is Wendy's?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 0,
+    "item": 2,
+    "answerText": "The banana split Blizzard",
+    "questionText": "What is Dairy Queen?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 0,
+    "item": 3,
+    "answerText": "The 1,520-Calorie tour of italy, with lasagna, chicken parmigiana & fettuccine alfredo",
+    "questionText": "What is The Olive Garden?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 0,
+    "item": 4,
+    "answerText": "Orange Chicken (Since 1987), Honey Walnut Shrimp (2010)",
+    "questionText": "What is Panda Express?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 1,
+    "item": 0,
+    "answerText": "It forms the Arizona-California border before emptying into the gulf of California in Mexico",
+    "questionText": "What is the Colorado River?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 1,
+    "item": 1,
+    "answerText": "The bay of green bay lies at its northwestern corner",
+    "questionText": "What is Lake Michigan?",
+    "dailyDouble": true,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 1,
+    "item": 2,
+    "answerText": "Cities located on its banks include fort smith & little rock",
+    "questionText": "What is the Arkansas River?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 1,
+    "item": 3,
+    "answerText": "Prince William Sound is a large inlet of this even larger inlet of the pacific",
+    "questionText": "What is the Gulf of Alaska?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 1,
+    "item": 4,
+    "answerText": "This river is formed by the junction of the des plaines & Kankakee rivers",
+    "questionText": "What is the Illinous River?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 2,
+    "item": 0,
+    "answerText": "The Troemner Reflex Hammer is mainly used to tap this; Troemner said why not use the handle as a tongue depressor",
+    "questionText": "What is the knee?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 2,
+    "item": 1,
+    "answerText": "Legend says this sport originated when Celtic hero Cu Chulainn squng a chariot over his head & let it go",
+    "questionText": "What is the hammer throttle?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 2,
+    "item": 2,
+    "answerText": "This sea dweller has a funny-shaped head called a cephalofoil",
+    "questionText": "What is a hammerhead shark?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 2,
+    "item": 3,
+    "answerText": "Judas Priest's song \"Between the Hammer &\" this is an idiom for equally unpleasant choices",
+    "questionText": "What is the anvil?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 2,
+    "item": 4,
+    "answerText": "The hammers on most pianos are covered with this soft 4-letter material",
+    "questionText": "What is felt?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 3,
+    "item": 2,
+    "answerText": "In the name of a rodeo riding event, it follows saddle",
+    "questionText": "What is bronc",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 3,
+    "item": 0,
+    "answerText": "Hollywood slang for a movie that tells the story of a real person's life",
+    "questionText": "what is a biopic?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 3,
+    "item": 1,
+    "answerText": "Quarterback Jameis Winston, or any other member of the NFL's Tampa Bay Team",
+    "questionText": "Who is a Buck",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 3,
+    "item": 3,
+    "answerText": "Seen here, are two pairs of this pear",
+    "questionText": "What are Bosc?",
+    "dailyDouble": false,
+    "image": "/pears.jpg",
+    "video": false,
+    "available": true
+  }, {
+    "category": 3,
+    "item": 4,
+    "answerText": "This temporary military encampment is often set up without shelter or protection from enemy fire",
+    "questionText": "What is a bivouac?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 4,
+    "item": 0,
+    "answerText": "The weekend explores the numbing effects of love in this no. 1 hit",
+    "questionText": "What is can't feel my face?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 4,
+    "item": 1,
+    "answerText": "Some of the anatomy John Mayer lauds in this song: skin like porcelain, candy lips & a bubblegum tongue",
+    "questionText": "What is your body is a wonderland?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 4,
+    "item": 2,
+    "answerText": "It's the truth that Shakira had one of the biggest hits of summer 2006 with this No. 1 song",
+    "questionText": "What is Hips don't Lie",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 4,
+    "item": 3,
+    "answerText": "\"Look but don't make your eyes strain\", raps Cypress Hill in a top 20 tune about going this",
+    "questionText": "What is insane in the brain?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 4,
+    "item": 4,
+    "answerText": "This top 10 hit by Sam Hunt says, \"Could drive it with my eyes closed, I know every curve like the back of my hand\"",
+    "questionText": "What is body like a back road?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 5,
+    "item": 0,
+    "answerText": "In addition to mmoving earth, Caterpillar is a major supplier of these units to supply backup power to hospitals",
+    "questionText": "What are generators?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 5,
+    "item": 1,
+    "answerText": "An oscilloscope displays waveforms to show voltage and this electric flow measured in amperes",
+    "questionText": "What is current?",
+    "dailyDouble": false,
+    "image": "/oscilloscope.jpg",
+    "video": false,
+    "available": true
+  }, {
+    "category": 5,
+    "item": 2,
+    "answerText": "Around 1908 William Coolidge improved upon this tungsten wire thread, making it bendable & the modern light bulb was born",
+    "questionText": "What is filament?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 5,
+    "item": 3,
+    "answerText": "The common duplex receptacle that you plug your blow dryer into has 2 outlets, each of this many volts",
+    "questionText": "What is 120?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  }, {
+    "category": 5,
+    "item": 4,
+    "answerText": "This phenomenon of zero resistance occurs in certain metals cooled to near absolute zero",
+    "questionText": "What is superconductivity?",
+    "dailyDouble": false,
+    "image": false,
+    "video": false,
+    "available": true
+  } ]
+}
