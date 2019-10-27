@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isAnswerScreen" class="unlocker">
+  <div v-if="isBuzzableScreen" class="unlocker">
     <div class="button unlock-button" :class="{selected: !isLocked}" @click.prevent="unlockBuzzers()">
       <i class="material-icons">lock_open</i>
     </div>
@@ -10,16 +10,19 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 export default {
   name: 'Unlocker',
   props: {
-    isAnswerScreen: {
+    isBuzzableScreen: {
       type: Boolean,
       required: true
     }
   },
   computed: {
+    ...mapState({
+      answer: state => state.game.game.answer
+    }),
     ...mapGetters([
       'isBuzzerLocked'
     ]),

@@ -16,7 +16,7 @@ export default {
       'completedAnswerCounter'
     ]),
     notice: function () {
-      if (this.completedAnswerCounter === 1) return 'Get to know the players!';
+      if (this.completedAnswerCounter === 15) return 'Get to know the players!';
       else return '';
     },
     completedCount: function () {

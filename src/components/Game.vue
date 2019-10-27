@@ -1,21 +1,28 @@
 <template>
   <div class="game">
-    <ScoreBoard/>
-    <h1>{{ game.name }}</h1>
     <div v-if="edit" class="debug blink">EDIT MODE</div>
-    <GameBoard :edit="edit"/>
+    <router-view />
+    <transition name="component-fade" mode="out-in">
+      <component v-bind:is="scoreOrControls"></component>
+    </transition>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import GameBoard from './GameBoard';
-import ScoreBoard from './ScoreBoard';
+import ScoreBoard from '@/components/ScoreBoard';
+import Controls from '@/components/Controls';
 export default {
   name: 'Game',
+  data: function () {
+    return {
+    }
+  },
   components: {
-    ScoreBoard,
-    GameBoard
+    GameBoard,
+    'score': ScoreBoard,
+    'controls': Controls,
   },
   props: {
 
@@ -26,14 +33,33 @@ export default {
       'gameId'
     ]),
     edit: function () {
-      return (this.$route.query.edit === "1");
-    }
+      return (this.$store.state.meta.edit === true);
+    },
+    isAnswerScreen: function () {
+      return (
+        typeof this.$route.query.category !== 'undefined' &&
+        typeof this.$route.query.item !== 'undefined'
+      );
+    },
+    scoreOrControls: function () {
+      return (this.isAnswerScreen) ? 'controls' : 'score';
+    },
+    transitionStyle: function () {
+      return 'fade';
+    },
+  },
+  methods: {
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s linear;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 .game {
   color: white;
   user-select: none;

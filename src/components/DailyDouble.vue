@@ -1,5 +1,5 @@
 <template>
-  <div v-if="answer.dailyDouble" class="daily-double rollIn">
+  <div class="daily-double">
     <span>DAILY DOUBLE</span>
   </div>
 </template>
@@ -10,10 +10,8 @@ export default {
   components: {
   },
   props: {
-    answer: {
-      type: Object,
-      required: true
-    }
+  },
+  computed: {
   },
   methods: {
   }
@@ -22,34 +20,25 @@ export default {
 
 <style scoped>
   .daily-double {
+    height: 100vh;
     color: white;
-    position: absolute;
-    font-size: 3em;
-    width: 100%;
-    height: 100%;
+    font-family: arial;
+    font-size: 11em;
+    text-shadow: 2px 2px black;
     display: flex;
-    overflow: hidden;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    font-family: arial;
-    font-weight: 900;
     background-image: linear-gradient(to bottom, navy, purple, orange, purple, navy);
-    animation-duration: 1s;
-    animation-fill-mode: both;
-    animation-timing-function: linear;
-    animation-name: rollIn;
+    justify-content: center;
+    font-weight: 900;
+    overflow: hidden;
+    user-select: none;
+    padding: 0 10vw 0 10vw;
+    position: absolute;
   }
 
 
 
-  @keyframes rollIn {
-     0% {
-        transform: perspective(500px) scale(0.1) rotateX(360deg);
-     }
-     100% {
-        transform: perspective(0);
-     }
-  }
+
 
 </style>

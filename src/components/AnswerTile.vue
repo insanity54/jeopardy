@@ -1,6 +1,6 @@
 <template>
-  <div @click="openAnswer" :class="tileClass">
-    <div v-if="answer.available">{{ points }}</div>
+  <div @click="openAnswer" :class="[ tileClass, { noclick: !isPlayerSelected } ]">
+    <div :class="{ invisible: isTileInvisible }">{{ points }}</div>
   </div>
 </template>
 
@@ -22,7 +22,11 @@ export default {
   computed: {
     ...mapGetters([
       'answers',
+      'selectedPlayer'
     ]),
+    isTileInvisible: function () {
+      return !this.answer.available
+    },
     tileClass: function () {
       return `item cat${this.answer.category}-itm${this.answer.item}`;
     },
@@ -34,24 +38,33 @@ export default {
     },
     answerId: function () {
       return `${this.answer.category}${this.answer.item}`;
+    },
+    isPlayerSelected: function () {
+      return (typeof this.selectedPlayer !== 'undefined')
     }
   },
   methods: {
     openAnswer: function() {
-      // this.$store.commit('setActiveAnswer', this.answerId);
-      this.$router.push({
-        path: `/game/${this.gameId}/answer`,
-        query: {
-          category: this.answer.category,
-          item: this.answer.item
-        }
-      });
+      if (this.isPlayerSelected) {
+        this.$store.commit('setActiveAnswer', this.answerId);
+        this.$router.push({
+          path: `/game/${this.gameId}/answer`,
+          query: {
+            category: this.answer.category,
+            item: this.answer.item
+          }
+        });
+      }
     }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.invisible {
+  visibility: hidden;
+}
+.noclick {
+  cursor: not-allowed;
+}
 </style>

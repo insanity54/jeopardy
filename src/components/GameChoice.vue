@@ -20,16 +20,15 @@ export default {
     gameLink: function () {
       return `/game/${this.game.id}`;
     },
-    gameEditorLink: function () {
-      return `/game/${this.game.id}?edit=1`;
-    }
   },
   methods: {
     goToGame: function () {
+      this.$store.commit('leaveEditMode');
       this.$router.push(this.gameLink);
     },
     goToGameEditor: function() {
-      this.$router.push(this.gameEditorLink);
+      this.$store.commit('enterEditMode');
+      this.$router.push(this.gameLink);
     }
   }
 }

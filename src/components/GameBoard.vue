@@ -1,8 +1,10 @@
 <template>
-  <div class="game-board">
-    <CategoryTile v-for="category in categories" :key="category" :edit="edit" :category="category"></CategoryTile>
-    <AnswerTile v-for="answer in answers" :key="answer.id" :edit="edit" :answer="answer"></AnswerTile>
-  </div>
+  <transition name="delay">
+    <div class="game-board">
+        <CategoryTile v-for="category in categories" :key="category" :edit="edit" :category="category"></CategoryTile>
+        <AnswerTile v-for="answer in answers" :key="answer.id" :edit="edit" :answer="answer"></AnswerTile>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -33,6 +35,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+.delay-leave-active {
+  animation-delay: 1.1s;
+}
+.component-fade-enter-active, .component-fade-leave-active {
+  transition: opacity .3s ease;
+}
+.component-fade-enter, .component-fade-leave-to
+/* .component-fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 .game-board {
   font-family: sans-serif, Helvetica;
   min-height: 80vh;

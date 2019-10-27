@@ -1,10 +1,11 @@
 <template>
-  <div class="player-selector">
+  <div class="player-selector" :class="{ highlighted: isPlayerSelectionRequired }">
     <PlayerButton v-for="player in players" :key="player.id" :player="player"></PlayerButton>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex';
 import PlayerButton from './PlayerButton';
 export default {
   name: 'PlayerSelector',
@@ -14,17 +15,15 @@ export default {
   props: {
   },
   computed: {
-    players: function () {
-      return this.$store.state.players;
-    },
-    selectedPlayer: function () {
-      return this.players.find((p) => {
-        return p.selected === true;
-      })
-    },
-    isSelected: function () {
-      if (this.isAnswerScreen) return (this.selected);
-      return false;
+    ...mapState({
+      players: state => state.players
+    }),
+    ...mapGetters([
+      'selectedPlayer'
+    ]),
+    isPlayerSelectionRequired: function () {
+      if (typeof this.selectedPlayer === 'undefined') return true;
+      else return false;
     }
   },
   methods: {
@@ -48,4 +47,17 @@ export default {
 .selected {
   text-decoration: underline overline;
 }
+.highlighted {
+  animation: 0.5s infinite alternate strobe;
+}
+
+@keyframes strobe {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 </style>

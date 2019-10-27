@@ -5,15 +5,20 @@
 </template>
 
 <script>
-
 export default {
   name: 'app',
   components: {
+  },
+  computed: {
+
   }
 }
 </script>
 
 <style>
+* {
+  margin: 0;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -27,5 +32,9 @@ body {
 }
 .logo {
   width: 50vw;
+}
+.idk {
+  border: 5px solid indigo;
+  background-color: purple;
 }
 </style>

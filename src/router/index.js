@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from '@/components/Home';
 import Game from '@/components/Game';
+import GameBoard from '@/components/GameBoard';
 import AnswerScreen from '@/components/AnswerScreen';
 import GameCreator from '@/components/GameCreator';
 
@@ -12,7 +13,9 @@ export default new Router({
   routes: [
     { path: '/', component: Home },
     { path: '/game/new', component: GameCreator },
-    { path: '/game/:gameId', component: Game },
-    { path: '/game/:gameId/answer', component: AnswerScreen },
+    { path: '/game/:gameId', component: Game, children: [
+      { path: '/', component: GameBoard },
+      { path: 'answer', component: AnswerScreen }
+    ] },
   ]
 })

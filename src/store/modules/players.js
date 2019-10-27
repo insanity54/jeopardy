@@ -39,6 +39,9 @@ export default {
     },
     tiesto: state => {
       return `YOLO ${state[0].name}`
+    },
+    selectedPlayer: state => {
+      return state.find((p) => p.chooser === true);
     }
   },
   mutations: {

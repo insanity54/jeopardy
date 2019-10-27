@@ -1,34 +1,47 @@
 <template>
   <div class="controls">
-    <Unlocker :isAnswerScreen="isAnswerScreen"/>
+    <EditModeToggle/>
+    <Wager :wagers="wagers" :answer="answer" :gameType="gameType" :selectedPlayer="selectedPlayer"/>
     <div class="spacer"></div>
-    <BuzzerSelector :isAnswerScreen="isAnswerScreen"/>
+    <Unlocker :isBuzzableScreen="isBuzzableScreen"/>
     <div class="spacer"></div>
-    <ResultRegistrator :answer="answer" :isAnswerScreen="isAnswerScreen"/>
+    <BuzzerSelector :isBuzzableScreen="isBuzzableScreen"/>
+    <div class="spacer"></div>
+    <ResultRegistrator :answer="answer"/>
   </div>
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex';
+import EditModeToggle from './EditModeToggle';
 import BuzzerSelector from './BuzzerSelector';
+import Wager from './Wager';
 import ResultRegistrator from './ResultRegistrator';
 import Unlocker from './Unlocker';
 export default {
   name: 'Controls',
   components: {
+    EditModeToggle,
     BuzzerSelector,
     ResultRegistrator,
-    Unlocker
+    Unlocker,
+    Wager
   },
   computed: {
-    isAnswerScreen: function () {
-      return (typeof this.$route.query.category !== 'undefined');
+    ...mapState({
+      answer: state => state.game.game.answer,
+      gameType: state => state.game.game.type,
+      wagers: state => state.game.game.wagers,
+    }),
+    ...mapGetters([
+      'selectedPlayer'
+    ]),
+    isBuzzableScreen: function () {
+      if (this.answer.dailyDouble === true) return false;
+      return true;
     }
   },
   props: {
-    answer: {
-      type: Object,
-      required: true
-    }
   },
   methods: {
   }
@@ -43,7 +56,7 @@ export default {
   align-items: center;
   justify-content: center;
   position: absolute;
-  z-index: 5;
+  z-index: 10;
   height: 5vh;
   width: 100vw;
   top: 94vh;
