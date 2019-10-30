@@ -17,16 +17,12 @@ export default {
     'dailyDouble': DailyDouble
   },
   props: {
-    edit: {
-      type: Boolean,
-      required: false,
-      default: false
-    }
   },
   computed: {
     ...mapState({
       answer: state => state.game.game.answer,
       wager: state => state.game.game.wager,
+      isEditMode: state => state.meta.edit,
     }),
     ...mapGetters([
       'answers'
@@ -35,6 +31,7 @@ export default {
       return (this.answer.dailyDouble === true) ? true : false;
     },
     transitionVariant: function () {
+      if (this.isEditMode) return 'none';
       if (this.isDailyDouble && this.isWagerPlaced)
         return 'flip';
       if (this.isDailyDouble && !this.isWagerPlaced)
@@ -50,6 +47,7 @@ export default {
     },
     answerOrDailyDouble () {
       if (
+        this.isEditMode === false &&
         this.answer.dailyDouble === true &&
         this.isWagerPlaced === false
       ) {
@@ -71,6 +69,9 @@ export default {
 </script>
 
 <style>
+
+
+
   .zoom-enter-active {
     transition: all 1s ease; /* 1s */
   }

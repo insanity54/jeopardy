@@ -1,7 +1,7 @@
 <template>
   <div class="notices">
+    <span v-if="isEditMode" class="debug blink">EDIT MODE</span>
     <span>{{ notice }} {{ completedCount }}/30</span>
-    <div class="spacer"></div>
   </div>
 </template>
 
@@ -15,6 +15,9 @@ export default {
     ...mapGetters([
       'completedAnswerCounter'
     ]),
+    isEditMode: function () {
+      return (this.$store.state.meta.edit === true);
+    },
     notice: function () {
       if (this.completedAnswerCounter === 15) return 'Get to know the players!';
       else return '';
@@ -36,7 +39,14 @@ export default {
   flex-direction: row;
   color: white;
 }
-.spacer {
-  width: 1em;
+.debug {
+  color: red;
+  font-weight: bold;
+  margin-right: 3em;
 }
+.blink {
+  animation: blinker 1s cubic-bezier(.5, 0, 1, 1) infinite alternate;
+}
+@keyframes blinker { to { opacity: 0; } }
+
 </style>

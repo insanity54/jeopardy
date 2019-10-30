@@ -7,6 +7,7 @@ export default {
       buzzed: false,
       buzzWinner: false,
       chooser: false,
+      color: '#fff',
     },
     {
       name: 'Kai',
@@ -15,6 +16,7 @@ export default {
       buzzed: false,
       buzzWinner: false,
       chooser: false,
+      color: '#fff',
     },
     {
       name: 'Sacha',
@@ -23,6 +25,7 @@ export default {
       buzzed: false,
       buzzWinner: false,
       chooser: false,
+      color: '#fff',
     },
     {
       name: 'Taylor',
@@ -31,6 +34,7 @@ export default {
       buzzed: false,
       buzzWinner: false,
       chooser: false,
+      color: '#fff',
     }
   ],
   getters: {
@@ -73,6 +77,32 @@ export default {
       state.forEach((p) => {
         p.buzzWinner = false;
       })
+    },
+    updatePlayerColor(state, data) {
+      let { color, playerId } = data;
+      let pl = state.find((p) => p.id === playerId)
+      return pl.color = color;
+    },
+    updatePlayerName(state, data) {
+      let { name, id } = data;
+      let pl = state.find((p) => p.id === id)
+      return pl.name = name;
+    },
+    createPlayer(state, data) {
+      state.push({
+        name: data.name,
+        id: state.length,
+        score: 0,
+        buzzed: false,
+        buzzWinner: false,
+        chooser: false,
+        color: '#fff',
+      });
+    },
+    deletePlayer(state, data) {
+      let { id } = data;
+      let i = state.findIndex((p) => p.id === id);
+      state.splice(i, 1);
     }
   }
 }

@@ -1,4 +1,6 @@
 import defaultGame from '@/assets/default.game.json'
+import { uuidv4 } from '@/util/util';
+
 
 export default {
   state: {
@@ -11,14 +13,28 @@ export default {
       categories: '',
       answers: '',
       completedAnswerCounter: '',
-      type: '', // single, double, or final.
+      gameType: '', // single, double, or final.
       answer: '',
       wager: null
-    }
+    },
+    games: [
+    ],
   },
   getters: {
     game: state => {
       return state.game;
+    },
+    singleGames: state => {
+      return state.games.filter((g) => g.type === 'single');
+    },
+    doubleGames: state => {
+      return state.games.filter((g) => g.type === 'double');
+    },
+    finalGames: state => {
+      return state.games.filter((g) => g.type === 'final');
+    },
+    games: state => {
+      return state.games;
     },
     isBuzzerLocked: state => {
       return state.game.buzzerLock;
@@ -40,6 +56,24 @@ export default {
     }
   },
   mutations: {
+    updateCategoryText(state, categoryData) {
+      state.game.categories[categoryData.categoryIndex] = categoryData.text;
+    },
+    createGame(state, gameObject) {
+      state.games.push({
+        ...defaultGame,
+        ...gameObject,
+        id: uuidv4(),
+      });
+    },
+    updateGame(state, gameObject) {
+      let i = state.games.findIndex((g) => g.id === gameObject.id);
+      state.games[i] = gameObject;
+    },
+    deleteGame(state, gameId) {
+      let i = state.games.findIndex((g) => g.id === gameId);
+      state.games.splice(i, 1)
+    },
     unlockBuzzers(state) {
       state.game.buzzerLock = false;
     },
@@ -56,12 +90,13 @@ export default {
     },
     loadDefaultGame(state) {
       return state.game = defaultGame;
-      // Vue.set(state, 'game', defaultGame);
-      // Vue.set(state, 'game', defaultGame);
+    },
+    loadGame(state, gameId) {
+      let game = state.games.find((g) => g.id === gameId);
+      state.game = game;
     },
     setGameId(state, gameId) {
       return state.game = { ...state.game, id: gameId };
-      // Vue.set(state.game, 'id', gameId);
     },
     setActiveAnswer(state, answerId) {
       const category = parseInt(answerId[0]);
@@ -86,8 +121,25 @@ export default {
       return state.game = { ...state.game, wager: null };
     },
     updateImage(state, imageData) {
-      let answer = state.game.answers.find((a) => a.id === imageData.answerId);
-      return answer.image = imageData.imageURI;
+      return state.game.answer.image = imageData.imageURI;
+    },
+    updateAnswerText(state, text) {
+      return state.game.answer.answerText = text;
+    },
+    updateQuestionText(state, text) {
+      return state.game.answer.questionText = text;
+    },
+    updateDailyDouble(state, isDailyDouble) {
+      return state.game.answer.dailyDouble = isDailyDouble;
+    },
+    updateGameTitle(state, text) {
+      return state.game.name = text;
+    },
+    restartGame(state) {
+      state.game.completedAnswerCounter = 0;
+      return state.game.answers.forEach((a) => {
+        a.available = true;
+      })
     }
   }
 }

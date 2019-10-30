@@ -1,5 +1,5 @@
 <template>
-  <div class="category-tile">
+  <div @click="openCategory" :class="{ noClick: !isEditMode, click: isEditMode }" class="category-tile">
     {{ category }}
   </div>
 </template>
@@ -8,14 +8,30 @@
 export default {
   name: 'CategoryTile',
   props: {
-    edit: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
     category: {
       type: String,
       required: true
+    },
+    index: {
+      type: Number,
+      required: true
+    }
+  },
+  computed : {
+    gameId() {
+      return this.$store.state.game.game.id;
+    },
+    isEditMode () {
+      return this.$store.state.meta.edit;
+    }
+  },
+  methods: {
+    openCategory: function() {
+      if (this.isEditMode) {
+        this.$router.push({
+          path: `/game/${this.gameId}/category/${this.index}`
+        });
+      }
     }
   }
 }
@@ -34,5 +50,11 @@ export default {
     text-shadow: 2px 2px black;
     font-weight: bold;
     padding: 0.5em 5px 0.5em 5px;
+  }
+  .no-click {
+    cursor: default;
+  }
+  .click {
+    cursor: pointer;
   }
 </style>

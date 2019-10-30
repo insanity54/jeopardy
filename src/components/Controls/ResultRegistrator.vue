@@ -45,7 +45,7 @@ export default {
   methods: {
     doPlayerCorrect: function () {
       if (this.isCorrectButtonLocked) return;
-      this.$store.commit('incrementCompletedAnswerCounter');
+      this.maybeIncrCompletedCounter();
       this.$store.commit('makeUnavailable', `${this.category}${this.item}`);
       if (this.answer.dailyDouble === true) {
         this.$store.commit('addPoints', { playerId: this.selectedPlayer.id, points: this.game.wager });
@@ -60,7 +60,7 @@ export default {
     },
     doPlayerIncorrect: function () {
       if (this.isIncorrectButtonLocked) return;
-      this.$store.commit('incrementCompletedAnswerCounter');
+      this.maybeIncrCompletedCounter();
       if (this.answer.dailyDouble === true) {
         this.$store.commit('subtractPoints', { playerId: this.selectedPlayer.id, points: this.game.wager });
         this.$store.commit('clearWager');
@@ -71,13 +71,18 @@ export default {
       }
     },
     doTimeout: function () {
-      this.$store.commit('incrementCompletedAnswerCounter');
+      this.maybeIncrCompletedCounter();
       this.$store.commit('makeUnavailable', `${this.answer.category}${this.answer.item}`);
       this.$store.commit('unsetBuzzWinner');
       this.$store.commit('lockBuzzers');
       this.$store.commit('clearWager');
       this.$router.push(`/game/${this.gameId}/`);
-    }
+    },
+    maybeIncrCompletedCounter: function () {
+      if (this.answer.available === true) {
+        this.$store.commit('incrementCompletedAnswerCounter');
+      }
+    },
   }
 }
 </script>

@@ -14,7 +14,12 @@ export default {
   computed: {
   },
   methods: {
-  }
+  },
+  mounted() {
+  },
+  created () {
+    this.$root.$emit('play-audio');
+  },
 }
 </script>
 

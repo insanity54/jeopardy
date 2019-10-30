@@ -2,7 +2,7 @@
   <div class="controls">
     <EditModeToggle/>
     <Wager :wagers="wagers" :answer="answer" :gameType="gameType" :selectedPlayer="selectedPlayer"/>
-    <div class="spacer"></div>
+    <Spacer/>
     <Unlocker :isBuzzableScreen="isBuzzableScreen"/>
     <div class="spacer"></div>
     <BuzzerSelector :isBuzzableScreen="isBuzzableScreen"/>
@@ -14,6 +14,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 import EditModeToggle from './EditModeToggle';
+import Spacer from './Spacer';
 import BuzzerSelector from './BuzzerSelector';
 import Wager from './Wager';
 import ResultRegistrator from './ResultRegistrator';
@@ -25,7 +26,8 @@ export default {
     BuzzerSelector,
     ResultRegistrator,
     Unlocker,
-    Wager
+    Wager,
+    Spacer
   },
   computed: {
     ...mapState({
@@ -62,11 +64,9 @@ export default {
   top: 94vh;
   user-select: none;
 }
-.spacer {
-  width: 2em;
-}
 .button {
   display: flex;
+  cursor: pointer;
   flex-direction: column;
   align-items: center;
   justify-content: center;

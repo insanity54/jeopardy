@@ -1,5 +1,5 @@
 <template>
-  <div class="player button" :class="{selected: isSelectedPlayer, locked: isButtonLocked}" @click.prevent="clickPlayer(player)">
+  <div class="player button" :style="{backgroundColor: player.color}" :class="{selected: isSelectedPlayer, locked: isButtonLocked}" @click.prevent="clickPlayer(player)">
     {{ player.name }} {{ player.score }}
   </div>
 </template>
@@ -40,18 +40,6 @@ export default {
 <style scoped>
 .selected {
   text-decoration: underline overline;
-}
-div.player:nth-child(1) {
-  background-color: green;
-}
-div.player:nth-child(2) {
-  background-color: red;
-}
-div.player:nth-child(3) {
-  background-color: blue;
-}
-div.player:nth-child(4) {
-  background-color: hotpink;
 }
 div.player.locked {
   background-color: grey;

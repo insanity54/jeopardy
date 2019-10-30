@@ -3,9 +3,10 @@ import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist';
 import Vlf from 'vlf' // vue-localforage for saving multimedia locally
 import game from './modules/game';
-import games from './modules/games';
 import players from './modules/players';
 import meta from './modules/meta';
+import episode from './modules/episode';
+import audio from './modules/audio';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
 Vue.use(Vuex);
@@ -19,9 +20,10 @@ const vuexLocal = new VuexPersistence({
 export default new Vuex.Store({
     modules: {
         game,
-        games,
         players,
-        meta
+        meta,
+        episode,
+        audio,
     },
     plugins: [
       vuexLocal.plugin

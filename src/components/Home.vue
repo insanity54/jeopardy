@@ -3,25 +3,19 @@
     <div class="header">
       <h1>Jeopardy!</h1>
     </div>
-    <GameChooser :games="games"/>
+    <MainMenu/>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import GameChooser from './GameChooser';
+import MainMenu from './MainMenu';
 export default {
   name: 'Home',
   props: {
   },
   components: {
-    GameChooser
+    MainMenu
   },
-  computed: {
-    ...mapGetters([
-      'games'
-    ])
-  }
 }
 </script>
 

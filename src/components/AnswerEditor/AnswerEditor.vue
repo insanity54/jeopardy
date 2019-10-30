@@ -1,27 +1,28 @@
 <template>
   <div class="answer-editor">
+    {{ this.answer }}
     <div class="edit-item">
       <label for="answer-text-input">Answer</label>
-      <textarea id="answer-text-input" :value="answer.answerText"/>
+      <textarea v-model="answerText" id="answer-text-input"/>
     </div>
     <div class="edit-item">
       <label for="question-text-input">Question</label>
-      <textarea id="question-text-input" :value="answer.questionText"/>
+      <textarea v-model="questionText" id="question-text-input"/>
     </div>
     <div class="edit-item">
       <label for="daily-double-input">Daily Double</label>
-      <input id="daily-double-input" :value="answer.dailyDouble" type="checkbox"/>
+      <input v-model="dailyDouble" id="daily-double-input" type="checkbox"/>
     </div>
     <div class="edit-item">
       <label for="image-input">Image</label>
-      <!-- <div class="multimedia-upload"> -->
         <input type="file" @change="onChangeInputFile">
         <p>Drop an image file or browse your computer.</p>
-        <p>Max size: 10MB</p>
-        <img class="thumbnail" :src="this.answer.image"/>
-      <!-- </div> -->
+        <div v-if="isImage" @click="deleteImage" class="button delete-image-button">Delete image</div>
+        <div class="thumbnails">
+          <img class="thumbnail" :src="this.answer.image"/>
+        </div>
     </div>
-    <div class="edit-item">
+    <!-- <div class="edit-item">
       <div class="editor-controls">
         <div class="button leave-button">
           Back
@@ -30,7 +31,7 @@
           Save
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -46,8 +47,51 @@ export default {
     }
   },
   computed: {
+    isImage: function () {
+      return (this.answer.image.length > 0)
+    },
+    gameId: function () {
+      return this.$store.state.game.game.id
+    },
+    // answerImage: {
+    //   get () {
+    //     return this.answer.image;
+    //   },
+    //   set (value) {
+    //     this.$store.commit('updateImage', { answerId: this.answer.id, imageURI: imageURI });
+    //   }
+    // },
+    answerText: {
+      get () {
+        return this.answer.answerText;
+      },
+      set (value) {
+        this.$store.commit('updateAnswerText', value);
+      }
+    },
+    questionText: {
+      get () {
+        return this.answer.questionText;
+      },
+      set (value) {
+        this.$store.commit('updateQuestionText', value);
+      }
+    },
+    dailyDouble: {
+      get () {
+        return this.answer.dailyDouble;
+      },
+      set (value) {
+        this.$store.commit('updateDailyDouble', value);
+      }
+    }
   },
   methods: {
+    deleteImage: function () {
+      this.$vlf.removeItem(`game:${this.gameId}:${this.answer.id}:image`).then(() => {
+        this.$store.commit('updateImage', { answerid: this.answer.id, imageURI: '' })
+      })
+    },
     onChangeInputFile: function (e) {
       // greetz
       // https://github.com/dflourusso/v-file-upload/blob/master/src/FileUpload.vue
@@ -63,29 +107,33 @@ export default {
       }
       this.storeLocally(file).then((imageURI) => {
         this.$store.commit('updateImage', { answerId: this.answer.id, imageURI: imageURI });
-      }).catch(function(err) {
-        console.log(err);
-      });
+      })
     },
     storeLocally: function (file) {
-      return this.$vlf.setItem(`${this.gameId}${this.answer.id}`, file).then(function(image) {
-        var blob = new Blob([image]);
-        var imageURI = window.URL.createObjectURL(blob);
-        console.log(imageURI);
-        return imageURI;
+      return new Response(file).arrayBuffer().then((buffer) => {
+        return this.$vlf.setItem(`game:${this.gameId}:${this.answer.id}:image`, buffer).then(function(image) {
+          var blob = new Blob([image]);
+          var imageURI = window.URL.createObjectURL(blob);
+          return imageURI;
+        })
       })
-    }
+    },
   }
 }
 </script>
 <style scoped>
 .answer-editor {
+  font-size: 12pt;
   font-family: arial;
   text-transform: none;
   display: flex;
   flex-direction: column;
   height: 80vh;
   width: 80vw;
+  user-select: text;
+}
+.answer-editor p {
+  font-size: 10pt;
 }
 .edit-item {
   font-size: 18pt;
@@ -100,6 +148,10 @@ export default {
 .edit-item textarea {
   width: 100%;
   resize: vertical;
+}
+.image-item {
+  display: flex;
+  flex-direction: row;
 }
 .editor-controls {
   display: flex;
@@ -131,5 +183,12 @@ export default {
 }
 img.thumbnail {
   width: 10%;
+}
+.thumbnails {
+  display: flex;
+  flex-direction: row;
+}
+.delete-image-button {
+  background-color: red;
 }
 </style>

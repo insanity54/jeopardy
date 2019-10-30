@@ -1,6 +1,7 @@
 <template>
   <div class="game">
-    <div v-if="edit" class="debug blink">EDIT MODE</div>
+    <AudioPlayer/>
+    <h1 class="title" @click="openTitleEditor" v-if="isEditMode">{{ game.name }}</h1>
     <router-view />
     <transition name="component-fade" mode="out-in">
       <component v-bind:is="scoreOrControls"></component>
@@ -10,9 +11,10 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import AudioPlayer from '@/components/AudioPlayer/AudioPlayer';
 import GameBoard from './GameBoard';
-import ScoreBoard from '@/components/ScoreBoard';
-import Controls from '@/components/Controls';
+import ScoreBoard from '@/components/Controls/ScoreBoard';
+import Controls from '@/components/Controls/Controls';
 export default {
   name: 'Game',
   data: function () {
@@ -20,6 +22,7 @@ export default {
     }
   },
   components: {
+    AudioPlayer,
     GameBoard,
     'score': ScoreBoard,
     'controls': Controls,
@@ -32,8 +35,8 @@ export default {
       'game',
       'gameId'
     ]),
-    edit: function () {
-      return (this.$store.state.meta.edit === true);
+    isEditMode: function () {
+      return this.$store.state.meta.edit;
     },
     isAnswerScreen: function () {
       return (
@@ -49,11 +52,21 @@ export default {
     },
   },
   methods: {
+    openTitleEditor: function() {
+      if (this.isEditMode) {
+        this.$router.push({
+          path: `/game/${this.gameId}/title`
+        });
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
+.title {
+  cursor: pointer;
+}
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s linear;
 }
@@ -64,11 +77,4 @@ export default {
   color: white;
   user-select: none;
 }
-.debug {
-  color: red;
-}
-.blink {
-  animation: blinker 1.7s cubic-bezier(.5, 0, 1, 1) infinite alternate;
-}
-@keyframes blinker { to { opacity: 0; } }
 </style>

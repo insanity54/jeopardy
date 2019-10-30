@@ -1,8 +1,8 @@
 <template>
   <div class="answer">
     <div v-if="!isEditMode" class="live">
-      <span v-if="!isAnswerImage">{{ answer.answerText }}</span>
-      <img v-if="isAnswerImage" :src="answer.image"/>
+      <span v-if="!isImageAnswer">{{ answer.answerText }}</span>
+      <img v-if="isImageAnswer" :src="answer.image"/>
     </div>
     <AnswerEditor v-if="isEditMode" :answer="answer"/>
   </div>
@@ -21,13 +21,27 @@ export default {
   computed: {
     ...mapState({
       answer: state => state.game.game.answer,
-      isEditMode: state => state.meta.edit
+      isEditMode: state => state.meta.edit,
+      gameId: state => state.game.game.id,
     }),
-    isAnswerImage: function () {
-      return (typeof this.answer.image === 'string') ? true : false;
+    isImageAnswer: function () {
+      return (this.answer.image.length > 0) ? true : false;
     }
   },
   methods: {
+    loadLocalForageImage: function () {
+      return this.$vlf.getItem(`game:${this.gameId}:${this.answer.id}:image`).then((v) => {
+        var blob = new Blob([v]);
+        var imageURI = window.URL.createObjectURL(blob);
+        this.loadedImage = imageURI;
+        return this.$store.commit('updateImage', { imageURI: imageURI });
+      });
+    }
+  },
+  created: function () {
+    if (this.isImageAnswer && this.answer.image.startsWith('blob')) {
+      this.loadLocalForageImage();
+    }
   }
 }
 </script>

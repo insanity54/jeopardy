@@ -1,6 +1,7 @@
 export default {
   state: {
     edit: false,
+    audioQueue: []
   },
   mutations: {
     enterEditMode(state) {

@@ -1,18 +1,25 @@
 <template>
   <div class="score-board">
     <Notices/>
+    <Spacer/>
     <PlayerSelector/>
+    <Spacer/>
+    <HomeButton/>
   </div>
 </template>
 
 <script>
 import PlayerSelector from './PlayerSelector';
 import Notices from './Notices';
+import HomeButton from './HomeButton';
+import Spacer from './Spacer';
 export default {
   name: 'ScoreBoard',
   components: {
     PlayerSelector,
-    Notices
+    Notices,
+    HomeButton,
+    Spacer
   },
   computed: {
   },
@@ -36,9 +43,6 @@ export default {
   width: 100vw;
   top: 94vh;
   user-select: none;
-}
-.spacer {
-  width: 2em;
 }
 .button {
   display: flex;

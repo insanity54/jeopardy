@@ -1,5 +1,5 @@
 <template>
-  <div class="buzzer button" :class="{selected: isBuzzWinner, locked: isButtonLocked}" @click.prevent="clickPlayer(player)">
+  <div class="buzzer button" :style="{backgroundColor: player.color}" :class="{selected: isBuzzWinner, locked: isButtonLocked}" @click.prevent="clickPlayer(player)">
     {{ player.name }}
   </div>
 </template>
@@ -42,19 +42,7 @@ export default {
 .selected {
   text-decoration: underline overline;
 }
-div.buzzer:nth-child(1) {
-  background-color: green;
-}
-div.buzzer:nth-child(2) {
-  background-color: red;
-}
-div.buzzer:nth-child(3) {
-  background-color: blue;
-}
-div.buzzer:nth-child(4) {
-  background-color: hotpink;
-}
 div.buzzer.locked {
-  background-color: grey;
+  background-color: grey !important;
 }
 </style>
