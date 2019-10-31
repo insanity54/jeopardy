@@ -1,6 +1,6 @@
 <template>
   <div @click="openAnswer" :class="[ tileClass, { noclick: !isPlayerSelected } ]">
-    <div :class="{ invisible: isTileInvisible, unrevealed: !answer.revealed }">{{ points }}</div>
+    <div :class="{ invisible: isTileInvisible, unrevealed: isTimeUnrevealed }">{{ points }}</div>
   </div>
 </template>
 
@@ -26,6 +26,12 @@ export default {
     ]),
     isTileInvisible: function () {
       return !this.answer.available
+    },
+    isTimeUnrevealed: function () {
+      return !this.answer.revealed && !this.isEditMode;
+    },
+    isEditMode: function () {
+      return this.$store.state.meta.edit;
     },
     tileClass: function () {
       return `item cat${this.answer.category}-itm${this.answer.item}`;

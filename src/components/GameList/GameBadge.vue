@@ -13,7 +13,7 @@
         <div @click="goToGame" class="button">
           <i class="material-icons">play_arrow</i>Play
         </div>
-        <div class="button">
+        <div @click="goToGameEditor" class="button">
           <i class="material-icons">edit</i>Edit
         </div>
         <div @click="deleteGame" class="button">
@@ -53,7 +53,7 @@ export default {
       }
     },
     isEditMode: function () {
-      return this.$store.state.game.game.edit;
+      return this.$store.state.meta.edit;
     },
     gameLink: function () {
       return `/game/${this.game.id}`

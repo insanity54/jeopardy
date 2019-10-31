@@ -1,5 +1,5 @@
 <template>
-  <div class="revealer">
+  <div v-if="!isEditMode" class="revealer">
     <div v-if="isUnrevealedAnswers" @click="doRevealAnswers" class="button">
       <i class="material-icons">flip</i>Reveal Answers
     </div>
@@ -19,6 +19,9 @@ export default {
     }
   },
   computed: {
+    isEditMode: function () {
+      return this.$store.state.meta.edit;
+    },
     isUnrevealedAnswers: function () {
       return (this.$store.state.game.game.answers.find(a => a.revealed === false)) ? true : false;
     },

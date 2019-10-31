@@ -19,7 +19,7 @@ export default {
     },
     categoryText: {
       get () {
-        return this.$store.state.game.game.categories[this.categoryIndex];
+        return this.$store.state.game.game.categories[this.categoryIndex].name;
       },
       set (value) {
         this.$store.commit('updateCategoryText', { categoryIndex: this.categoryIndex, text: value });

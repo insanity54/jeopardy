@@ -2,7 +2,7 @@
   <div @click="openCategory" :class="{ noClick: !isEditMode, click: isEditMode }" class="category-tile">
     <p class="category-tile-name">
       <transition name="rev">
-        <p v-if="isRevealed">{{ category.name }}</p>
+        <p v-if="isRevealed || isEditMode">{{ category.name }}</p>
       </transition>
     </p>
   </div>
