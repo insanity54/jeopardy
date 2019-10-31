@@ -40,6 +40,6 @@ export default {
   color: white;
   display: flex;
   flex-direction: row;
-  flex-wra: wrap;
+  flex-wrap: wrap;
 }
 </style>

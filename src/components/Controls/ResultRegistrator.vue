@@ -60,8 +60,8 @@ export default {
     },
     doPlayerIncorrect: function () {
       if (this.isIncorrectButtonLocked) return;
-      this.maybeIncrCompletedCounter();
       if (this.answer.dailyDouble === true) {
+        this.maybeIncrCompletedCounter();
         this.$store.commit('subtractPoints', { playerId: this.selectedPlayer.id, points: this.game.wager });
         this.$store.commit('clearWager');
         this.$router.push(`/game/${this.gameId}`);

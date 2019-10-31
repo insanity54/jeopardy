@@ -62,10 +62,15 @@ export default {
       state.game.categories[categoryData.categoryIndex] = categoryData.text;
     },
     createGame(state, gameObject) {
+      function getMultiplier(type) {
+        if (type === 'double') return 200;
+        return 100;
+      }
       state.games.push({
         ...JSON.parse(JSON.stringify(defaultGame)),
         ...gameObject,
         id: uuidv4(),
+        pointMultiplier: getMultiplier(gameObject.gameType)
       });
     },
     updateGame(state, gameObject) {
@@ -150,6 +155,7 @@ export default {
     },
     revealCategory(state) {
       let c = state.game.categories.find((c) => c.revealed === false)
+      if (typeof c === 'undefined') return;
       c.revealed = true;
     }
   },
@@ -161,7 +167,6 @@ export default {
       context.state.game.answers.forEach((a) => {
         let multiplier = Math.floor(Math.random() * (maxMultiplier - minMultiplier + 1) + minMultiplier);
         let timeout = divide * multiplier;
-        // let answer = a;
         setTimeout(() => {
           context.commit('revealAnswer', a.id);
         }, timeout);

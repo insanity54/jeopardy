@@ -30,8 +30,11 @@ export default {
     tileClass: function () {
       return `item cat${this.answer.category}-itm${this.answer.item}`;
     },
+    multiplier: function () {
+      return this.$store.state.game.game.pointMultiplier;
+    },
     points: function () {
-      return `$${(this.answer.item+1)*200}`;
+      return `$${(this.answer.item+1)*this.multiplier}`;
     },
     gameId: function () {
       return this.$route.params.gameId;

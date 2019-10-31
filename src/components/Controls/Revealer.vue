@@ -1,9 +1,9 @@
 <template>
   <div class="revealer">
-    <div @click="doRevealAnswers" class="button">
+    <div v-if="isUnrevealedAnswers" @click="doRevealAnswers" class="button">
       <i class="material-icons">flip</i>Reveal Answers
     </div>
-    <div @click="doRevealCategory" class="button">
+    <div v-if="isUnrevealedCategories" @click="doRevealCategory" class="button">
       <i class="material-icons">flip</i>Reveal Category
     </div>
   </div>
@@ -19,6 +19,12 @@ export default {
     }
   },
   computed: {
+    isUnrevealedAnswers: function () {
+      return (this.$store.state.game.game.answers.find(a => a.revealed === false)) ? true : false;
+    },
+    isUnrevealedCategories: function() {
+      return (this.$store.state.game.game.categories.find(c => c.revealed === false)) ? true : false;
+    }
   },
   props: {
   },

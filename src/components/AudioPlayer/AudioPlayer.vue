@@ -40,7 +40,6 @@ export default {
   },
   created: function () {
     this.$root.$on('play-audio', (arg) => {
-      console.log(`playing ${arg}`);
       this.play(this.audios.find((a) => a.id === arg));
     })
   },
