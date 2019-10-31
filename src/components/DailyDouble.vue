@@ -18,7 +18,7 @@ export default {
   mounted() {
   },
   created () {
-    this.$root.$emit('play-audio');
+    this.$root.$emit('play-audio', 'lazer');
   },
 }
 </script>

@@ -8,18 +8,20 @@
 export default {
   name: 'AudioPlayer',
   props: {
-    src: {
-      type: String,
-      required: true
-    }
   },
   data: function () {
     return {
       audios: [
         {
           id: 'lazer',
-          name: 'Lazer',
+          name: 'lazer',
           file: new Audio('/lazer.ogg'),
+          isPlaying: false
+        },
+        {
+          id: 'generate',
+          name: 'generate',
+          file: new Audio('/generate.ogg'),
           isPlaying: false
         },
       ]
@@ -37,9 +39,9 @@ export default {
     }
   },
   created: function () {
-    this.$root.$on('play-audio', () => {
-      console.log('playing audio');
-      this.play(this.audios[0]);
+    this.$root.$on('play-audio', (arg) => {
+      console.log(`playing ${arg}`);
+      this.play(this.audios.find((a) => a.id === arg));
     })
   }
 }

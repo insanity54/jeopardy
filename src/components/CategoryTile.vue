@@ -1,6 +1,8 @@
 <template>
   <div @click="openCategory" :class="{ noClick: !isEditMode, click: isEditMode }" class="category-tile">
-    {{ category }}
+    <transition name="rev">
+      <p v-if="isRevealed">{{ category.name }}</p>
+    </transition>
   </div>
 </template>
 
@@ -18,6 +20,9 @@ export default {
     }
   },
   computed : {
+    isRevealed() {
+      return (this.category.revealed === true);
+    },
     gameId() {
       return this.$store.state.game.game.id;
     },
@@ -38,6 +43,10 @@ export default {
 </script>
 
 <style scoped>
+  .rev-enter-active {
+
+  }
+  .rev-enter
   .category-tile {
     cursor: default;
     display: flex;
