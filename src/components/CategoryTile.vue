@@ -1,8 +1,10 @@
 <template>
   <div @click="openCategory" :class="{ noClick: !isEditMode, click: isEditMode }" class="category-tile">
-    <transition name="rev">
-      <p v-if="isRevealed">{{ category.name }}</p>
-    </transition>
+    <p class="category-tile-name">
+      <transition name="rev">
+        <p v-if="isRevealed">{{ category.name }}</p>
+      </transition>
+    </p>
   </div>
 </template>
 
@@ -11,7 +13,7 @@ export default {
   name: 'CategoryTile',
   props: {
     category: {
-      type: String,
+      type: Object,
       required: true
     },
     index: {
@@ -44,9 +46,14 @@ export default {
 
 <style scoped>
   .rev-enter-active {
-
+    transition: transform 0.5s linear;
   }
-  .rev-enter
+  .rev-enter {
+    transform: rotateX(90deg);
+  }
+  .category-tile-name {
+    height: 2em;
+  }
   .category-tile {
     cursor: default;
     display: flex;

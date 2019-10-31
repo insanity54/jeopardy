@@ -43,6 +43,9 @@ export default {
       console.log(`playing ${arg}`);
       this.play(this.audios.find((a) => a.id === arg));
     })
+  },
+  destroyed: function () {
+    this.$root.$off('play-audio');
   }
 }
 </script>

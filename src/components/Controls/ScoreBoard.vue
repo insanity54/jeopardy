@@ -1,5 +1,6 @@
 <template>
   <div class="score-board">
+    <Revealer/>
     <Notices/>
     <Spacer/>
     <PlayerSelector/>
@@ -13,9 +14,11 @@ import PlayerSelector from './PlayerSelector';
 import Notices from './Notices';
 import HomeButton from './HomeButton';
 import Spacer from './Spacer';
+import Revealer from './Revealer';
 export default {
   name: 'ScoreBoard',
   components: {
+    Revealer,
     PlayerSelector,
     Notices,
     HomeButton,

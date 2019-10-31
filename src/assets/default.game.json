@@ -9,7 +9,31 @@
   "image": "/abstract.jpg",
   "isAnswersRevealed": false,
   "revealedCategories": 0,
-  "categories": ["The Food Chain", "Stately Bodies of Water", "Hammer", "From B to C", "I sing the body", "Electric"],
+  "categories": [{
+    "name": "The Food Chain",
+    "id": 1,
+    "revealed": false
+  }, {
+    "name": "Stately Bodies of Water",
+    "id": 2,
+    "revealed": false
+  }, {
+    "name": "Hammer",
+    "id": 3,
+    "revealed": false
+  }, {
+    "name": "From B to C",
+    "id": 4,
+    "revealed": false
+  }, {
+    "name": "I sing the body",
+    "id": 5,
+    "revealed": false
+  }, {
+    "name": "Electric",
+    "id": 6,
+    "revealed": false
+  }],
   "answers": [{
     "id": "00",
     "category": 0,
@@ -19,7 +43,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "01",
     "category": 0,
@@ -29,7 +54,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "02",
     "category": 0,
@@ -39,7 +65,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "03",
     "category": 0,
@@ -49,7 +76,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "04",
     "category": 0,
@@ -59,7 +87,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "10",
     "category": 1,
@@ -69,7 +98,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "11",
     "category": 1,
@@ -79,7 +109,8 @@
     "dailyDouble": true,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "12",
     "category": 1,
@@ -89,7 +120,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "13",
     "category": 1,
@@ -99,7 +131,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "14",
     "category": 1,
@@ -109,7 +142,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "20",
     "category": 2,
@@ -119,7 +153,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "21",
     "category": 2,
@@ -129,7 +164,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "22",
     "category": 2,
@@ -139,7 +175,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "23",
     "category": 2,
@@ -149,7 +186,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "24",
     "category": 2,
@@ -159,7 +197,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "30",
     "category": 3,
@@ -169,7 +208,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "31",
     "category": 3,
@@ -179,7 +219,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "32",
     "category": 3,
@@ -189,7 +230,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "33",
     "category": 3,
@@ -199,7 +241,8 @@
     "dailyDouble": false,
     "image": "/pears.jpg",
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "34",
     "category": 3,
@@ -209,7 +252,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "40",
     "category": 4,
@@ -219,7 +263,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "41",
     "category": 4,
@@ -229,7 +274,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "42",
     "category": 4,
@@ -239,7 +285,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "43",
     "category": 4,
@@ -249,7 +296,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "44",
     "category": 4,
@@ -259,7 +307,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "50",
     "category": 5,
@@ -269,7 +318,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "51",
     "category": 5,
@@ -279,7 +329,8 @@
     "dailyDouble": false,
     "image": "/oscilloscope.jpg",
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "52",
     "category": 5,
@@ -289,7 +340,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "53",
     "category": 5,
@@ -299,7 +351,8 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }, {
     "id": "54",
     "category": 5,
@@ -309,6 +362,7 @@
     "dailyDouble": false,
     "image": false,
     "video": false,
-    "available": true
+    "available": true,
+    "revealed": false
   }]
 }

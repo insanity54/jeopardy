@@ -1,5 +1,6 @@
 <template>
   <div class="controls">
+    <Spacer/>
     <EditModeToggle/>
     <Wager :wagers="wagers" :answer="answer" :gameType="gameType" :selectedPlayer="selectedPlayer"/>
     <Spacer/>

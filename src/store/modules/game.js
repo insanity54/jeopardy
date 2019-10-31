@@ -1,5 +1,7 @@
 import defaultGame from '@/assets/default.game.json'
 import { uuidv4 } from '@/util/util';
+import Vue from 'vue';
+
 
 
 export default {
@@ -61,7 +63,7 @@ export default {
     },
     createGame(state, gameObject) {
       state.games.push({
-        ...defaultGame,
+        ...JSON.parse(JSON.stringify(defaultGame)),
         ...gameObject,
         id: uuidv4(),
       });
@@ -73,6 +75,7 @@ export default {
     deleteGame(state, gameId) {
       let i = state.games.findIndex((g) => g.id === gameId);
       state.games.splice(i, 1)
+      Vue.delete(state.game);
     },
     unlockBuzzers(state) {
       state.game.buzzerLock = false;
@@ -140,6 +143,29 @@ export default {
       return state.game.answers.forEach((a) => {
         a.available = true;
       })
+    },
+    revealAnswer(state, answerId) {
+      let answer = state.game.answers.find((a) => a.id === answerId);
+      answer.revealed = true;
+    },
+    revealCategory(state) {
+      let c = state.game.categories.find((c) => c.revealed === false)
+      c.revealed = true;
+    }
+  },
+  actions: {
+    revealAnswers ( context ) {
+      let divide = 180;
+      let minMultiplier = 0;
+      let maxMultiplier = 16;
+      context.state.game.answers.forEach((a) => {
+        let multiplier = Math.floor(Math.random() * (maxMultiplier - minMultiplier + 1) + minMultiplier);
+        let timeout = divide * multiplier;
+        // let answer = a;
+        setTimeout(() => {
+          context.commit('revealAnswer', a.id);
+        }, timeout);
+      });
     }
   }
 }

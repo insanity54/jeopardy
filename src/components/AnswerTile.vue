@@ -1,6 +1,6 @@
 <template>
   <div @click="openAnswer" :class="[ tileClass, { noclick: !isPlayerSelected } ]">
-    <div :class="{ invisible: isTileInvisible }">{{ points }}</div>
+    <div :class="{ invisible: isTileInvisible, unrevealed: !answer.revealed }">{{ points }}</div>
   </div>
 </template>
 
@@ -61,6 +61,9 @@ export default {
 </script>
 
 <style scoped>
+.unrevealed {
+  color: navy;
+}
 .invisible {
   visibility: hidden;
 }
