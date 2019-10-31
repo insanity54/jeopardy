@@ -10,6 +10,7 @@
   "dependencies": {
     "core-js": "^3.3.2",
     "faker": "^4.1.0",
+    "jdenticon": "^2.2.0",
     "material-design-icons-iconfont": "^5.0.1",
     "vlf": "^1.0.5",
     "vue": "^2.6.10",

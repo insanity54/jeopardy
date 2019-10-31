@@ -6,7 +6,7 @@
     </div>
     <div class="game-badge-content">
       <div class="game-badge-game-image">
-        <img :src="game.image">
+        <Avatar :data="game.id"/>
       </div>
       <div class="game-badge-controls">
         <div class="spacer-small"></div>
@@ -27,8 +27,12 @@
 </template>
 
 <script>
+import Avatar from "@/components/Avatar/Avatar";
 export default {
   name: 'GameBadge',
+  components: {
+    Avatar
+  },
   props: {
     game: {
       type: Object,
@@ -95,6 +99,7 @@ export default {
     margin: 0.5em 1em;
     width: 25vw;
     justify-content: space-between;
+    user-select: none;
   }
   .game-badge-heading {
     font-size: 18pt;
@@ -112,6 +117,7 @@ export default {
   .game-badge-content {
     display: flex;
     flex-direction: column;
+    height: 100%;
   }
   .game-badge-game-image {
     display: flex;
@@ -120,6 +126,7 @@ export default {
     align-items: center;
     flex-wrap: wrap;
     margin: 1em 0;
+    height: 200px;
   }
   .game-badge-controls {
     display: flex;
