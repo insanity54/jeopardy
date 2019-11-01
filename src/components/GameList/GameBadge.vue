@@ -16,6 +16,12 @@
         <div @click="goToGameEditor" class="button">
           <i class="material-icons">edit</i>Edit
         </div>
+        <div @click="restartGame" class="button">
+          <i class="material-icons">autorenew</i>Restart
+        </div>
+        <div @click="exportGame" class="button">
+          <i class="material-icons">import_export</i>Export
+        </div>
         <div @click="deleteGame" class="button">
           <i class="material-icons">delete</i>Delete
         </div>
@@ -27,6 +33,8 @@
 </template>
 
 <script>
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 import Avatar from "@/components/Avatar/Avatar";
 export default {
   name: 'GameBadge',
@@ -79,6 +87,35 @@ export default {
       if (!this.isEditMode) this.$store.commit('enterEditMode');
       this.$store.commit('loadGame', this.game.id);
       this.$router.push(this.gameLink);
+    },
+    exportGame: function () {
+      let zip = new JSZip();
+      zip.file(`${this.game.id}.json`, JSON.stringify(this.game));
+      let assets = zip.folder('assets');
+
+      // loop through images and add them to the zip
+      for (var i=0; i<this.game.answers.length; i++) {
+        let answer = this.game.answers[i];
+        if (answer.image) {
+          let img = this.loadImage(answer.image);
+          assets.file(`${answer.id}.jpg`, img);
+        }
+      }
+      zip.generateAsync({type:"blob"}).then((content) => {
+        saveAs(content, `${this.game.id}.zip`);
+      });
+    },
+    loadImage: async function (url) {
+      let blob = await fetch(url).then(r => r.blob());
+      return blob;
+    },
+    loadLocalForageFile: function () {
+      return this.$vlf.getItem(`game:${this.gameId}:${this.answer.id}:image`).then((v) => {
+        var blob = new Blob([v]);
+        var imageURI = window.URL.createObjectURL(blob);
+        this.loadedImage = imageURI;
+        return this.$store.commit('updateImage', { imageURI: imageURI });
+      });
     }
   }
 }
@@ -131,6 +168,7 @@ export default {
   .game-badge-controls {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
   }
 </style>

@@ -145,8 +145,12 @@ export default {
     },
     restartGame(state) {
       state.game.completedAnswerCounter = 0;
-      return state.game.answers.forEach((a) => {
+      state.game.answers.forEach((a) => {
+        a.revealed = false;
         a.available = true;
+      });
+      return state.game.categories.forEach((c) => {
+        c.revealed = false;
       })
     },
     revealAnswer(state, answerId) {
