@@ -1,5 +1,5 @@
 <template>
-  <div class="score-board">
+  <div class="bottom-control-bar">
     <Revealer/>
     <Notices/>
     <Spacer/>
@@ -16,7 +16,7 @@ import HomeButton from './HomeButton';
 import Spacer from './Spacer';
 import Revealer from './Revealer';
 export default {
-  name: 'ScoreBoard',
+  name: 'BottomControlBar',
   components: {
     Revealer,
     PlayerSelector,
@@ -25,6 +25,9 @@ export default {
     Spacer
   },
   computed: {
+    isEditMode: function () {
+      return this.$store.state.meta.edit;
+    }
   },
   props: {
   },
@@ -34,7 +37,7 @@ export default {
 </script>
 
 <style>
-.score-board {
+.bottom-control-bar {
   color: white;
   display: flex;
   flex-direction: row;

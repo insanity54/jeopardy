@@ -4,7 +4,7 @@
     <h1 class="title" @click="openTitleEditor" v-if="isEditMode">{{ game.name }}</h1>
     <router-view />
     <transition name="component-fade" mode="out-in">
-      <component v-bind:is="scoreOrControls"></component>
+      <component v-bind:is="answerOrGameControls"></component>
     </transition>
   </div>
 </template>
@@ -13,7 +13,7 @@
 import { mapGetters } from 'vuex';
 import AudioPlayer from '@/components/AudioPlayer/AudioPlayer';
 import GameBoard from './GameBoard';
-import ScoreBoard from '@/components/Controls/ScoreBoard';
+import BottomControlBar from '@/components/Controls/BottomControlBar';
 import Controls from '@/components/Controls/Controls';
 export default {
   name: 'Game',
@@ -24,8 +24,8 @@ export default {
   components: {
     AudioPlayer,
     GameBoard,
-    'score': ScoreBoard,
-    'controls': Controls,
+    'gameControls': BottomControlBar,
+    'answerControls': Controls,
   },
   props: {
 
@@ -44,8 +44,8 @@ export default {
         typeof this.$route.query.item !== 'undefined'
       );
     },
-    scoreOrControls: function () {
-      return (this.isAnswerScreen) ? 'controls' : 'score';
+    answerOrGameControls: function () {
+      return (this.isAnswerScreen) ? 'answerControls' : 'gameControls';
     },
     transitionStyle: function () {
       return 'fade';
