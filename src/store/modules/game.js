@@ -58,8 +58,8 @@ export default {
     }
   },
   mutations: {
-    updateCategoryText(state, categoryData) {
-      state.game.categories[categoryData.categoryIndex] = categoryData.text;
+    updateCategory(state, categoryData) {
+      state.game.categories[categoryData.id] = categoryData;
     },
     createGame(state, gameObject) {
       function getMultiplier(type) {

@@ -92,10 +92,10 @@ export default {
       let zip = new JSZip();
       zip.file(`${this.game.id}.json`, JSON.stringify(this.game));
       let assets = zip.folder('assets');
-
       // loop through images and add them to the zip
       for (var i=0; i<this.game.answers.length; i++) {
         let answer = this.game.answers[i];
+        console.log(answer.image)
         if (answer.image) {
           let img = this.loadImage(answer.image);
           assets.file(`${answer.id}.jpg`, img);
@@ -106,11 +106,10 @@ export default {
       });
     },
     loadImage: async function (url) {
-      let blob = await fetch(url).then(r => r.blob());
-      return blob;
+      return await fetch(url).then(r => r.blob());
     },
     loadLocalForageFile: function () {
-      return this.$vlf.getItem(`game:${this.gameId}:${this.answer.id}:image`).then((v) => {
+      return this.$vlf.getItem(`game.${this.gameId}.${this.answer.id}.image`).then((v) => {
         var blob = new Blob([v]);
         var imageURI = window.URL.createObjectURL(blob);
         this.loadedImage = imageURI;

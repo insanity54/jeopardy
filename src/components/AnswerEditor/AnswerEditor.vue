@@ -53,14 +53,6 @@ export default {
     gameId: function () {
       return this.$store.state.game.game.id
     },
-    // answerImage: {
-    //   get () {
-    //     return this.answer.image;
-    //   },
-    //   set (value) {
-    //     this.$store.commit('updateImage', { answerId: this.answer.id, imageURI: imageURI });
-    //   }
-    // },
     answerText: {
       get () {
         return this.answer.answerText;

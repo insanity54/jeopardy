@@ -15,14 +15,14 @@ export default {
   },
   computed: {
     categoryIndex: function () {
-      return this.$route.params.categoryIndex
+      return parseInt(this.$route.params.categoryIndex)
     },
     categoryText: {
       get () {
         return this.$store.state.game.game.categories[this.categoryIndex].name;
       },
       set (value) {
-        this.$store.commit('updateCategoryText', { categoryIndex: this.categoryIndex, text: value });
+        this.$store.commit('updateCategory', { id: this.categoryIndex, name: value, revealed: false });
       }
     }
   },

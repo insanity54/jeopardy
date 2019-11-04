@@ -1,6 +1,7 @@
 <template>
   <div class="game-list">
-    <NewGameButton/>
+    <NewGameBadge/>
+    <ImportGameBadge/>
     <GameBadge v-for="game in games" :key="game.id" :game="game"/>
   </div>
 </template>
@@ -8,12 +9,14 @@
 
 <script>
 import GameBadge from './GameBadge';
-import NewGameButton from './NewGameButton';
+import NewGameBadge from './NewGameBadge';
+import ImportGameBadge from './ImportGameBadge';
 export default {
   name: 'GameList',
   components: {
     GameBadge,
-    NewGameButton
+    NewGameBadge,
+    ImportGameBadge
   },
   props: {
   },
