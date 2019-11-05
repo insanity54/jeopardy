@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { basename } from '@/util/util.js'
 import JSZip from 'jszip';
 export default {
   name: 'ImportGameBadge',
@@ -80,7 +81,7 @@ export default {
               ].id;
               this.storeLocally({
                 url: imageURI,
-                name: this.basename(zipEntry.name),
+                name: basename(zipEntry.name),
                 gameId: gid
               });
             });
@@ -88,10 +89,7 @@ export default {
         })
       });
     },
-    basename: function (name) {
-      // greetz https://stackoverflow.com/a/29939805/1004931
-      return name.substring(name.lastIndexOf('/')+1, name.lastIndexOf('.'));
-    },
+
     onChangeInputFile: function (e) {
       // greetz
       // https://github.com/dflourusso/v-file-upload/blob/master/src/FileUpload.vue

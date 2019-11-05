@@ -11,3 +11,15 @@ export function uuidv4 () {
 export function randomIntFromInterval (min, max) { // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+
+
+export function basename (name) {
+  // greetz https://stackoverflow.com/a/29939805/1004931
+  return name.substring(name.lastIndexOf('/')+1, name.lastIndexOf('.'));
+}
+
+
+export function extension (filename) {
+  return filename.substr(filename.lastIndexOf('.')+1);
+}

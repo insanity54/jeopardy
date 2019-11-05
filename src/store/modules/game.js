@@ -129,7 +129,7 @@ export default {
       return state.game = { ...state.game, wager: null };
     },
     updateImage(state, imageData) {
-      return state.game.answer.image = imageData.imageURI;
+      return state.game.answer.image = imageData;
     },
     updateAnswerText(state, text) {
       return state.game.answer.answerText = text;

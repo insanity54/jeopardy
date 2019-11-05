@@ -19,8 +19,11 @@
         <p>Drop an image file or browse your computer.</p>
         <div v-if="isImage" @click="deleteImage" class="button delete-image-button">Delete image</div>
         <div class="thumbnails">
-          <img class="thumbnail" :src="this.answer.image"/>
+          <img class="thumbnail" :src="this.answer.image.url"/>
         </div>
+    </div>
+    <div class="error">
+      <span>{{ error.message }}</span>
     </div>
     <!-- <div class="edit-item">
       <div class="editor-controls">
@@ -35,10 +38,16 @@
   </div>
 </template>
 <script>
+import { extension } from '@/util/util.js';
 export default {
   name: 'AnswerEditor',
   components: {
     // ExternalResource
+  },
+  data: function () {
+    return {
+      error: {}
+    }
   },
   props: {
     answer: {
@@ -79,6 +88,9 @@ export default {
     }
   },
   methods: {
+    logError: function (e) {
+      this.error = e;
+    },
     deleteImage: function () {
       this.$vlf.removeItem(`game:${this.gameId}:${this.answer.id}:image`).then(() => {
         this.$store.commit('updateImage', { answerid: this.answer.id, imageURI: '' })
@@ -87,33 +99,51 @@ export default {
     onChangeInputFile: function (e) {
       // greetz
       // https://github.com/dflourusso/v-file-upload/blob/master/src/FileUpload.vue
+      console.log('change input');
       let files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return
+      console.log(files);
+      if (!files.length) return;
       const file = files[0];
+      const ext = extension(file.name);
+      console.log(ext);
+      if (ext !== 'jpg' && ext !== 'png' && ext !== 'gif') {
+        this.$emit('error', {
+          code: 'wrong_extension',
+          message: 'That image file extension is not allowed. Please upload a jpg, png, or gif.'
+        });
+        return;
+      }
       if (file.size > 15728640) {
         this.$emit('error', {
           code: 'max_size_exceeded',
           message: `File max size exceded, upload a file smaller than ${this.maxSize}`
-        })
+        });
         return;
       }
       this.storeLocally(file).then((imageURI) => {
-        this.$store.commit('updateImage', { answerId: this.answer.id, imageURI: imageURI });
-      })
+        this.$store.commit('updateImage', { id: `${this.answer.id}`, url: imageURI, type: ext });
+      });
     },
     storeLocally: function (file) {
       return new Response(file).arrayBuffer().then((buffer) => {
-        return this.$vlf.setItem(`game:${this.gameId}:${this.answer.id}:image`, buffer).then(function(image) {
+        return this.$vlf.setItem(`game.${this.gameId}.${this.answer.id}.image`, buffer).then(function(image) {
           var blob = new Blob([image]);
           var imageURI = window.URL.createObjectURL(blob);
           return imageURI;
         })
       })
-    },
+    }
+  }, mounted: function () {
+    this.$on('error', this.logError);
+  }, destroyed: function () {
+    this.$off('error');
   }
 }
 </script>
 <style scoped>
+.error span {
+  color: red;
+}
 .answer-editor {
   font-size: 12pt;
   font-family: arial;
@@ -174,7 +204,7 @@ export default {
   text-decoration: underline;
 }
 img.thumbnail {
-  width: 10%;
+  width: 100px;
 }
 .thumbnails {
   display: flex;
