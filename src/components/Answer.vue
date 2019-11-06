@@ -29,22 +29,22 @@ export default {
     }
   },
   methods: {
-    // loadLocalForageImage: function (img) {
-    //   let { type, id } = img;
-    //   return this.$vlf.getItem(`game.${this.gameId}.${this.answer.id}.image`).then((v) => {
-    //     var blob = new Blob([v]);
-    //     var imageURI = window.URL.createObjectURL(blob);
-    //     console.log(imageURI);
-    //     this.loadedImage = imageURI;
-    //     return this.$store.commit('updateImage', { url: imageURI, type, id });
-    //   });
-    // }
+    loadLocalForageImage: function (img) {
+      let { type, id } = img;
+      return this.$vlf.getItem(`game.${this.gameId}.${this.answer.id}.image`).then((v) => {
+        var blob = new Blob([v.blob]);
+        var imageURI = window.URL.createObjectURL(blob);
+        console.log(imageURI);
+        this.loadedImage = imageURI;
+        return this.$store.commit('updateImage', { url: imageURI, type, id });
+      });
+    }
   },
-  // created: function () {
-  //   if (this.isImageAnswer && this.answer.image.url.startsWith('blob')) {
-  //     this.loadLocalForageImage(this.answer.image);
-  //   }
-  // }
+  created: function () {
+    if (this.isImageAnswer && this.answer.image.url.startsWith('blob')) {
+      this.loadLocalForageImage(this.answer.image);
+    }
+  }
 }
 </script>
 

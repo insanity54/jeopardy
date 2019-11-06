@@ -88,6 +88,7 @@ export default {
         .then(this.regenerateImageUrls)
         .then(this.updateGameJsonImages)
         .then(this.debug)
+        .then(this.createImportedGame)
         .then(this.storeGameData)
         .then(this.displaySuccess)
         .catch(this.displayError)
@@ -95,6 +96,11 @@ export default {
     debug: function (gameData) {
       console.log(`answer [10] image URL => ${gameData.gameJson.answers[10].image.url}`)
       return gameData
+    },
+    createImportedGame: function (gameData) {
+      // store game.json in vuex
+      this.$store.commit('createGame', gameData.gameJson);
+      return gameData;
     },
     /**
      * Put the regenerated image urls in the game data
@@ -163,9 +169,6 @@ export default {
     storeGameData: function (gameData) {
       console.log(gameData);
 
-      // store game.json in vuex
-      this.$store.commit('createGame', gameData.gameJson);
-
       // store assets/*.(jpg|png|gif) in localForage
       let promises = [];
       for (var i=0; i<gameData.gameAssets.length; i++) {
@@ -173,14 +176,13 @@ export default {
           id: gameData.gameAssetJson[i].id,
           type: gameData.gameAssetJson[i].type,
           gameId: this.gameId,
-          blob: gameData.gameAssets[i],
-          url: gameData.gameAssetJson[i].url
+          blob: gameData.gameAssets[i]
         }));
       }
       return {
         ...gameData,
         storageResult: Promise.all(promises)
-      }
+      };
     },
     /**
      * Handle the contents of the zip file being imported.

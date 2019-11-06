@@ -66,12 +66,14 @@ export default {
         if (type === 'double') return 200;
         return 100;
       }
+      const id = uuidv4();
       state.games.push({
         ...JSON.parse(JSON.stringify(defaultGame)),
         ...gameObject,
-        id: uuidv4(),
+        id: id,
         pointMultiplier: getMultiplier(gameObject.gameType)
       });
+      return state.game = { ...state.game, id: id };
     },
     updateGame(state, gameObject) {
       let i = state.games.findIndex((g) => g.id === gameObject.id);
