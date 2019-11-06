@@ -29,6 +29,7 @@ export default {
 body {
   background: black;
   margin: 0;
+  user-select: none;
 }
 .logo {
   width: 50vw;

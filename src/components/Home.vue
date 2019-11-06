@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="header">
-      <h1>Jeopardy!</h1>
+      <h1>Jepurdee?</h1>
     </div>
     <MainMenu/>
   </div>

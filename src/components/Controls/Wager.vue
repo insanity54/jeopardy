@@ -50,6 +50,10 @@ export default {
       return true;
     },
     wagerMinimum: function () {
+      if (
+        this.gameType === 'single' ||
+        this.gameType === 'double'
+      ) return 5;
       return 0;
     },
     answerId: function () {

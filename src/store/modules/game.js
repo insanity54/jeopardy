@@ -131,6 +131,10 @@ export default {
     updateImage(state, imageData) {
       return state.game.answer.image = imageData;
     },
+    patchImage(state, imageData) {
+      let i = state.game.answer.image;
+      return i = { ...i, ...imageData };
+    },
     updateAnswerText(state, text) {
       return state.game.answer.answerText = text;
     },

@@ -100,8 +100,6 @@ export default {
         if (typeof answer.image.url !== 'undefined') {
           let imgBlob = this.loadImage(answer.image.url);
           let { type, id, url } = answer.image;
-          // console.log(`type:${type}, id:${id}, url:${url}`)
-          console.log(imgBlob);
           assetsData.push({ type, id, url });
           assets.file(`${answer.id}.${type}`, imgBlob);
         }
@@ -114,7 +112,7 @@ export default {
     },
     loadImage: async function (url) {
       // This function accepts a url, returns a blob.
-      return await fetch(url).then(r => { console.log(r); return r.blob() });
+      return await fetch(url).then(r => { return r.blob() });
     },
     loadLocalForageFile: function () {
       return this.$vlf.getItem(`game.${this.gameId}.${this.answer.id}.image`).then((v) => {

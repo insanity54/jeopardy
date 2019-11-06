@@ -34,6 +34,7 @@ export default {
   },
   methods: {
     play (audio) {
+      console.log(`playing audio ${audio}`)
       audio.isPlaying = true;
       audio.file.play();
     }

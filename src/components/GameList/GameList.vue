@@ -3,6 +3,7 @@
     <NewGameBadge/>
     <ImportGameBadge/>
     <GameBadge v-for="game in games" :key="game.id" :game="game"/>
+    <BlobTester/>
   </div>
 </template>
 
@@ -11,12 +12,14 @@
 import GameBadge from './GameBadge';
 import NewGameBadge from './NewGameBadge';
 import ImportGameBadge from './ImportGameBadge';
+import BlobTester from '@/components/debug/BlobTester';
 export default {
   name: 'GameList',
   components: {
     GameBadge,
     NewGameBadge,
-    ImportGameBadge
+    ImportGameBadge,
+    BlobTester
   },
   props: {
   },

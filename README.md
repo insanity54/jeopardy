@@ -1,4 +1,4 @@
-# jepurdy
+# jepurdee
 
 A full featured clone of a quiz show game. Made for family gatherings, meetups, business meetings, educational use, and more.
 
