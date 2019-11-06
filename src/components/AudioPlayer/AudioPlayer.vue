@@ -15,7 +15,7 @@ export default {
         {
           id: 'lazer',
           name: 'lazer',
-          file: new Audio('/lazor.ogg'),
+          file: new Audio('/lazer.ogg'),
           isPlaying: false
         },
         {
