@@ -1,41 +1,5 @@
 export default {
   state: [
-    {
-      name: 'Yolyamanitzin',
-      id: 0,
-      score: 0,
-      buzzed: false,
-      buzzWinner: false,
-      chooser: false,
-      color: '#fff',
-    },
-    {
-      name: 'Kai',
-      id: 1,
-      score: 0,
-      buzzed: false,
-      buzzWinner: false,
-      chooser: false,
-      color: '#fff',
-    },
-    {
-      name: 'Sacha',
-      id: 2,
-      score: 0,
-      buzzed: false,
-      buzzWinner: false,
-      chooser: false,
-      color: '#fff',
-    },
-    {
-      name: 'Taylor',
-      id: 3,
-      score: 0,
-      buzzed: false,
-      buzzWinner: false,
-      chooser: false,
-      color: '#fff',
-    }
   ],
   getters: {
     buzzWinner: state => {

@@ -15,12 +15,7 @@
     <div class="white-text">
       <i class="material-icons">import_export</i><span>Import Game Zip</span>
     </div>
-    <div v-if="error.message" class="error">
-      <span>{{ error.message }}</span>
-    </div>
-    <div v-if="success.message" class="success">
-      <span>{{ success.message }}</span>
-    </div>
+    <ErrorHandler :error="error" :success="success"/>
   </div>
 </div>
 </template>
@@ -28,18 +23,18 @@
 <script>
 let maxSize = 15728640;
 import * as Promise from "bluebird";
-// import {
-//   basename
-// } from '@/util/util.js';
+import ErrorHandler from '@/components/ErrorHandler/ErrorHandler';
 import JSZip from 'jszip';
 export default {
   name: 'ImportGameBadge',
-  components: {},
-  data: function() {
+  components: {
+    ErrorHandler
+  },
+  data: function () {
     return {
       gameType: 'single',
       dats: [],
-      error: {},
+      error: new Error(),
       success: {},
     }
   },
@@ -84,10 +79,8 @@ export default {
         .then(this.gatherGameData)
         .then(this.parseGameData)
         .then(this.validateGameData)
-        .then(this.debug)
         .then(this.regenerateImageUrls)
         .then(this.updateGameJsonImages)
-        .then(this.debug)
         .then(this.createImportedGame)
         .then(this.storeGameData)
         .then(this.displaySuccess)
@@ -261,28 +254,6 @@ export default {
 </script>
 
 <style scoped>
-.error {
-  margin: 1em 0;
-  padding: 3em 1em;
-  border: 3px dashed red;
-  background-color: Ivory;
-}
-.error span {
-  font-weight: bold;
-  color: maroon;
-}
-
-.success {
-  margin: 1em 0;
-  padding: 3em 1em;
-  border: 3px dotted white;
-  background-color: Green;
-}
-
-.success span {
-  font-weight: bold;
-  color: white;
-}
 
 .debug img {
   width: 50px;

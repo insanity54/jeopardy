@@ -130,8 +130,16 @@ export default {
     clearWager(state) {
       return state.game = { ...state.game, wager: null };
     },
-    updateImage(state, imageData) {
-      return state.game.answer.image = imageData;
+    updateImage(state, data) {
+      let { id, type, url } = data;
+      state.game.answer.image = Object.assign({}, state.game.answer.image, {
+        url: url,
+        id: id,
+        type: type
+      });
+    },
+    deleteImage(state) {
+      state.game.answer.image = Object.assign({});
     },
     patchImage(state, imageData) {
       let i = state.game.answer.image;

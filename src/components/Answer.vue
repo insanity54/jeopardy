@@ -36,7 +36,7 @@ export default {
         var imageURI = window.URL.createObjectURL(blob);
         console.log(imageURI);
         this.loadedImage = imageURI;
-        return this.$store.commit('updateImage', { url: imageURI, type, id });
+        return this.$store.commit('updateImage', { url: imageURI, type, answerId: id, gameId: this.gameId });
       });
     }
   },

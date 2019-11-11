@@ -57,7 +57,11 @@ export default {
   },
   computed: {
     isImage: function () {
-      return (this.answer.image.length > 0)
+      return (
+        typeof this.answer.image.id !== 'undefined' ||
+        typeof this.answer.image.type !== 'undefined' ||
+        typeof this.answer.image.url !== 'undefined'
+      )
     },
     gameId: function () {
       return this.$store.state.game.game.id
@@ -93,7 +97,7 @@ export default {
     },
     deleteImage: function () {
       this.$vlf.removeItem(`game:${this.gameId}:${this.answer.id}:image`).then(() => {
-        this.$store.commit('updateImage', { answerid: this.answer.id, imageURI: '' })
+        this.$store.commit('deleteImage');
       })
     },
     onChangeInputFile: function (e) {

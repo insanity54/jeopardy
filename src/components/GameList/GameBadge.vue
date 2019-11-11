@@ -28,23 +28,33 @@
       </div>
         <div class="game-badge-color-chooser">
         </div>
-      </div>
+      <ErrorHandler :error="error" :success="success"/>
+    </div>
   </div>
 </template>
 
 <script>
+import * as Promise from "bluebird";
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import ErrorHandler from '@/components/ErrorHandler/ErrorHandler';
 import Avatar from "@/components/Avatar/Avatar";
 export default {
   name: 'GameBadge',
   components: {
-    Avatar
+    Avatar,
+    ErrorHandler
   },
   props: {
     game: {
       type: Object,
       required: true
+    }
+  },
+  data: function () {
+    return {
+      error: new Error(),
+      success: {}
     }
   },
   computed: {
@@ -88,39 +98,58 @@ export default {
       this.$store.commit('loadGame', this.game.id);
       this.$router.push(this.gameLink);
     },
+    normalizeName: function (name) {
+      return name.toLowerCase().replace(' ', '-');
+    },
     exportGame: function () {
       let zip = new JSZip();
-      zip.file(`${this.game.id}.json`, JSON.stringify(this.game));
+      zip.file(`${this.normalizeName(this.gameName)}.json`, JSON.stringify(this.game));
       let assets = zip.folder('assets');
       // create assets.json which contains image name, type, and url.
       let assetsData = [];
-      // loop through images and add them to the zip
-      for (var i=0; i<this.game.answers.length; i++) {
-        let answer = this.game.answers[i];
-        if (typeof answer.image.url !== 'undefined') {
-          let imgBlob = this.loadImage(answer.image.url);
-          let { type, id, url } = answer.image;
-          assetsData.push({ type, id, url });
-          assets.file(`${answer.id}.${type}`, imgBlob);
+
+      this.refreshBlobUrls().then(() => {
+        assets.file(`assets.json`, JSON.stringify(assetsData));
+        for (var i=0; i<this.game.answers.length; i++) {
+          // loop through images and add them to the zip
+          let answer = this.game.answers[i];
+          if (typeof answer.image.url !== 'undefined') {
+            console.log(`url-> ${answer.image.url}`);
+            let { type, id, url } = answer.image;
+            assetsData.push({ type, id, url });
+            let imgBlob = this.getBlobFromUrl(url);
+            assets.file(`${answer.id}.${type}`, imgBlob);
+          }
         }
-      }
-      // add assets.json to the zip object
-      assets.file(`assets.json`, JSON.stringify(assetsData));
-      zip.generateAsync({ type:"blob" }).then((content) => {
-        saveAs(content, `${this.game.id}.zip`);
+        zip.generateAsync({ type:"blob" }).then((content) => {
+          saveAs(content, `${this.normalizeName(this.game.name)}.zip`);
+        });
+      })
+    },
+    refreshBlobUrls: function () {
+      // Goes through each image in the game, and re-generates it's URL.
+      // then, the image.url property (vuex) is updated.
+      // This is required because the blob URL will become invalid
+      // after certain events such as closing the window.
+      return new Promise.each(this.game.answers, (a) => {
+        if (typeof a.url === 'undefined') return null;
+        return this.getBlobUrl(this.game.id, a.id).then((url) => {
+          return this.updateVuexImageUrl(this.game.id, a.id, url);
+        })
       });
     },
-    loadImage: async function (url) {
-      // This function accepts a url, returns a blob.
-      return await fetch(url).then(r => { return r.blob() });
-    },
-    loadLocalForageFile: function () {
-      return this.$vlf.getItem(`game.${this.gameId}.${this.answer.id}.image`).then((v) => {
+    getBlobUrl: function (gameId, answerId) {
+      return this.$vlf.getItem(`game.${gameId}.${answerId}.image`).then((v) => {
         var blob = new Blob([v]);
-        var imageURI = window.URL.createObjectURL(blob);
-        this.loadedImage = imageURI;
-        return this.$store.commit('updateImage', { imageURI: imageURI });
-      });
+        return window.URL.createObjectURL(blob);
+      })
+    },
+    getBlobFromUrl: async function (url) {
+      console.log(`getting ${url}`);
+      return await fetch(url).then(r => r.blob());
+    },
+    updateVuexImageUrl: function (gameId, answerId, imageUrl) {
+      this.$store.commit('updateImage', { gameId, answerId, imageUrl });
     }
   }
 }

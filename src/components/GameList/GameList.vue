@@ -27,13 +27,6 @@ export default {
     games: function () {
       return this.$store.state.game.games;
     },
-    // downloadLink: function () {
-    //   let contentType = 'application/json';
-    //   let dData = JSON.stringify(this.game);
-    //   let blob = new Blob([dData], { type: contentType });
-    //   let url = window.URL.createObjectURL(blob);
-    //   return url;
-    // }
   },
   methods: {
   }
