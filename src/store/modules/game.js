@@ -79,9 +79,10 @@ export default {
       let i = state.games.findIndex((g) => g.id === gameObject.id);
       state.games[i] = gameObject;
     },
-    deleteGame(state, gameId) {
-      let i = state.games.findIndex((g) => g.id === gameId);
-      state.games.splice(i, 1)
+    deleteGame(state, game) {
+      let i = state.games.findIndex((g) => g.id === game.id);
+      if (i === -1) throw new Error(`game id ${game.id} was not found in storage.`);
+      state.games.splice(i, 1);
       Vue.delete(state.game);
     },
     unlockBuzzers(state) {

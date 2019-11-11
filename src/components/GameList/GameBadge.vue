@@ -83,6 +83,7 @@ export default {
   },
   methods: {
     deleteGame: function () {
+      console.log(`deleting ${this.game.id}`)
       this.$store.commit('deleteGame', { id: this.game.id });
     },
     goToGame: function () {
