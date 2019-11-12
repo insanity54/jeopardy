@@ -110,7 +110,6 @@ export default {
       let assetsData = [];
 
       this.refreshBlobUrls().then(() => {
-        assets.file(`assets.json`, JSON.stringify(assetsData));
         for (var i=0; i<this.game.answers.length; i++) {
           // loop through images and add them to the zip
           let answer = this.game.answers[i];
@@ -122,6 +121,7 @@ export default {
             assets.file(`${answer.id}.${type}`, imgBlob);
           }
         }
+        assets.file(`assets.json`, JSON.stringify(assetsData));
         zip.generateAsync({ type:"blob" }).then((content) => {
           saveAs(content, `${this.normalizeName(this.game.name)}.zip`);
         });
