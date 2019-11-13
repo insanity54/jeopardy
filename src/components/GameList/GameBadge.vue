@@ -93,6 +93,7 @@ export default {
     },
     restartGame: function () {
       this.$store.commit('restartGame', this.game.id);
+      this.$store.commit('resetScores');
     },
     goToGameEditor: function() {
       if (!this.isEditMode) this.$store.commit('enterEditMode');
@@ -103,29 +104,30 @@ export default {
       return name.toLowerCase().replace(' ', '-');
     },
     exportGame: function () {
+      // console.log(`name:${this.game}`)
+
       let zip = new JSZip();
       zip.file(`${this.normalizeName(this.gameName)}.json`, JSON.stringify(this.game));
       let assets = zip.folder('assets');
       // create assets.json which contains image name, type, and url.
       let assetsData = [];
-
       this.refreshBlobUrls().then(() => {
         for (var i=0; i<this.game.answers.length; i++) {
           // loop through images and add them to the zip
           let answer = this.game.answers[i];
           if (typeof answer.image.url !== 'undefined') {
-            console.log(`url-> ${answer.image.url}`);
             let { type, id, url } = answer.image;
             assetsData.push({ type, id, url });
-            let imgBlob = this.getBlobFromUrl(url);
+            let imgBlob = this.getBlobUrl(url);
             assets.file(`${answer.id}.${type}`, imgBlob);
           }
         }
         assets.file(`assets.json`, JSON.stringify(assetsData));
         zip.generateAsync({ type:"blob" }).then((content) => {
+          console.log(content);
           saveAs(content, `${this.normalizeName(this.game.name)}.zip`);
         });
-      })
+      });
     },
     refreshBlobUrls: function () {
       // Goes through each image in the game, and re-generates it's URL.
@@ -146,7 +148,6 @@ export default {
       })
     },
     getBlobFromUrl: async function (url) {
-      console.log(`getting ${url}`);
       return await fetch(url).then(r => r.blob());
     },
     updateVuexImageUrl: function (gameId, answerId, imageUrl) {

@@ -67,6 +67,11 @@ export default {
       let { id } = data;
       let i = state.findIndex((p) => p.id === id);
       state.splice(i, 1);
+    },
+    resetScores(state) {
+      state.forEach((p) => {
+        p.score = 0;
+      })
     }
   }
 }
