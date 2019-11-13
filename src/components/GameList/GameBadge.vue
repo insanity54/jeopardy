@@ -83,7 +83,6 @@ export default {
   },
   methods: {
     deleteGame: function () {
-      console.log(`deleting ${this.game.id}`)
       this.$store.commit('deleteGame', { id: this.game.id });
     },
     goToGame: function () {
@@ -124,7 +123,6 @@ export default {
         }
         assets.file(`assets.json`, JSON.stringify(assetsData));
         zip.generateAsync({ type:"blob" }).then((content) => {
-          console.log(content);
           saveAs(content, `${this.normalizeName(this.game.name)}.zip`);
         });
       });
