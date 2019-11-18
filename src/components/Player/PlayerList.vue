@@ -5,7 +5,7 @@
     </div>
     <div class="player-list-content">
       <NewPlayerButton/>
-      <PlayerBadge v-for="player in players" :key="player.id" :player="player"/>
+      <PlayerBadge v-for="player in players" :key="player.id" :playerId="player.id"/>
     </div>
   </div>
 </template>

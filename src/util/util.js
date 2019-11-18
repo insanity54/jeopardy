@@ -1,3 +1,5 @@
+import faker from 'faker';
+
 
 export function uuidv4 () {
   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
@@ -22,4 +24,10 @@ export function basename (name) {
 
 export function extension (filename) {
   return filename.substr(filename.lastIndexOf('.')+1);
+}
+
+
+export function humanReadableId () {
+  let randomWords = `${faker.random.word()}-${faker.random.word()}`;
+  return randomWords.toLowerCase().replace(/ /g, '-').replace(/\(/g, '').replace(/\)/g, '');
 }

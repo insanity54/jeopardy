@@ -1,8 +1,5 @@
 <template>
   <div class="main-menu">
-    <div class="main-menu-header">
-      <h1>Main Menu</h1>
-    </div>
     <div class="main-menu-content">
       <div @click="gotoPlayers" class="main-menu-item">
         <i class="material-icons">people</i>
@@ -17,15 +14,6 @@
         <span>Episodes</span>
       </div>
     </div>
-    <div class="tutorial">
-      <h3>Tutorial</h3>
-      <ol class="tutorial">
-        <li>Set up Players</li>
-        <li>Create 3 Games-- single, double, and final</li>
-        <li>Add 3 rounds to an Episode</li>
-        <li>Play!</li>
-      </ol>
-    </div>
   </div>
 </template>
 
@@ -37,13 +25,17 @@ export default {
   components: {
   },
   computed: {
+    houseId: function () {
+      return this.$store.state.meta.houseId;
+    }
   },
   methods: {
     gotoGames: function() {
+      this.$socket.emit('unlockBuzzer', { houseId: this.houseId });
       this.$router.push('/games');
     },
     gotoPlayers: function() {
-      this.$router.push('/players');
+      this.$socket.emit('routeJumbotron', { to: '/players' });
     },
     gotoEpisodes: function() {
       this.$router.push('/episodes');
@@ -63,11 +55,11 @@ export default {
   justify-content: center;
 }
 .tutorial {
-  
+
 }
 .main-menu-content {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
 }
 .main-menu-item {

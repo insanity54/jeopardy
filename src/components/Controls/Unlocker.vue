@@ -1,16 +1,16 @@
 <template>
   <div v-if="isBuzzableScreen" class="unlocker">
-    <div class="button unlock-button" :class="{selected: !isLocked}" @click.prevent="unlockBuzzers()">
+    <div class="button unlock-button" :class="{selected: !isLocked}" @click.prevent="unlockBuzzer()">
       <i class="material-icons">lock_open</i>
     </div>
-    <div class="button lock-button" :class="{selected: isLocked}" @click.prevent="lockBuzzers()">
+    <div class="button lock-button" :class="{selected: isLocked}" @click.prevent="lockBuzzer()">
       <i class="material-icons">lock_outline</i>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
+import { mapState } from 'vuex';
 export default {
   name: 'Unlocker',
   props: {
@@ -21,21 +21,24 @@ export default {
   },
   computed: {
     ...mapState({
-      answer: state => state.game.game.answer
+      answer: state => state.game.game.answer,
+      buzzerLock: state => state.game.game.buzzerLock
     }),
-    ...mapGetters([
-      'isBuzzerLocked'
-    ]),
     isLocked: function () {
-      return this.isBuzzerLocked;
+      return (this.buzzerLock === true);
+    },
+    houseId: function () {
+      return this.$store.state.meta.houseId;
     }
   },
   methods: {
-    unlockBuzzers: function () {
-      return this.$store.commit('unlockBuzzers');
+    unlockBuzzer: function () {
+      this.$socket.emit('unlockBuzzer', { id: this.houseId, time: Date.now() });
+      return this.$store.commit('unlockBuzzer');
     },
-    lockBuzzers: function () {
-      return this.$store.commit('lockBuzzers');
+    lockBuzzer: function () {
+      this.$socket.emit('lockBuzzer', { id: this.houseId, time: Date.now() });
+      return this.$store.commit('lockBuzzer');
     }
   }
 }

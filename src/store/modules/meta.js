@@ -1,9 +1,15 @@
+import { humanReadableId } from '@/util/util';
+
 export default {
   state: {
     edit: false,
-    audioQueue: []
+    audioQueue: [],
+    houseId: ''
   },
   mutations: {
+    generateHouseId(state) {
+      state.houseId = humanReadableId();
+    },
     enterEditMode(state) {
       state.edit = true;
     },

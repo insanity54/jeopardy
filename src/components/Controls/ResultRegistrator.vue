@@ -16,9 +16,9 @@ export default {
     ...mapState({
       answer: state => state.game.game.answer,
       game: state => state.game.game,
+      buzzerLock: state => state.game.game.buzzerLock
     }),
     ...mapGetters([
-      'isBuzzerLocked',
       'pointMultiplier',
       'gameId',
       'buzzWinner',
@@ -26,7 +26,7 @@ export default {
     ]),
     isCorrectButtonLocked: function () {
       if (this.answer.dailyDouble === true && this.game.wager ) return false;
-      return (this.isBuzzerLocked || (typeof this.buzzWinner === 'undefined'));
+      return (this.buzzerLock || (typeof this.buzzWinner === 'undefined'));
     },
     isIncorrectButtonLocked: function () {
       return this.isCorrectButtonLocked;
@@ -54,7 +54,7 @@ export default {
         this.$store.commit('addPoints', { playerId: this.buzzWinner.id, points: this.pointValue });
       }
       this.$store.commit('unsetBuzzWinner');
-      this.$store.commit('lockBuzzers');
+      this.$store.commit('lockBuzzer');
       this.$store.commit('clearWager');
       this.$router.push(`/game/${this.gameId}/`);
     },
@@ -74,7 +74,7 @@ export default {
       this.maybeIncrCompletedCounter();
       this.$store.commit('makeUnavailable', `${this.answer.category}${this.answer.item}`);
       this.$store.commit('unsetBuzzWinner');
-      this.$store.commit('lockBuzzers');
+      this.$store.commit('lockBuzzer');
       this.$store.commit('clearWager');
       this.$router.push(`/game/${this.gameId}/`);
     },

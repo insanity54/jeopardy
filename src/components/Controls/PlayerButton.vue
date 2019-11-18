@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 export default {
   name: 'PlayerButton',
   props: {
@@ -15,10 +14,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters([
-      'isBuzzerLocked'
-    ]),
     isButtonLocked: function () {
+      if (this.$store.state.game.buzzerLock === true) return true;
       return false;
     },
     isSelectedPlayer: function () {

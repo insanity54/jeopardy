@@ -38,9 +38,6 @@ export default {
     games: state => {
       return state.games;
     },
-    isBuzzerLocked: state => {
-      return state.game.buzzerLock;
-    },
     pointMultiplier: state => {
       return state.game.pointMultiplier;
     },
@@ -58,6 +55,7 @@ export default {
     }
   },
   mutations: {
+
     updateCategory(state, categoryData) {
       state.game.categories[categoryData.id] = categoryData;
     },
@@ -85,10 +83,10 @@ export default {
       state.games.splice(i, 1);
       Vue.delete(state.game);
     },
-    unlockBuzzers(state) {
+    unlockBuzzer(state) {
       state.game.buzzerLock = false;
     },
-    lockBuzzers(state) {
+    lockBuzzer(state) {
       state.game.buzzerLock = true;
     },
     makeUnavailable(state, answerId) {

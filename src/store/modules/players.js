@@ -13,6 +13,16 @@ export default {
     }
   },
   mutations: {
+    SOCKET_updatePlayerColor(state, data) {
+      let { color, playerId } = data;
+      let pl = state.find((p) => p.id === playerId)
+      return pl.color = color;
+    },
+    updatePlayerColor(state, data) {
+      let { color, playerId } = data;
+      let pl = state.find((p) => p.id === playerId)
+      return pl.color = color;
+    },
     buzzPlayer(state, player) {
       state.forEach((p) => {
         if (p.id === player.id) p.buzzWinner = true;
@@ -42,26 +52,30 @@ export default {
         p.buzzWinner = false;
       })
     },
-    updatePlayerColor(state, data) {
-      let { color, playerId } = data;
-      let pl = state.find((p) => p.id === playerId)
-      return pl.color = color;
+    SOCKET_updatePlayerName(state, data) {
+      this.commit('updatePlayerName', data);
     },
     updatePlayerName(state, data) {
       let { name, id } = data;
       let pl = state.find((p) => p.id === id)
       return pl.name = name;
     },
+    SOCKET_createPlayer(state, data) {
+      this.commit('createPlayer', data);
+    },
     createPlayer(state, data) {
       state.push({
         name: data.name,
-        id: state.length,
+        id: data.id,
         score: 0,
         buzzed: false,
         buzzWinner: false,
         chooser: false,
-        color: '#fff',
+        color: data.color,
       });
+    },
+    SOCKET_deletePlayer(state, data) {
+      this.commit('deletePlayer', data);
     },
     deletePlayer(state, data) {
       let { id } = data;

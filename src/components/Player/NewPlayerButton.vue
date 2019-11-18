@@ -1,10 +1,12 @@
 <template>
   <div class="new-player-button">
     <div class="new-player-button-heading">
-      Add a Player
+      Player Join
     </div>
     <div class="new-player-button-content">
-      <img @click="createPlayer" alt="Add a new player" class="new-player-button-button" src="/plus.png">
+      <!-- <img @click="createPlayer" alt="Add a new player" class="new-player-button-button" src="/plus.png"> -->
+      <qrcode :value="qrCodeData"></qrcode>
+      <p>{{ qrCodeData }}</p>
     </div>
   </div>
 </template>
@@ -53,6 +55,12 @@ export default {
   props: {
   },
   computed: {
+    houseId: function () {
+      return this.$store.state.meta.houseId;
+    },
+    qrCodeData: function () {
+      return `${location.origin}/player/new?houseId=${this.houseId}`;
+    }
   },
   methods: {
     getRandomName: function () {
@@ -91,6 +99,9 @@ export default {
   }
   .new-player-button-content {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+  }
+  .new-player-button-content p {
+    user-select: text;
   }
 </style>
