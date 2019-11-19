@@ -3,8 +3,6 @@
     <h1>Host Setup</h1>
     <h3>House ID</h3>
     <h4>{{ houseId }}</h4>
-    <p>Welcome, Host!</p>
-    <p>The next step is to set up players.</p>
     <MainMenu />
   </div>
 </template>

@@ -3,7 +3,11 @@
     <div class="main-menu-content">
       <div @click="gotoPlayers" class="main-menu-item">
         <i class="material-icons">people</i>
-        <span>Players</span>
+        <span>Player Setup</span>
+      </div>
+      <div @click="gotoBuzzerTest" class="main-menu-item">
+        <i class="material-icons">touch_app</i>
+        <span>Buzzer Tester</span>
       </div>
       <div @click="gotoGames" class="main-menu-item">
         <i class="material-icons">videogame_asset</i>
@@ -30,16 +34,22 @@ export default {
     }
   },
   methods: {
-    gotoGames: function() {
-      this.$socket.emit('unlockBuzzer', { houseId: this.houseId });
-      this.$router.push('/games');
-    },
     gotoPlayers: function() {
-      this.$socket.emit('routeJumbotron', { to: '/players' });
+      this.$socket.emit('routeToScreen', { screenName: 'players' });
+      this.$router.push('/host/players');
+    },
+    gotoBuzzerTest: function () {
+      this.$socket.emit('unlockBuzzer');
+      this.$socket.emit('routeToScreen', { screenName: 'buzzerTest' });
+      this.$router.push('/host/buzzerTest');
+    },
+    gotoGames: function() {
+      this.$socket.emit('lockBuzzer');
+      this.$router.push('/games');
     },
     gotoEpisodes: function() {
       this.$router.push('/episodes');
-    }
+    },
   }
 }
 </script>

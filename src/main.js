@@ -5,11 +5,13 @@ import store from './store';
 import VueQrcode from '@chenfengyuan/vue-qrcode';
 import VueSocketIO from 'vue-socket.io'
 
+console.log(location.hostname)
+
 Vue.config.productionTip = false
 Vue.component(VueQrcode.name, VueQrcode);
 Vue.use(new VueSocketIO({
   debug: false,
-  connection: 'http://localhost:5050',
+  connection: `${location.hostname}:5050`,
   vuex: {
     store,
     actionPrefix: 'SOCKET_',

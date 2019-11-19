@@ -1,7 +1,7 @@
 <template>
   <div class="player-list">
     <div class="player-list-heading">
-      <HomeButton/><h1>Player List</h1>
+      <h1>Player List</h1>
     </div>
     <div class="player-list-content">
       <NewPlayerButton/>
@@ -13,15 +13,18 @@
 <script>
 import PlayerBadge from './PlayerBadge';
 import NewPlayerButton from './NewPlayerButton';
-import HomeButton from '@/components/Controls/HomeButton';
 export default {
   name: 'PlayerList',
   components: {
     PlayerBadge,
     NewPlayerButton,
-    HomeButton
   },
   props: {
+  },
+  sockets: {
+    kickPlayer: function (player) {
+      this.$store.commit('deletePlayer', player);
+    }
   },
   computed: {
     players: function () {

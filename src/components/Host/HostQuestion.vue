@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style scoped>
-.kicked {
+.host-question {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,7 +21,7 @@ export default {
   height: 100vh;
   width: 100vw;
 }
-.kicked h1 {
+.host-question h1 {
   color: red;
   font-weight: bold;
   font-size: 24pt;

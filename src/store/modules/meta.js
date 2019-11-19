@@ -15,6 +15,9 @@ export default {
     },
     leaveEditMode(state) {
       state.edit = false;
+    },
+    setHouseId(state, houseId) {
+      state.houseId = houseId;
     }
   }
 }

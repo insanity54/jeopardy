@@ -10,7 +10,9 @@
       <p>Choose a person who will host the game.</p>
       <p>The host should visit the below URL on their smart phone. For convenience, the following QR code will direct the host to that URL. Only the host should scan this code.</p>
       <qrcode :value="hostUrl"></qrcode>
-      <p>{{ hostUrl }}</p>
+      <p>
+        <a :href="hostUrl">{{ hostUrl }}</a>
+      </p>
     </div>
     <HouseId />
     <div class="footer"></div>
@@ -27,19 +29,26 @@ export default {
     HouseId
   },
   sockets: {
-    routeJumbotron: function (evt) {
-      let { to } = evt;
-      console.log(`routeJumbotron emission detected. ${to}`);
-      this.$router.push(to);
+    routeToScreen: function (evt) {
+      let { screenName, id } = evt;
+      console.log(`route to screen detected with screenName ${screenName}`)
+      if (screenName === 'buzzerTest') this.$router.push('/jumbotron/buzzerTest');
+      if (screenName === 'players') this.$router.push('/jumbotron/players');
+      if (screenName === 'game') this.$router.push(`/jumbotron/game/${id}`);
     }
   },
   computed: {
     hostUrl: function () {
-      return `${location.origin}/host?houseId=${this.houseId}`;
+      return `${location.origin}/host/new?houseId=${this.houseId}`;
     },
     houseId: function () {
       return this.$store.state.meta.houseId;
     }
+  },
+  methods: {
+    // gotoHostUrl: function () {
+    //   this.$router.push({ path: 'host', params: { houseId: this.houseId } });
+    // }
   }
 }
 </script>
@@ -58,6 +67,10 @@ export default {
   .description p {
     width: 50vw;
     margin-bottom: 1em;
+  }
+  .description a {
+    color: white;
+    text-decoration: none;
   }
   .header h1 {
     color: white;

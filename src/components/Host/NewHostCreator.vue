@@ -1,17 +1,22 @@
 <template>
-  <div class="host-controller">
-    <h1>HostController</h1>
-    <router-view />
+  <div class="new-host-creator">
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HostController',
+  name: 'NewHostCreator',
   data: function () {
     return {
       houseId: ''
     }
+  },
+  created: function () {
+    // set the houseId in vuex based on the houseId seen in the router query
+    this.houseId = this.$route.query.houseId;
+    this.$store.commit('setHouseId', this.houseId);
+    // redirect to the host setup page
+    this.$router.replace(`/host/setup`);
   }
 }
 </script>

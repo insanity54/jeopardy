@@ -20,6 +20,7 @@
       <div class="player-badge-color-chooser">
         <Compact v-model="color" />
       </div>
+      <p>HouseId:{{ houseId }}</p>
       <transition name="fade">
         <div v-if="buzzed" class="buzzer-tester">
           <i class="material-icons">touch_app</i>
@@ -40,7 +41,8 @@ export default {
   data: function () {
     return {
       isEditMode: false,
-      pid: ''
+      pid: '',
+      buzzed: false
     }
   },
   props: {
@@ -69,7 +71,7 @@ export default {
       return true;
     },
     houseId: function () {
-      return this.$store.state.meta.homeId;
+      return this.$store.state.meta.houseId;
     },
     color: {
       get () {

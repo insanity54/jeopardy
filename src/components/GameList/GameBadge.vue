@@ -89,7 +89,7 @@ export default {
       if (this.isEditMode) this.$store.commit('leaveEditMode');
       this.$store.commit('loadGame', this.game.id);
       this.$router.push(this.gameLink);
-      this.$socket.emit('startGame', { id: this.game.id });
+      this.$socket.emit('routeToScreen', { screenName: 'game', id: this.game.id });
     },
     restartGame: function () {
       this.$store.commit('restartGame', this.game.id);

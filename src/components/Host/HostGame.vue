@@ -1,23 +1,17 @@
 <template>
-  <div class="host-controller">
-    <h1>HostController</h1>
-    <router-view />
+  <div class="host-game">
+    <h1>Host Game</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HostController',
-  data: function () {
-    return {
-      houseId: ''
-    }
-  }
+  name: 'HostGame',
 }
 </script>
 
 <style scoped>
-.host {
+.host-game {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -27,9 +21,10 @@ export default {
   height: 100vh;
   width: 100vw;
 }
-.host-controller h1 {
-  color: skyblue;
+.host-game h1 {
+  color: green;
   font-weight: bold;
   font-size: 24pt;
+  text-decoration: underline;
 }
 </style>

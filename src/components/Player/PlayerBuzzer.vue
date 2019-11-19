@@ -1,6 +1,5 @@
 <template>
   <div class="player-buzzer">
-    <p>why you no?</p>
     <div class="player-buzzer-heading" :style="{ backgroundColor: player.color }">
       <h1>{{ player.name }}</h1>
     </div>
@@ -29,7 +28,10 @@ export default {
   },
   methods: {
     doBuzz: function () {
-      this.$socket.emit('buzz', { id: this.pid, time: Date.now() });
+      this.$socket.emit('buzz', {
+        id: this.pid,
+        buzzEpoch: Date.now()
+      });
     }
   },
   computed: {

@@ -12,13 +12,18 @@ import PlayerList from '@/components/Player/PlayerList';
 import EpisodeList from '@/components/EpisodeList/EpisodeList';
 import PlayerBadge from '@/components/Player/PlayerBadge';
 import NewPlayerCreator from '@/components/Player/NewPlayerCreator';
-import Kicked from '@/components/Jail/Kicked';
+import Kicked from '@/components/Player/Kicked';
 import PlayerBuzzer from '@/components/Player/PlayerBuzzer';
 import PlayerController from '@/components/Player/PlayerController';
 import HostController from '@/components/Host/HostController';
 import HostSetup from '@/components/Host/HostSetup';
 import HostQuestion from '@/components/Host/HostQuestion';
-
+import HostGame from '@/components/Host/HostGame';
+import HostPlayers from '@/components/Host/HostPlayers';
+import HostBuzzerTest from '@/components/Host/HostBuzzerTest';
+import NewHostCreator from '@/components/Host/NewHostCreator';
+import JumbotronController from '@/components/Jumbotron/JumbotronController';
+import JumbotronBuzzerTest from '@/components/Jumbotron/JumbotronBuzzerTest';
 
 Vue.use(Router);
 
@@ -67,15 +72,50 @@ export default new Router({
       ]
     },
     {
+      path: '/jumbotron',
+      component: JumbotronController,
+      children: [
+        {
+          path: '/',
+          component: Home
+        },
+        {
+          path: 'players',
+          component: PlayerList
+        },
+        {
+          path: 'buzzerTest',
+          component: JumbotronBuzzerTest
+        },
+      ]
+    },
+    {
       path: '/host',
       component: HostController,
-      children: [{
-          path: '/',
+      children: [
+        {
+          path: 'setup',
           component: HostSetup,
+        },
+        {
+          path: 'new',
+          component: NewHostCreator
         },
         {
           path: 'question',
           component: HostQuestion
+        },
+        {
+          path: 'players',
+          component: HostPlayers
+        },
+        {
+          path: 'game',
+          component: HostGame
+        },
+        {
+          path: 'buzzerTest',
+          component: HostBuzzerTest
         }
       ]
     },

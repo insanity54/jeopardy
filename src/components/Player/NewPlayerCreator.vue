@@ -98,6 +98,8 @@ export default {
       id: this.playerId
     });
 
+    this.$store.commit('setHouseId', this.houseId);
+
     // redirect to the new player ID page
     this.$router.replace(`/player/${this.playerId}`);
   }
