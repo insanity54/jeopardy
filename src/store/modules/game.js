@@ -64,7 +64,7 @@ export default {
         if (type === 'double') return 200;
         return 100;
       }
-      const id = uuidv4();
+      const id = (gameObject.id) ? gameObject.id : uuidv4();
       state.games.push({
         ...JSON.parse(JSON.stringify(defaultGame)),
         ...gameObject,
