@@ -42,14 +42,6 @@ export default {
       ) {
         this.$router.replace('/kicked');
       }
-    },
-    routeToScreen: function (data) {
-      let { screenName } = data;
-      if (
-        screenName === 'game' ||
-        screenName === 'buzzerTest'
-      ) this.gotoBuzzer();
-      else if (screenName === 'players') this.gotoPlayer();
     }
   },
   methods: {

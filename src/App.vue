@@ -1,16 +1,53 @@
 <template>
   <div id="app">
+    <RoleDisplay />
+    <TinyMenu />
     <router-view />
   </div>
 </template>
 
 <script>
+import TinyMenu from '@/components/Menu/TinyMenu';
+import RoleDisplay from '@/components/debug/RoleDisplay';
 export default {
   name: 'app',
   components: {
+    TinyMenu,
+    RoleDisplay
+  },
+  sockets: {
+    routeToScreen: function (data) {
+      let { screenName, id } = data;
+      if (this.role === 'player') {
+        if (screenName === 'players') this.$router.push(`/player/${this.playerId}`);
+        if (
+          screenName === 'buzzerTest' &&
+          screenName === 'game'
+        ) this.$router.push(`/player/${this.playerId}/buzzer`);
+      }
+      else if (this.role === 'jumbotron') {
+        if (screenName === 'players') this.$router.push('/players');
+        else if (screenName === 'buzzerTest') this.$router.push('/buzzerTest');
+        else if (screenName === 'game') {
+          this.$store.commit('loadGame', id);
+          this.$router.push(`/game/${id}`);
+        }
+      }
+    },
+    unlockBuzzer: function () {
+      this.$store.commit('unlockBuzzer');
+    },
+    lockBuzzer: function () {
+      this.$store.commit('lockBuzzer');
+    }
   },
   computed: {
-
+    role: function () {
+      return this.$store.state.meta.role;
+    },
+    playerId: function () {
+      return this.$store.state.meta.playerId;
+    }
   }
 }
 </script>

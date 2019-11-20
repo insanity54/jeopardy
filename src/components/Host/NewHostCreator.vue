@@ -15,6 +15,7 @@ export default {
     // set the houseId in vuex based on the houseId seen in the router query
     this.houseId = this.$route.query.houseId;
     this.$store.commit('setHouseId', this.houseId);
+    this.$store.commit('setRole', 'host');
     // redirect to the host setup page
     this.$router.replace(`/host/setup`);
   }

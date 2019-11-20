@@ -32,9 +32,9 @@ export default {
     routeToScreen: function (evt) {
       let { screenName, id } = evt;
       console.log(`route to screen detected with screenName ${screenName}`)
-      if (screenName === 'buzzerTest') this.$router.push('/jumbotron/buzzerTest');
-      if (screenName === 'players') this.$router.push('/jumbotron/players');
-      if (screenName === 'game') this.$router.push(`/jumbotron/game/${id}`);
+      if (screenName === 'buzzerTest') this.$router.push('/buzzerTest');
+      if (screenName === 'players') this.$router.push('/players');
+      if (screenName === 'game') this.$router.push(`/game/${id}`);
     }
   },
   computed: {

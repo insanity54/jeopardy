@@ -16,6 +16,7 @@
     "jdenticon": "^2.2.0",
     "jszip": "^3.2.2",
     "material-design-icons-iconfont": "^5.0.1",
+    "moment": "^2.24.0",
     "vlf": "^1.0.5",
     "vue": "^2.6.10",
     "vue-color": "^2.7.0",

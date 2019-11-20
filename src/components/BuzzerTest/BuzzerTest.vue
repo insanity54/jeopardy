@@ -1,5 +1,5 @@
 <template>
-  <div class="jumbotron-buzzer-test">
+  <div class="buzzer-test">
     <h1>Buzzer Test</h1>
     <div class="buzzer-data">
       <div class="buzzer-result">
@@ -15,7 +15,6 @@
       <div ref="bhist" class="buzzer-history">
         <div class="buzzer-history-item" v-for="(l, i) in buzzer.buzzLog" :key="i">
           <div class="name" :style="{backgroundColor: colorLookup(l)}">{{ nameLookup(l) }}</div>
-          <div class="time">{{ timeOffset(l.time) }}</div>
         </div>
       </div>
     </div>
@@ -26,7 +25,7 @@
 let undecidedWinner = { name: '...' };
 import Buzzer from '@/util/buzzer';
 export default {
-  name: 'JumbotronBuzzerTest',
+  name: 'BuzzerTest',
   components: {
   },
   data: function () {
@@ -79,20 +78,11 @@ export default {
       ) return 'navy';
       else return p.color;
     },
-    prettify: function (input) {
-      if (typeof input.act !== 'undefined') return `${input.act} ${Date.now()}`
-      else return `${this.nameFromId(input.id)} ${input.time}`;
-    },
     nameLookup: function (evt) {
       if (typeof evt.id === 'undefined') return '...';
       if (typeof evt.act !== 'undefined') return evt.act;
       return this.$store.state.players.find((p) => p.id === evt.id).name;
     },
-    timeOffset: function (epoch) {
-      // let latestUnlockTime = this.buzzer.calculateLatestUnlockTime();
-      // return epoch - latestUnlockTime;
-      return epoch;
-    }
   },
   created() {
     this.winner = undecidedWinner;
@@ -102,8 +92,9 @@ export default {
 </script>
 
 <style scoped>
-.jumbotron-buzzer-test {
+.buzzer-test {
   color: white;
+  height: 100vh;
 }
 .lock-indicator i {
   font-size: 100pt;

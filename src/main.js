@@ -5,7 +5,6 @@ import store from './store';
 import VueQrcode from '@chenfengyuan/vue-qrcode';
 import VueSocketIO from 'vue-socket.io'
 
-console.log(location.hostname)
 
 Vue.config.productionTip = false
 Vue.component(VueQrcode.name, VueQrcode);

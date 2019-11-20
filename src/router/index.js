@@ -15,15 +15,11 @@ import NewPlayerCreator from '@/components/Player/NewPlayerCreator';
 import Kicked from '@/components/Player/Kicked';
 import PlayerBuzzer from '@/components/Player/PlayerBuzzer';
 import PlayerController from '@/components/Player/PlayerController';
-import HostController from '@/components/Host/HostController';
 import HostSetup from '@/components/Host/HostSetup';
-import HostQuestion from '@/components/Host/HostQuestion';
-import HostGame from '@/components/Host/HostGame';
-import HostPlayers from '@/components/Host/HostPlayers';
 import HostBuzzerTest from '@/components/Host/HostBuzzerTest';
 import NewHostCreator from '@/components/Host/NewHostCreator';
-import JumbotronController from '@/components/Jumbotron/JumbotronController';
-import JumbotronBuzzerTest from '@/components/Jumbotron/JumbotronBuzzerTest';
+import BuzzerTest from '@/components/BuzzerTest/BuzzerTest';
+import Settings from '@/components/Settings/Settings';
 
 Vue.use(Router);
 
@@ -32,6 +28,14 @@ export default new Router({
   routes: [{
       path: '/',
       component: Home
+    },
+    {
+      path: '/buzzerTest',
+      component: BuzzerTest
+    },
+    {
+      path: '/settings',
+      component: Settings
     },
     {
       path: '/kicked',
@@ -72,74 +76,16 @@ export default new Router({
       ]
     },
     {
-      path: '/jumbotron',
-      component: JumbotronController,
-      children: [
-        {
-          path: '/',
-          component: Home
-        },
-        {
-          path: 'players',
-          component: PlayerList
-        },
-        {
-          path: 'buzzerTest',
-          component: JumbotronBuzzerTest
-        },
-        {
-          path: 'game/:gameId',
-          component: Game,
-          children: [
-            {
-              path: '/',
-              component: GameBoard
-            },
-            {
-              path: 'answer',
-              component: AnswerScreen
-            },
-            {
-              path: 'category/:categoryIndex',
-              component: CategoryEditor
-            },
-            {
-              path: 'title/',
-              component: TitleEditor
-            },
-          ]
-        },
-      ]
+      path: '/host/setup',
+      component: HostSetup,
     },
     {
-      path: '/host',
-      component: HostController,
-      children: [
-        {
-          path: 'setup',
-          component: HostSetup,
-        },
-        {
-          path: 'new',
-          component: NewHostCreator
-        },
-        {
-          path: 'question',
-          component: HostQuestion
-        },
-        {
-          path: 'players',
-          component: HostPlayers
-        },
-        {
-          path: 'game',
-          component: HostGame
-        },
-        {
-          path: 'buzzerTest',
-          component: HostBuzzerTest
-        }
-      ]
+      path: '/host/new',
+      component: NewHostCreator
+    },
+    {
+      path: '/host/buzzerTest',
+      component: HostBuzzerTest
     },
     {
       path: '/game/:gameId',

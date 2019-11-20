@@ -4,7 +4,9 @@ export default {
   state: {
     edit: false,
     audioQueue: [],
-    houseId: ''
+    houseId: '',
+    role: 'jumbotron',
+    playerId: ''
   },
   mutations: {
     generateHouseId(state) {
@@ -18,6 +20,12 @@ export default {
     },
     setHouseId(state, houseId) {
       state.houseId = houseId;
+    },
+    setRole(state, role) {
+      state.role = role;
+    },
+    setPlayerId(state, playerId) {
+      state.playerId = playerId;
     }
   }
 }
