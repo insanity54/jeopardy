@@ -1,6 +1,6 @@
 <template>
   <div @click="openAnswer" :class="[ tileClass, { noclick: !isPlayerSelected } ]">
-    <div :class="{ invisible: isTileInvisible, unrevealed: isTimeUnrevealed }">{{ points }}</div>
+    <div class="points" :class="{ invisible: isTileInvisible, unrevealed: isTimeUnrevealed }">{{ points }}</div>
   </div>
 </template>
 
@@ -70,6 +70,9 @@ export default {
 </script>
 
 <style scoped>
+.points {
+  font-size: 4vmin;
+}
 .unrevealed {
   color: navy;
 }

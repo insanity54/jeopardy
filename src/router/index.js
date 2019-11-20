@@ -87,6 +87,28 @@ export default new Router({
           path: 'buzzerTest',
           component: JumbotronBuzzerTest
         },
+        {
+          path: 'game/:gameId',
+          component: Game,
+          children: [
+            {
+              path: '/',
+              component: GameBoard
+            },
+            {
+              path: 'answer',
+              component: AnswerScreen
+            },
+            {
+              path: 'category/:categoryIndex',
+              component: CategoryEditor
+            },
+            {
+              path: 'title/',
+              component: TitleEditor
+            },
+          ]
+        },
       ]
     },
     {

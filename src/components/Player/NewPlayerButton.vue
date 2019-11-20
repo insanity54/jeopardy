@@ -74,6 +74,11 @@ export default {
 </script>
 
 <style scoped>
+@media screen and (max-width: 500px) {
+  .new-player-button {
+    width: 100vw;
+  }
+}
   .new-player-button-button {
     width: 50px;
   }
@@ -86,7 +91,6 @@ export default {
     padding: 1em;
     margin: 0.5em 1em;
     color: black;
-    width: 25vw;
   }
   .new-player-button-heading {
     font-size: 18pt;

@@ -169,7 +169,6 @@ export default {
     border-radius: 5px;
     padding: 1em;
     margin: 0.5em 1em;
-    width: 25vw;
     justify-content: space-between;
     user-select: none;
   }

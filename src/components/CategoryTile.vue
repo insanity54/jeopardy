@@ -53,6 +53,7 @@ export default {
   }
   .category-tile-name {
     height: 2em;
+    font-size: 2vmin
   }
   .category-tile {
     cursor: default;

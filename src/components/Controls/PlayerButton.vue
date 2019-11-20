@@ -1,6 +1,7 @@
 <template>
-  <div class="player button" :style="{backgroundColor: player.color}" :class="{selected: isSelectedPlayer, locked: isButtonLocked}" @click.prevent="clickPlayer(player)">
-    {{ player.name }} {{ player.score }}
+  <div class="player-button" :style="{backgroundColor: player.color}" :class="{selected: isSelectedPlayer, locked: isButtonLocked}" @click.prevent="clickPlayer(player)">
+    <p>{{ player.score }}</p>
+    <p>{{ player.name }}</p>
   </div>
 </template>
 
@@ -35,8 +36,17 @@ export default {
 </script>
 
 <style scoped>
+.player-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1em;
+  margin: 0 5px;
+  font-weight: bold;
+  text-shadow: 0 0 5px black;
+}
 .selected {
-  text-decoration: underline overline;
+  outline: 5px solid white;
 }
 div.player.locked {
   background-color: grey;

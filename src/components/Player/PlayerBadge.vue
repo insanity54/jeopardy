@@ -107,20 +107,23 @@ export default {
 </script>
 
 <style scoped>
+  @media screen and (max-width: 500px) {
+    .player-badge {
+      width: 100vw;
+    }
+  }
+
+  .player-badge {
+    display: inline-block;
+    background-color: white;
+    color: black;
+    padding: 1em 1em;
+  }
+
   .spacer-small {
     margin-right: 0.5em;
   }
-  .player-badge {
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    border: 3px solid grey;
-    border-radius: 5px;
-    padding: 1em;
-    margin: 0.5em 1em;
-    color: black;
-    width: 25vw;
-  }
+
   .player-badge-heading {
     font-size: 18pt;
     font-weight: bold;

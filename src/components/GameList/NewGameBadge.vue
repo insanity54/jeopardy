@@ -63,7 +63,6 @@ export default {
   padding: 1em;
   margin: 0.5em 1em;
   color: black;
-  width: 25vw;
 }
 
 .white-text {

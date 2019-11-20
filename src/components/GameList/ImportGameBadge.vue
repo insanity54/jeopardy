@@ -277,7 +277,6 @@ export default {
   border-radius: 5px;
   padding: 1em;
   color: black;
-  width: 25vw;
   margin: 0.5em 1em;
 }
 
