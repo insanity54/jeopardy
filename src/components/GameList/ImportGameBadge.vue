@@ -133,7 +133,7 @@ export default {
      */
     displaySuccess: function (gameData) {
       let gameName = gameData.gameJson.name;
-      this.error = {};
+      this.error = new Error();
       this.success = { code: 'all_good_m8', message: `${gameName} imported successfully` };
     },
     /**
@@ -142,16 +142,21 @@ export default {
     validateGameData: function (gameData) {
       return new Promise((resolve, reject) => {
         if (typeof gameData.gameJson === 'undefined') {
-          reject({
-            code: 'no_game_json',
-            message: 'The game being imported does not contain game data, which is required.'
-          })
+          reject(new Error (
+            'The game being imported does not contain game data, which is required.'
+          ))
         }
         if (typeof gameData.gameAssetJson === 'undefined') {
-          reject({
-            code: 'no_asset_json',
-            message: 'The game being imported does not contain asset data, which is required.'
-          })
+          reject(new Error (
+            'The game being imported does not contain asset data, which is required.'
+          ))
+        }
+        let gameId = gameData.gameJson.id;
+        let match = this.$store.state.game.games.find((g) => g.id === gameId);
+        if (typeof match !== 'undefined') {
+          reject(new Error (
+            'The game being imported has the same ID as a game which already exists. IDs must be unique.'
+          ))
         }
         resolve(gameData);
       });

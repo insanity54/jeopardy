@@ -16,7 +16,7 @@
     props: {
       error: {
         type: Error,
-        required: true
+        required: false
       },
       success: {
         type: Object,
