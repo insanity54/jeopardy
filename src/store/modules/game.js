@@ -11,7 +11,6 @@ export default {
       id: '',
       pointUnit: '', // dollars
       pointMultiplier: '', // 100 for single, 200 for double
-      buzzerLock: '',
       categories: '',
       answers: '',
       completedAnswerCounter: '',
@@ -82,12 +81,6 @@ export default {
       if (i === -1) throw new Error(`game id ${game.id} was not found in storage.`);
       state.games.splice(i, 1);
       Vue.delete(state.game);
-    },
-    unlockBuzzer(state) {
-      state.game.buzzerLock = false;
-    },
-    lockBuzzer(state) {
-      state.game.buzzerLock = true;
     },
     makeUnavailable(state, answerId) {
       const category = parseInt(answerId[0]);

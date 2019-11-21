@@ -1,6 +1,7 @@
 <template>
   <div class="role-display">
     <p>{{ role }}</p>
+    <p>{{ houseId }}</p>
   </div>
 </template>
 
@@ -17,6 +18,9 @@ export default {
   computed: {
     role: function () {
       return this.$store.state.meta.role;
+    },
+    houseId: function () {
+      return this.$store.state.meta.houseId;
     }
   },
   methods: {

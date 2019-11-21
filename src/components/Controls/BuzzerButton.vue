@@ -15,7 +15,7 @@ export default {
   },
   computed: {
     isButtonLocked: function () {
-      if (this.$store.state.game.game.buzzerLock) return true;
+      if (this.$store.state.buzzer.isLocked) return true;
       return false;
     },
     isBuzzWinner: function () {

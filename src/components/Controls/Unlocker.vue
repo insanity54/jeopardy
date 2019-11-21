@@ -22,7 +22,7 @@ export default {
   computed: {
     ...mapState({
       answer: state => state.game.game.answer,
-      buzzerLock: state => state.game.game.buzzerLock
+      buzzerLock: state => state.buzzer.isLocked
     }),
     isLocked: function () {
       return (this.buzzerLock === true);

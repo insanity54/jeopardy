@@ -16,7 +16,7 @@ export default {
     ...mapState({
       answer: state => state.game.game.answer,
       game: state => state.game.game,
-      buzzerLock: state => state.game.game.buzzerLock
+      buzzerLock: state => state.buzzer.isLocked
     }),
     ...mapGetters([
       'pointMultiplier',

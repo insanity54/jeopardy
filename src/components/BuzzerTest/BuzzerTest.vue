@@ -5,7 +5,10 @@
       <div class="buzzer-result">
         <div class="buzzer-result-winner">
           <p>The winner is</p>
-          <div class="winner-name" :style="{backgroundColor: colorLookup(winner)}">{{ nameLookup(winner) }}</div>
+          <div class="winner-box" :style="{backgroundColor: colorLookup(winner)}">
+            <p class="winner-name">{{ nameLookup(winner) }}</p>
+            <p class="winner-response-time">{{ reactionTime }}</p>
+          </div>
         </div>
         <div class="buzzer-result-seen">
           <p>Buzzers seen</p>
@@ -13,7 +16,7 @@
         </div>
       </div>
       <div ref="bhist" class="buzzer-history">
-        <div class="buzzer-history-item" v-for="(l, i) in buzzer.buzzLog" :key="i">
+        <div class="buzzer-history-item" v-for="(l, i) in buzzLog" :key="i">
           <div class="name" :style="{backgroundColor: colorLookup(l)}">{{ nameLookup(l) }}</div>
         </div>
       </div>
@@ -22,16 +25,13 @@
 </template>
 
 <script>
-let undecidedWinner = { name: '...' };
-import Buzzer from '@/util/buzzer';
 export default {
   name: 'BuzzerTest',
   components: {
   },
   data: function () {
     return {
-      buzzer: null,
-      winner: null
+      winner: {}
     }
   },
   sockets: {
@@ -39,27 +39,28 @@ export default {
       this.winner = evt;
     },
     buzz: function (evt) {
-      this.buzzer.logBuzz(evt);
+      this.$store.commit('buzz', evt);
       this.scroll();
-    },
-    unlockBuzzer: function () {
-      // this.buzzer.unlockBuzzer();
-    },
-    lockBuzzer: function () {
-      this.winner = undecidedWinner;
-      this.buzzer.clearLog();
     }
   },
   computed: {
+    buzzLog: function () {
+      return this.$store.state.buzzer.buzzLog;
+    },
     seen: function () {
-      return this.buzzer.buzzLog.map((l) => l.id).filter(this.onlyUnique);
+      return this.buzzLog.map((l) => l.id).filter(this.onlyUnique);
     },
     isBuzzerLocked: function () {
-      return this.$store.state.game.game.buzzerLock;
+      return this.$store.state.buzzer.isLocked;
     },
     lockVariant: function () {
       return (this.isBuzzerLocked) ? 'lock' : 'lock_open';
-    }
+    },
+    reactionTime: function () {
+      if (typeof this.winner.reactionTime === 'undefined') return '';
+      let m = this.winner.reactionTime;
+      return (m/1000);
+    },
   },
   methods: {
     onlyUnique: function (value, index, self) {
@@ -85,8 +86,7 @@ export default {
     },
   },
   created() {
-    this.winner = undecidedWinner;
-    this.buzzer = new Buzzer();
+
   }
 }
 </script>
@@ -128,9 +128,12 @@ export default {
   font-size: 24pt;
   padding: 1em;
 }
-.winner-name {
+.winner-box {
   padding: 1em;
   margin: 1em;
+}
+p.winner-response-time {
+  font-size: 12pt;
 }
 .seen {
   margin: 0 1em;

@@ -28,15 +28,24 @@ export default {
   },
   methods: {
     doBuzz: function () {
-      this.$socket.emit('buzz', {
-        id: this.pid,
-        buzzEpoch: Date.now()
-      });
+      let buzzEvent = {
+        buzzEpoch: Date.now(),
+        unlockEpoch: this.lastUnlockEpoch,
+        id: this.pid
+      };
+      this.$socket.emit('buzz', buzzEvent);
+      this.$store.commit('buzz', buzzEvent);
     }
   },
   computed: {
+    unlockLog: function () {
+      return this.$store.state.buzzer.unlockLog;
+    },
+    lastUnlockEpoch: function () {
+      return this.unlockLog[this.$store.state.buzzer.unlockLog.length-1]
+    },
     isBuzzerLock: function () {
-      return this.$store.state.game.game.buzzerLock;
+      return this.$store.state.buzzer.isLocked;
     },
     indicatorColor: function () {
       return (this.isBuzzerLock) ? 'black' : 'yellow';

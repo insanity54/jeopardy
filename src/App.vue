@@ -21,7 +21,7 @@ export default {
       if (this.role === 'player') {
         if (screenName === 'players') this.$router.push(`/player/${this.playerId}`);
         if (
-          screenName === 'buzzerTest' &&
+          screenName === 'buzzerTest' ||
           screenName === 'game'
         ) this.$router.push(`/player/${this.playerId}/buzzer`);
       }
