@@ -3,14 +3,14 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import VueQrcode from '@chenfengyuan/vue-qrcode';
-import VueSocketIO from 'vue-socket.io'
-
+import VueSocketIO from 'vue-socket.io';
+let socketUrl = (process.env.NODE_ENV === 'production') ? `${location.hostname}` : `${location.hostname}:5050`;
 
 Vue.config.productionTip = false
 Vue.component(VueQrcode.name, VueQrcode);
 Vue.use(new VueSocketIO({
   debug: false,
-  connection: `${location.hostname}:5050`,
+  connection: socketUrl,
   vuex: {
     store,
     actionPrefix: 'SOCKET_',
