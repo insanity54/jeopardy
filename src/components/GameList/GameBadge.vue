@@ -19,8 +19,11 @@
         <div @click="restartGame" class="button">
           <i class="material-icons">autorenew</i>Restart
         </div>
+        <div @click="uploadGame" class="button">
+          <i class="material-icons">cloud_upload</i>Upload
+        </div>
         <div @click="exportGame" class="button">
-          <i class="material-icons">import_export</i>Export
+          <i class="material-icons">file_download</i>Download
         </div>
         <div @click="deleteGame" class="button">
           <i class="material-icons">delete</i>Delete
@@ -34,11 +37,12 @@
 </template>
 
 <script>
-import * as Promise from "bluebird";
+import axios from 'axios';
+import * as Promise from 'bluebird';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import ErrorHandler from '@/components/ErrorHandler/ErrorHandler';
-import Avatar from "@/components/Avatar/Avatar";
+import Avatar from '@/components/Avatar/Avatar';
 export default {
   name: 'GameBadge',
   components: {
@@ -82,6 +86,38 @@ export default {
     }
   },
   methods: {
+    uploadGame: function () {
+      this.prepareZip().then((zipContent) => {
+        axios.post('/api/v1/game/upload', zipContent);
+      }).catch((e) => {
+        console.log(e)
+        this.error = e;
+      })
+      .then(() => {
+        this.success = { msg: 'the upload was successful.' };
+      })
+    },
+    prepareZip: function () {
+      let zip = new JSZip();
+      zip.file(`${this.normalizeName(this.gameName)}.json`, JSON.stringify(this.game));
+      let assets = zip.folder('assets');
+      // create assets.json which contains image name, type, and url.
+      let assetsData = [];
+      return this.refreshBlobUrls().then(() => {
+        for (var i=0; i<this.game.answers.length; i++) {
+          // loop through images and add them to the zip
+          let answer = this.game.answers[i];
+          if (typeof answer.image.url !== 'undefined') {
+            let { type, id, url } = answer.image;
+            assetsData.push({ type, id, url });
+            let imgBlob = this.getBlobUrl(url);
+            assets.file(`${answer.id}.${type}`, imgBlob);
+          }
+        }
+        assets.file(`assets.json`, JSON.stringify(assetsData));
+        return zip.generateAsync({ type:"blob" })
+      });
+    },
     deleteGame: function () {
       this.$store.commit('deleteGame', { id: this.game.id });
     },
@@ -89,6 +125,7 @@ export default {
       if (this.isEditMode) this.$store.commit('leaveEditMode');
       this.$store.commit('loadGame', this.game.id);
       this.$router.push(this.gameLink);
+      this.$socket.emit('shareGame', this.game);
       this.$socket.emit('routeToScreen', { screenName: 'game', id: this.game.id });
     },
     restartGame: function () {
@@ -101,31 +138,14 @@ export default {
       this.$router.push(this.gameLink);
     },
     normalizeName: function (name) {
-      return name.toLowerCase().replace(' ', '-');
+      return name.toLowerCase().replace(/ /g, '-');
     },
     exportGame: function () {
       // console.log(`name:${this.game}`)
-
-      let zip = new JSZip();
-      zip.file(`${this.normalizeName(this.gameName)}.json`, JSON.stringify(this.game));
-      let assets = zip.folder('assets');
-      // create assets.json which contains image name, type, and url.
-      let assetsData = [];
-      this.refreshBlobUrls().then(() => {
-        for (var i=0; i<this.game.answers.length; i++) {
-          // loop through images and add them to the zip
-          let answer = this.game.answers[i];
-          if (typeof answer.image.url !== 'undefined') {
-            let { type, id, url } = answer.image;
-            assetsData.push({ type, id, url });
-            let imgBlob = this.getBlobUrl(url);
-            assets.file(`${answer.id}.${type}`, imgBlob);
-          }
-        }
-        assets.file(`assets.json`, JSON.stringify(assetsData));
-        zip.generateAsync({ type:"blob" }).then((content) => {
-          saveAs(content, `${this.normalizeName(this.game.name)}.zip`);
-        });
+      this.prepareZip().then((content) => {
+        saveAs(content, `${this.normalizeName(this.game.name)}.zip`);
+      }).then((res) => {
+        this.success = res;
       });
     },
     refreshBlobUrls: function () {

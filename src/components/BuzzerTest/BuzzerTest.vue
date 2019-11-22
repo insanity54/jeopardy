@@ -82,7 +82,9 @@ export default {
     nameLookup: function (evt) {
       if (typeof evt.id === 'undefined') return '...';
       if (typeof evt.act !== 'undefined') return evt.act;
-      return this.$store.state.players.find((p) => p.id === evt.id).name;
+      let player = this.$store.state.players.find((p) => p.id === evt.id);
+      if (typeof player === 'undefined') return 'mystery player';
+      return player.name;
     },
   },
   created() {

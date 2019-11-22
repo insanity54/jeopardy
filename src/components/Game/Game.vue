@@ -1,5 +1,8 @@
 <template>
   <div class="game">
+    <div v-if="game.id === ''" class="no-game-error">
+      <p>So sorry, the game {{ gameId }} does not exist on this device.</p>
+    </div>
     <h1 class="title" @click="openTitleEditor" v-if="isEditMode">{{ game.name }}</h1>
     <router-view />
   </div>
@@ -22,8 +25,10 @@ export default {
   computed: {
     ...mapGetters([
       'game',
-      'gameId'
     ]),
+    gameId: function () {
+      return this.$route.params.gameId;
+    },
     isEditMode: function () {
       return this.$store.state.meta.edit;
     },

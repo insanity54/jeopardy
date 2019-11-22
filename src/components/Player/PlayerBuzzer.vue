@@ -3,8 +3,11 @@
     <div class="player-buzzer-heading" :style="{ backgroundColor: player.color }">
       <h1>{{ player.name }}</h1>
     </div>
-    <div class="player-buzzer-content" :style="{ border: indicatorBorder }">
-      <div class="buzzer-button" @click="doBuzz">
+    <div class="player-buzzer-content" :style="{ backgroundColor: indicatorColor }">
+      <div v-if="isPenalized" class="buzzer-penalty-progress-bar">
+        <p>Early Buzz Penalty</p>
+      </div>
+      <div v-if="!isPenalized" class="buzzer-button" @click="doBuzz">
         <i class="material-icons">bolt</i>
         <span>Buzz</span>
       </div>
@@ -21,20 +24,34 @@ export default {
   },
   data: function () {
     return {
-      isEditMode: false
+      isPenalized: false,
+      penaltyEndEpoch: 0,
+      penaltyTimer: null
     }
   },
   props: {
   },
   methods: {
+    doPenalty: function () {
+      this.isPenalized = true;
+      clearTimeout(this.penaltyTimer);
+      this.penaltyTimer = window.setTimeout(this.doClearPenalty.bind(this), 500);
+    },
+    doClearPenalty: function () {
+      this.isPenalized = false;
+    },
     doBuzz: function () {
-      let buzzEvent = {
-        buzzEpoch: Date.now(),
-        unlockEpoch: this.lastUnlockEpoch,
-        id: this.pid
-      };
-      this.$socket.emit('buzz', buzzEvent);
-      this.$store.commit('buzz', buzzEvent);
+      if (this.isBuzzerLock) {
+        this.doPenalty();
+      } else {
+        let buzzEvent = {
+          buzzEpoch: Date.now(),
+          unlockEpoch: this.lastUnlockEpoch,
+          id: this.pid
+        };
+        this.$socket.emit('buzz', buzzEvent);
+        this.$store.commit('buzz', buzzEvent);
+      }
     }
   },
   computed: {
@@ -48,10 +65,7 @@ export default {
       return this.$store.state.buzzer.isLocked;
     },
     indicatorColor: function () {
-      return (this.isBuzzerLock) ? 'black' : 'yellow';
-    },
-    indicatorBorder: function () {
-      return (this.isBuzzerLock) ? '20px solid white' : '20px solid lime';
+      return (this.isBuzzerLock) ? 'black' : '#33ff33';
     },
     playerColor: function () {
       return this.player.color
@@ -87,10 +101,10 @@ export default {
   }
 
   .player-buzzer-content {
-    background-color: white;
+    background-color: black;
     padding: 1em 0;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 60vh;
@@ -103,13 +117,48 @@ export default {
     margin: 0;
   }
 
+  .buzzer-penalty-progress-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 158px;
+    background-color: red;
+    animation: shrinker 0.5s linear 1;
+    margin: 10px 0;
+  }
+  .buzzer-penalty-progress-bar p {
+    position: absolute;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    animation: blinker 0.5s linear infinite;
+    font-size: 24pt;
+  }
+
+  @keyframes blinker {
+    50% {
+      text-shadow: 0 0 5px white;
+    }
+  }
+
+  @keyframes shrinker {
+    0% {
+      width: 100%;
+    }
+    100% {
+      width: 0;
+    }
+  }
+
   .buzzer-button {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     height: 150px;
     width: 150px;
-    border: 8px solid black;
+    border: 8px solid #404040;
     background-color: green;
     color: white;
     font-weight: bold;
