@@ -9,6 +9,10 @@
     "lint": "vue-cli-service lint",
     "deploy": "echo 'To deploy, run `git push origin master`, then then run heroku push from jepurdee-server source tree.'"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/insanity54/jepurdee.git"
+  },
   "dependencies": {
     "@chenfengyuan/vue-qrcode": "^1.0.1",
     "axios": "^0.19.0",
