@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "deploy": "echo 'To deploy, run `git push origin master`, then then run heroku push from jepurdee-server source tree.'"
   },
   "dependencies": {
     "@chenfengyuan/vue-qrcode": "^1.0.1",
