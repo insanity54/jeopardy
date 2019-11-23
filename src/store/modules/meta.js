@@ -6,7 +6,8 @@ export default {
     audioQueue: [],
     houseId: '',
     role: 'jumbotron',
-    playerId: ''
+    playerId: '',
+    isDebugMode: false
   },
   mutations: {
     generateHouseId(state) {
@@ -23,6 +24,9 @@ export default {
     },
     setRole(state, role) {
       state.role = role;
+    },
+    setDebugMode(state, isDebugMode) {
+      state.isDebugMode = isDebugMode;
     },
     setPlayerId(state, playerId) {
       state.playerId = playerId;

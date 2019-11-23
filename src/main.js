@@ -5,8 +5,7 @@ import store from './store';
 import VueQrcode from '@chenfengyuan/vue-qrcode';
 import VueSocketIO from 'vue-socket.io';
 let socketUrl = (process.env.NODE_ENV === 'production') ? `${location.hostname}` : `${location.hostname}:5050`;
-console.log(`socketUrl is ${socketUrl}`);
-console.log(`environment is ${process.env.NODE_ENV}`)
+
 
 Vue.config.productionTip = false
 Vue.component(VueQrcode.name, VueQrcode);

@@ -1,5 +1,5 @@
 <template>
-  <div class="role-display">
+  <div v-if="isDebugMode" class="role-display">
     <p>{{ role }}</p>
     <p>{{ houseId }}</p>
   </div>
@@ -16,6 +16,9 @@ export default {
     }
   },
   computed: {
+    isDebugMode: function () {
+      return this.$store.state.meta.isDebugMode;
+    },
     role: function () {
       return this.$store.state.meta.role;
     },

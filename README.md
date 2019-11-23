@@ -33,9 +33,9 @@ Class Image {
 
 #### Importing (via ImportGameBadge)
 
-  * [ ] Read `assets.json` to determine image name and type.
-  * [ ] Read image data (arrayBuffer) and store in local storage.
-  * [ ] Derive URL from arrayBuffer and store in vuex state.
+  * [x] Read `assets.json` to determine image name and type.
+  * [x] Read image data (arrayBuffer) and store in local storage.
+  * [x] Derive URL from arrayBuffer and store in vuex state.
 
 
 #### Exporting (via GameBadge)
