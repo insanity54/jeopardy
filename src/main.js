@@ -5,7 +5,8 @@ import store from './store';
 import VueQrcode from '@chenfengyuan/vue-qrcode';
 import VueSocketIO from 'vue-socket.io';
 let socketUrl = (process.env.NODE_ENV === 'production') ? `${location.hostname}` : `${location.hostname}:5050`;
-
+const version = require('../package.json').version;
+global.__JEPURDEE_VERSION__ = JSON.stringify(version);
 
 Vue.config.productionTip = false
 Vue.component(VueQrcode.name, VueQrcode);

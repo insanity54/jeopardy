@@ -31,6 +31,8 @@
         <label for="debug">Debug Mode</label>
       </div>
     </div>
+    <h2>Version</h2>
+    <p>{{ version }}</p>
   </div>
 </template>
 
@@ -47,6 +49,9 @@ export default {
   components: {
   },
   computed: {
+    version() {
+      return global.__JEPURDEE_VERSION__;
+    },
     role: {
       get: function () {
         return this.$store.state.meta.role;
