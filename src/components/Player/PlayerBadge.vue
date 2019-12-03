@@ -109,7 +109,7 @@ export default {
 <style scoped>
   @media screen and (max-width: 500px) {
     .player-badge {
-      width: 100vw;
+      width: 90vw;
     }
   }
 

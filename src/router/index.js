@@ -11,6 +11,7 @@ import TitleEditor from '@/components/Game/TitleEditor';
 import PlayerList from '@/components/Player/PlayerList';
 import EpisodeList from '@/components/EpisodeList/EpisodeList';
 import PlayerBadge from '@/components/Player/PlayerBadge';
+import PlayerJoin from '@/components/Player/PlayerJoin';
 import NewPlayerCreator from '@/components/Player/NewPlayerCreator';
 import Kicked from '@/components/Player/Kicked';
 import PlayerBuzzer from '@/components/Player/PlayerBuzzer';
@@ -56,6 +57,10 @@ export default new Router({
     {
       path: '/episodes',
       component: EpisodeList
+    },
+    {
+      path: '/player/join',
+      component: PlayerJoin
     },
     {
       path: '/player/new',

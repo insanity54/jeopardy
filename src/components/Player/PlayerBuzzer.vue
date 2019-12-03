@@ -4,8 +4,9 @@
       <h1>{{ player.name }}</h1>
     </div>
     <div class="player-buzzer-content" :style="{ backgroundColor: indicatorColor }">
-      <div v-if="isPenalized" class="buzzer-penalty-progress-bar">
-        <p>Early Buzz Penalty</p>
+      <div v-if="isPenalized" class="buzzer-penalty">
+        <div class="buzzer-penalty-progress-bar"></div>
+        <div class="buzzer-penalty-text"><p>Early Buzz Penalty</p></div>
       </div>
       <div v-if="!isPenalized" class="buzzer-button" @click="doBuzz">
         <i class="material-icons">bolt</i>
@@ -117,6 +118,20 @@ export default {
     margin: 0;
   }
 
+  .buzzer-penalty {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .buzzer-penalty-text p {
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    animation: blinker 0.5s linear infinite;
+    font-size: 24pt;
+  }
   .buzzer-penalty-progress-bar {
     display: flex;
     flex-direction: row;
@@ -128,18 +143,10 @@ export default {
     animation: shrinker 0.5s linear 1;
     margin: 10px 0;
   }
-  .buzzer-penalty-progress-bar p {
-    position: absolute;
-    color: white;
-    text-transform: uppercase;
-    font-weight: bold;
-    animation: blinker 0.5s linear infinite;
-    font-size: 24pt;
-  }
 
   @keyframes blinker {
     50% {
-      text-shadow: 0 0 5px white;
+      text-shadow: 0 0 10px red;
     }
   }
 

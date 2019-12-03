@@ -7,7 +7,7 @@ export default {
     houseId: '',
     role: 'jumbotron',
     playerId: '',
-    isDebugMode: false
+    isDebugMode: true
   },
   mutations: {
     generateHouseId(state) {

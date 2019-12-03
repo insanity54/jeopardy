@@ -15,7 +15,7 @@ export default {
   name: 'GameBoard',
   components: {
     CategoryTile,
-    AnswerTile
+    AnswerTile,
   },
   props: {
   },
@@ -23,7 +23,7 @@ export default {
     ...mapGetters([
       'answers',
       'categories'
-    ])
+    ]),
   }
 }
 </script>

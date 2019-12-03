@@ -115,7 +115,11 @@ export default {
           }
         }
         assets.file(`assets.json`, JSON.stringify(assetsData));
-        return zip.generateAsync({ type:"blob" })
+        return zip.generateAsync({
+          type: "base64",
+          compression: "DEFLATE",
+          comment: "Play Jepurdee at https://xtoast.com/"
+        })
       });
     },
     deleteGame: function () {

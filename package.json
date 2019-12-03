@@ -7,7 +7,7 @@
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "deploy": "echo 'To deploy, run `git push origin master`, then then run heroku push from jepurdee-server source tree.'"
+    "deploy": "echo 'This project is deployed as a submodule of jepurdee-server.'"
   },
   "repository": {
     "type": "git",

@@ -37,6 +37,7 @@ export default {
       this.$store.dispatch('revealAnswers');
     },
     doRevealCategory: function () {
+      this.$socket.emit('revealCategory');
       this.$store.commit('revealCategory');
     },
   }

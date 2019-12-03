@@ -5,12 +5,13 @@
     </div>
     <h1 class="title" @click="openTitleEditor" v-if="isEditMode">{{ game.name }}</h1>
     <router-view />
+    <Revealer v-if="isHostRole" />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-
+import Revealer from '@/components/Controls/Revealer';
 export default {
   name: 'Game',
   data: function () {
@@ -18,6 +19,7 @@ export default {
     }
   },
   components: {
+    Revealer
   },
   props: {
 
@@ -26,6 +28,9 @@ export default {
     ...mapGetters([
       'game',
     ]),
+    isHostRole: function () {
+      return (this.$store.state.meta.role === 'host');
+    },
     gameId: function () {
       return this.$route.params.gameId;
     },

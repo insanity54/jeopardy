@@ -1,14 +1,20 @@
 <template>
   <div class="host-buzzer-test">
     <h1>Buzzer Test</h1>
-    <div class="button biggo" @click="unlockBuzzer">
-      <i class="material-icons">lock_open</i><span>Unlock Buzzer (Enable)</span>
+    <div class="selection">
+      <div class="indicator-led" :class="{ 'enable-led-on': !isBuzzerLocked }">
+      </div>
+      <div class="button biggo enable" @click="unlockBuzzer">
+        <span>Enable</span>
+      </div>
     </div>
-    <div class="indicator-led">
-      <span><i class="material-icons">{{ indicatorIcon }}</i></span>
-    </div>
-    <div class="button biggo" @click="lockBuzzer">
-      <i class="material-icons">lock</i><span>Lock Buzzer (Clear)</span>
+
+    <div class="selection">
+      <div class="indicator-led" :class="{ 'clear-led-on': isBuzzerLocked }">
+      </div>
+      <div class="button biggo clear" @click="lockBuzzer">
+        <span>Clear</span>
+      </div>
     </div>
   </div>
 </template>
@@ -21,12 +27,6 @@ export default {
   sockets: {
   },
   computed: {
-    indicatorIcon: function () {
-      return (this.isBuzzerLocked) ? 'arrow_downward' : 'arrow_upward';
-    },
-    indicatorText: function () {
-      return (this.isBuzzerLocked) ? 'the buzzer is locked' : 'the buzzer is unlocked';
-    },
     isBuzzerLocked: function () {
       return this.$store.state.buzzer.isLocked
     }
@@ -48,10 +48,46 @@ export default {
 .host-buzzer-test {
   color: white;
 }
+.selection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.indicator-led {
+  border: 3px solid grey;
+  border-radius: 50%;
+  width: 1em;
+  height: 1em;
+}
+.enable-led-on {
+  background-color: lime;
+}
+.clear-led-on {
+  background-color: red;
+}
 .biggo {
   height: 150px;
+  width: 100%;
   border: 3px solid grey;
   margin: 1em;
   background-color: goldenrod;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.enable {
+  background-color: blue;
+}
+.clear {
+  background-color: #1a1a1a;
+  border: 3px solid grey;
+}
+.clear span {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.enable span {
+  text-transform: uppercase;
+  font-weight: bold;
 }
 </style>

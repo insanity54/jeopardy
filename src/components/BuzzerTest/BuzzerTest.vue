@@ -1,6 +1,6 @@
 <template>
   <div class="buzzer-test">
-    <h1>Buzzer Test</h1>
+    <h1>Buzzer Testi</h1>
     <div class="buzzer-data">
       <div class="buzzer-result">
         <div class="buzzer-result-winner">

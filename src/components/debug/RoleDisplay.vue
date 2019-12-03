@@ -39,7 +39,7 @@ export default {
   background-color: red;
   opacity: 0.5;
   top: 50vh;
-  left: 50vw;
+  right: 0;
   padding: 1em;
   pointer-events: none;
 }

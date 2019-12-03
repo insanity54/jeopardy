@@ -2,6 +2,7 @@
   <div id="app">
     <RoleDisplay />
     <TinyMenu />
+    <JoinOverlay />
     <router-view />
   </div>
 </template>
@@ -9,11 +10,13 @@
 <script>
 import TinyMenu from '@/components/Menu/TinyMenu';
 import RoleDisplay from '@/components/debug/RoleDisplay';
+import JoinOverlay from '@/components/JoinOverlay/JoinOverlay';
 export default {
   name: 'app',
   components: {
     TinyMenu,
-    RoleDisplay
+    RoleDisplay,
+    JoinOverlay,
   },
   sockets: {
     routeToScreen: function (data) {
