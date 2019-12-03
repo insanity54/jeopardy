@@ -88,7 +88,7 @@ export default {
   methods: {
     uploadGame: function () {
       this.prepareZip().then((zipContent) => {
-        axios.post('/api/v1/game/upload', zipContent);
+        axios.post('/api/v1/game/upload', { payload: zipContent } );
       }).catch((e) => {
         console.log(e)
         this.error = e;
