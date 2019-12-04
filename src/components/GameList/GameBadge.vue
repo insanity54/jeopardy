@@ -99,7 +99,7 @@ export default {
     },
     prepareZip: function () {
       let zip = new JSZip();
-      zip.file(`${this.normalizeName(this.gameName)}.json`, JSON.stringify(this.game));
+      zip.file(`${this.game.id}.json`, JSON.stringify(this.game));
       let assets = zip.folder('assets');
       // create assets.json which contains image name, type, and url.
       let assetsData = [];
