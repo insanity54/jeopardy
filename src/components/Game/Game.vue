@@ -56,6 +56,7 @@ export default {
     }
   },
   created: function () {
+    console.log(`game id is ${this.game.id}`);
     if (this.game.id === '') {
       this.$store.dispatch('downloadGame', this.gameId)
     }
