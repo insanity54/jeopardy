@@ -1,7 +1,7 @@
 import defaultGame from '@/assets/default.game.json'
 import { uuidv4 } from '@/util/util';
 import Vue from 'vue';
-
+import axios from 'axios';
 
 
 export default {
@@ -54,7 +54,6 @@ export default {
     }
   },
   mutations: {
-
     updateCategory(state, categoryData) {
       state.game.categories[categoryData.id] = categoryData;
     },
@@ -181,6 +180,12 @@ export default {
           context.commit('revealAnswer', a.id);
         }, timeout);
       });
+    },
+    downloadGame ({ commit }, gameId) {
+      axios.get(`/api/v1/game/${gameId}`).then((game) => {
+        console.log(game);
+        commit('loadGame', game);
+      })
     }
   }
 }

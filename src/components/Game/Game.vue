@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import Revealer from '@/components/Controls/Revealer';
 export default {
   name: 'Game',
@@ -25,9 +24,9 @@ export default {
 
   },
   computed: {
-    ...mapGetters([
-      'game',
-    ]),
+    game: function () {
+      return this.$store.state.game.game;
+    },
     isHostRole: function () {
       return (this.$store.state.meta.role === 'host');
     },
@@ -54,6 +53,11 @@ export default {
           path: `/game/${this.gameId}/title`
         });
       }
+    }
+  },
+  created: function () {
+    if (this.game.id === '') {
+      this.$store.dispatch('downloadGame', this.gameId)
     }
   }
 }
