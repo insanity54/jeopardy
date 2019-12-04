@@ -3,7 +3,6 @@ import { uuidv4 } from '@/util/util';
 import Vue from 'vue';
 import axios from 'axios';
 
-
 export default {
   state: {
     game: {
@@ -183,8 +182,9 @@ export default {
     },
     downloadGame ({ commit }, gameId) {
       axios.get(`/api/v1/game/${gameId}`).then((game) => {
-        console.log(game);
-        commit('loadGame', game);
+          // load json into vuex
+          let g = JSON.parse(game);
+          commit('loadGame', g);
       })
     }
   }
