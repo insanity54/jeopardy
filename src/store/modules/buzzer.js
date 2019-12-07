@@ -7,7 +7,9 @@ export default {
   },
   mutations: {
     buzz(state, data) {
-      state.buzzLog.push(data);
+      let { buzzEpoch, id, unlockEpoch } = data;
+      let reactionTime = (buzzEpoch - unlockEpoch);
+      state.buzzLog.push({ buzzEpoch, id, unlockEpoch, reactionTime });
     },
     unlockBuzzer(state) {
       state.unlockLog.push(Date.now());

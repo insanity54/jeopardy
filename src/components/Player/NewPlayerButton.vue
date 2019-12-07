@@ -6,7 +6,7 @@
     <div class="new-player-button-content">
       <!-- <img @click="createPlayer" alt="Add a new player" class="new-player-button-button" src="/plus.png"> -->
       <qrcode :value="qrCodeData"></qrcode>
-      <p>{{ qrCodeData }}</p>
+      <a :href="qrCodeData">{{ qrCodeData }}</a>
     </div>
   </div>
 </template>

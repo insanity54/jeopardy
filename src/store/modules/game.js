@@ -95,6 +95,9 @@ export default {
       let game = state.games.find((g) => g.id === gameId);
       state.game = game;
     },
+    downloadGame(state, game) {
+      state.games.push(game);
+    },
     setGameId(state, gameId) {
       return state.game = { ...state.game, id: gameId };
     },
@@ -181,10 +184,11 @@ export default {
       });
     },
     downloadGame ({ commit }, gameId) {
-      axios.get(`/api/v1/game/${gameId}`).then((game) => {
-          // load json into vuex
-          let g = JSON.parse(game);
-          commit('loadGame', g);
+      return axios.get(`/api/v1/game/${gameId}`).then((game) => {
+        // load json into vuex
+          let g = JSON.parse(game.data)
+          commit('downloadGame', g);
+          return g;
       })
     }
   }

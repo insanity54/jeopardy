@@ -58,7 +58,9 @@ export default {
   created: function () {
     console.log(`game id is ${this.game.id}`);
     if (this.game.id === '') {
-      this.$store.dispatch('downloadGame', this.gameId)
+      this.$store.dispatch('downloadGame', this.gameId).then((g) => {
+        this.$store.commit('loadGame', g.id);
+      });
     }
   }
 }

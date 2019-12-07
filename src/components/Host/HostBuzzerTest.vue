@@ -16,6 +16,29 @@
         <span>Clear</span>
       </div>
     </div>
+
+    <div class="test-answers">
+      <h2>Test Answers</h2>
+      <h3>Category: True or False</h3>
+      <hr>
+      <p>A: AT A TRACK MEET, IT HAPPENS WHEN A RUNNER JUMPS THE GUN</p>
+      <p>Q: A FALSE START</p>
+      <hr>
+      <p>A: IT’S A CALL TO THE FIRE DEPARTMENT WHEN THERE TRULY IS NO FIRE</p>
+      <p>Q: A FALSE ALARM</p>
+      <hr>
+      <p>A: IT’S A CALL TO THE FIRE DEPARTMENT WHEN THERE TRULY IS NO FIRE</p>
+      <p>Q: A FALSE ALARM</p>
+      <hr>
+      <p>A: THE SENDER OF GIFTS IN “THE TWELVE DAYS OF CHRISTMAS”</p>
+      <p>Q: MY TRUE LOVE</p>
+      <hr>
+      <p>A: IT’S A HIGH-PITCHED SINGING VOICE FOR MEN</p>
+      <p>Q: FALSETTO</p>
+      <hr>
+      <p>A: RHYMING PHRASE THAT DESCRIBES A LOYAL PERSON, NOT ONE WHO’S HOLDING HIS BREATH</p>
+      <p>Q: TRUE-BLUE</p>
+    </div>
   </div>
 </template>
 

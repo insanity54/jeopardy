@@ -1,6 +1,6 @@
 <template>
   <div class="buzzer-test">
-    <h1>Buzzer Testi</h1>
+    <h1>Buzzer Test</h1>
     <div class="buzzer-data">
       <div class="buzzer-result">
         <div class="buzzer-result-winner">
@@ -12,7 +12,7 @@
         </div>
         <div class="buzzer-result-seen">
           <p>Buzzers seen</p>
-          <div class="seen" v-for="(p, i) in seen" :key="i" :style="{backgroundColor: colorLookup({id: p})}">{{ nameLookup({id: p}) }}</div>
+          <div class="seen" v-for="(p, i) in seen" :key="i" :style="{backgroundColor: colorLookup({id: p})}">{{ nameLookup({id: p}) }} ({{ lowestReactionTimeLookup(p) }})</div>
         </div>
       </div>
       <div ref="bhist" class="buzzer-history">
@@ -36,11 +36,15 @@ export default {
   },
   sockets: {
     buzzWinner: function (evt) {
+      console.log('winner seen');
       this.winner = evt;
     },
     buzz: function (evt) {
       this.$store.commit('buzz', evt);
       this.scroll();
+    },
+    lockBuzzer: function () {
+      this.winner = {};
     }
   },
   computed: {
@@ -86,6 +90,16 @@ export default {
       if (typeof player === 'undefined') return 'mystery player';
       return player.name;
     },
+    lowestReactionTimeLookup: function (id) {
+      if (typeof id === 'undefined') return '';
+      let playerReactions = this.buzzLog.filter((log) => log.id === id);
+      let lowestReactionTime = [];
+      playerReactions.forEach((r) => {
+        lowestReactionTime.push(r.reactionTime);
+      });
+      lowestReactionTime.sort((a, b) => a - b);
+      return `${lowestReactionTime[0]/1000}s`;
+    }
   },
   created() {
 
@@ -111,7 +125,7 @@ export default {
   flex-wrap: wrap;
   align-items: flex-start;
   height: 70vh;
-  width: 75vw;
+  width: 66vw;
   overflow: scroll;
 }
 .buzzer-history-item {
@@ -121,7 +135,7 @@ export default {
   padding: 0.5em 1em;
 }
 .buzzer-result {
-  width: 25vw;
+  width: 33vw;
   background-color: navy;
   padding: 1em 0 0 0;
   font-size: 24pt;
