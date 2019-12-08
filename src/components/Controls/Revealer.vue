@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     doRevealAnswers: function () {
-      this.$root.$emit('play-audio', 'generate');
+      this.$socket.emit('revealAnswers');
       this.$store.dispatch('revealAnswers');
     },
     doRevealCategory: function () {

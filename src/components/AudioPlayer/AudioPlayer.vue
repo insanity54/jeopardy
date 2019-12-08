@@ -28,13 +28,10 @@ export default {
     }
   },
   computed: {
-    audioQueue: function () {
-      return this.$store.state.audio.audioQueue;
-    }
   },
   methods: {
     play (audio) {
-      console.log(`playing audio ${audio}`)
+      console.log(`playing audio ${audio.name}`)
       audio.isPlaying = true;
       audio.file.play();
     }

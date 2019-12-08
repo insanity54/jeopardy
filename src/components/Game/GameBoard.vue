@@ -19,11 +19,16 @@ export default {
   },
   props: {
   },
+  sockets: {
+  },
   computed: {
     ...mapGetters([
       'answers',
       'categories'
     ]),
+    isJumbotron: function () {
+      return (this.$store.state.meta.role === 'jumbotron');
+    }
   }
 }
 </script>

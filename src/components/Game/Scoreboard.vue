@@ -1,16 +1,16 @@
 <template>
-  <div class="scoreboard" :class="{ highlighted: isPlayerSelectionRequired }">
-    <PlayerButton v-for="player in players" :key="player.id" :player="player"></PlayerButton>
+  <div class="scoreboard">
+    <PlayerScore v-for="player in players" :key="player.id" :player="player"></PlayerScore>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapState } from 'vuex';
-import PlayerButton from './PlayerButton';
+import PlayerScore from '@/components/Player/PlayerScore';
 export default {
   name: 'PlayerSelector',
   components: {
-    PlayerButton
+    PlayerScore
   },
   props: {
   },
@@ -21,9 +21,16 @@ export default {
     ...mapGetters([
       'selectedPlayer'
     ]),
-    isPlayerSelectionRequired: function () {
-      if (typeof this.selectedPlayer === 'undefined') return true;
-      else return false;
+    sortedPlayers: function () {
+      return this.players.map((p) => {
+        if (typeof p.score === 'undefined') {
+          p.score === 0;
+        }
+        else if (!p.score) {
+          p.score === 0;
+        }
+        return p;
+      }).sort((a, b) => a.score - b.score);
     }
   },
   methods: {
@@ -41,23 +48,10 @@ export default {
 .scoreboard {
   color: white;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
-  padding: 1em;
+  overflow: hidden;
 }
-.highlighted {
-  animation: 0.5s infinite alternate strobe;
-}
-
-@keyframes strobe {
-  0% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
 </style>

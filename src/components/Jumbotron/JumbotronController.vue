@@ -1,7 +1,7 @@
 <template>
   <div class="jumbotron-controller">
+    <h1>DEPRECATED</h1>
     <router-view />
-    <AudioPlayer/>
     <transition name="component-fade" mode="out-in">
       <Scoreboard v-if="isOverworld" />
     </transition>

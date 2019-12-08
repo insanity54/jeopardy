@@ -1,24 +1,45 @@
 <template>
   <div class="game">
+    <AudioPlayer />
     <div v-if="game.id === ''" class="no-game-error">
       <p>So sorry, the game {{ gameId }} does not exist on this device.</p>
     </div>
     <h1 class="title" @click="openTitleEditor" v-if="isEditMode">{{ game.name }}</h1>
-    <router-view />
+    <div class="layout">
+      <router-view class="view default" :class="{ 'host': isHostRole, 'jumbotron': !isHostRole }" name="default" />
+      <router-view v-if="isJumbotronRole" class="view sidebar" name="sidebar" />
+      <router-view class="view controls" name="controls" />
+    </div>
     <Revealer v-if="isHostRole" />
   </div>
 </template>
 
 <script>
 import Revealer from '@/components/Controls/Revealer';
+import AudioPlayer from '@/components/AudioPlayer/AudioPlayer';
 export default {
   name: 'Game',
   data: function () {
     return {
     }
   },
+  sockets: {
+    revealAnswers: function () {
+      this.$root.$emit('play-audio', 'generate');
+      this.$store.dispatch('revealAnswers');
+    },
+    revealCategory: function () {
+      this.$store.commit('revealCategory');
+    },
+    restartGame: function () {
+      console.log('restarting game')
+      this.$store.commit('restartGame', this.$store.state.game.id);
+      this.$store.commit('resetScores');
+    }
+  },
   components: {
-    Revealer
+    Revealer,
+    AudioPlayer,
   },
   props: {
 
@@ -45,6 +66,9 @@ export default {
     transitionStyle: function () {
       return 'fade';
     },
+    isJumbotronRole: function () {
+      return (this.$store.state.meta.role === 'jumbotron');
+    },
   },
   methods: {
     openTitleEditor: function() {
@@ -58,6 +82,7 @@ export default {
   created: function () {
     console.log(`game id is ${this.game.id}`);
     if (this.game.id === '') {
+      console.log('downloading game');
       this.$store.dispatch('downloadGame', this.gameId).then((g) => {
         this.$store.commit('loadGame', g.id);
       });
@@ -67,6 +92,25 @@ export default {
 </script>
 
 <style scoped>
+.default.host {
+  width: 100vw;
+}
+.default.jumbotron {
+  width: 79vw;
+}
+.layout {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.sidebar {
+  width: 19vw;
+}
+.default {
+}
+.controls {
+  width: 100vw;
+}
 .title {
   cursor: pointer;
 }

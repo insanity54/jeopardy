@@ -21,6 +21,8 @@ import HostBuzzerTest from '@/components/Host/HostBuzzerTest';
 import NewHostCreator from '@/components/Host/NewHostCreator';
 import BuzzerTest from '@/components/BuzzerTest/BuzzerTest';
 import Settings from '@/components/Settings/Settings';
+import GameHostControls from '@/components/Controls/GameHostControls';
+import Sidebar from '@/components/Game/Sidebar';
 
 Vue.use(Router);
 
@@ -98,7 +100,11 @@ export default new Router({
       children: [
         {
           path: '/',
-          component: GameBoard
+          components: {
+            default: GameBoard,
+            sidebar: Sidebar,
+            controls: GameHostControls
+          }
         },
         {
           path: 'answer',
