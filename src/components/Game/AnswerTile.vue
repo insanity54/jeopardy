@@ -1,5 +1,5 @@
 <template>
-  <div @click="openAnswer" :class="[ tileClass, { noclick: !isPlayerSelected } ]">
+  <div @click="emitAnswerThenOpen" :class="[ tileClass, { noclick: !isPlayerSelected } ]">
     <div class="points" :class="{ invisible: isTileInvisible, unrevealed: isTimeUnrevealed }">{{ points }}</div>
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
     answer: {
       type: Object,
       required: true
-    }
+    },
   },
   computed: {
     ...mapGetters([
@@ -46,23 +46,17 @@ export default {
       return this.$route.params.gameId;
     },
     answerId: function () {
-      return `${this.answer.category}${this.answer.item}`;
+      return this.answer.id;
     },
     isPlayerSelected: function () {
       return (typeof this.selectedPlayer !== 'undefined')
     }
   },
   methods: {
-    openAnswer: function() {
+    emitAnswerThenOpen: function () {
       if (this.isPlayerSelected) {
-        this.$store.commit('setActiveAnswer', this.answerId);
-        this.$router.push({
-          path: `/game/${this.gameId}/answer`,
-          query: {
-            category: this.answer.category,
-            item: this.answer.item
-          }
-        });
+        this.$socket.emit('openAnswer', { gameId: this.gameId, answerId: this.answerId });
+        this.$store.dispatch('openAnswer', { gameId: this.gameId, answerId: this.answerId });
       }
     }
   }

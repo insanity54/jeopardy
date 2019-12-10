@@ -1,5 +1,6 @@
 <template>
   <div class="game-host-controls">
+    <PlayerSelector />
     <Spacer/>
     <EditModeToggle/>
     <Wager :wagers="wagers" :answer="answer" :gameType="gameType" :selectedPlayer="selectedPlayer"/>
@@ -20,9 +21,11 @@ import BuzzerSelector from './BuzzerSelector';
 import Wager from './Wager';
 import ResultRegistrator from './ResultRegistrator';
 import Unlocker from './Unlocker';
+import PlayerSelector from './PlayerSelector';
 export default {
   name: 'GameHostControls',
   components: {
+    PlayerSelector,
     EditModeToggle,
     BuzzerSelector,
     ResultRegistrator,

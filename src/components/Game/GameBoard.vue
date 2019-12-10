@@ -29,6 +29,8 @@ export default {
     isJumbotron: function () {
       return (this.$store.state.meta.role === 'jumbotron');
     }
+  },
+  methods: {
   }
 }
 </script>

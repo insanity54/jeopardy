@@ -38,7 +38,7 @@ export default {
   font-size: 12pt;
   background-color: red;
   opacity: 0.5;
-  top: 50vh;
+  top: 90fvh;
   left: 0;
   padding: 1em;
   pointer-events: none;

@@ -32,9 +32,14 @@ export default {
       this.$store.commit('revealCategory');
     },
     restartGame: function () {
-      console.log('restarting game')
       this.$store.commit('restartGame', this.$store.state.game.id);
       this.$store.commit('resetScores');
+    },
+    openAnswer: function (evt) {
+      let { answerId, gameId } = evt;
+      console.log(`openAnswer socket emission with gameId:${gameId}, answer:${answerId}`)
+      this.$store.commit('setActiveAnswer', answerId);
+      this.$store.dispatch('openAnswer', gameId, answerId);
     }
   },
   components: {

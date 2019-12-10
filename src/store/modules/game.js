@@ -2,6 +2,7 @@ import defaultGame from '@/assets/default.game.json'
 import { uuidv4 } from '@/util/util';
 import Vue from 'vue';
 import axios from 'axios';
+import router from '../../router'
 
 export default {
   state: {
@@ -190,6 +191,17 @@ export default {
           commit('downloadGame', g);
           return g;
       })
+    },
+    openAnswer (context, params) {
+      let { answerId, gameId } = params;
+      console.log(answerId)
+      router.push({
+        path: `/game/${gameId}/answer`,
+        query: {
+          category: answerId[0],
+          item: answerId[1]
+        }
+      });
     }
   }
 }

@@ -166,7 +166,7 @@ export default {
     height: 150px;
     width: 150px;
     border: 8px solid #404040;
-    background-color: green;
+    background-color: blue;
     color: white;
     font-weight: bold;
     border-radius: 50%;
