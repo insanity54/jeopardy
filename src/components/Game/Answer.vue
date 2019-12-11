@@ -68,8 +68,8 @@ export default {
     align-items: flex-start;
   }
   .answer {
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     color: white;
     font-family: Georgia;
     font-size: 3em;

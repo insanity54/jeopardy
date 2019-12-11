@@ -39,6 +39,7 @@ export default {
 <style>
 .delay-leave-active {
   animation-delay: 1.1s;
+  position: absolute;
 }
 .component-fade-enter-active, .component-fade-leave-active {
   transition: opacity .3s ease;
@@ -49,8 +50,9 @@ export default {
 }
 .game-board {
   font-family: sans-serif, Helvetica;
-  min-height: 80vh;
+  /* min-height: 80vh; */
   width: 100%;
+  height: 100%;
   color: white;
   display: grid;
   grid-template-columns: [category-0] 16fr [category-1] 16fr [category-2] 16fr [category-3] 16fr [category-4] 16fr [category-5] 16fr;

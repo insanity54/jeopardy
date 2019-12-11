@@ -1,14 +1,15 @@
 <template>
   <div class="game">
-    <AudioPlayer />
+    <AudioPlayer v-if="isJumbotronRole"/>
     <div v-if="game.id === ''" class="no-game-error">
       <p>So sorry, the game {{ gameId }} does not exist on this device.</p>
     </div>
     <h1 class="title" @click="openTitleEditor" v-if="isEditMode">{{ game.name }}</h1>
     <div class="layout">
+      <router-view class="view default-overlay" name="defaultOverlay" />
       <router-view class="view default" :class="{ 'host': isHostRole, 'jumbotron': !isHostRole }" name="default" />
       <router-view v-if="isJumbotronRole" class="view sidebar" name="sidebar" />
-      <router-view class="view controls" name="controls" />
+      <router-view v-if="isHostRole" class="view controls" name="controls" />
     </div>
     <Revealer v-if="isHostRole" />
   </div>
@@ -25,6 +26,7 @@ export default {
   },
   sockets: {
     revealAnswers: function () {
+      console.log('socket revealAnswers')
       this.$root.$emit('play-audio', 'generate');
       this.$store.dispatch('revealAnswers');
     },
@@ -39,7 +41,13 @@ export default {
       let { answerId, gameId } = evt;
       console.log(`openAnswer socket emission with gameId:${gameId}, answer:${answerId}`)
       this.$store.commit('setActiveAnswer', answerId);
-      this.$store.dispatch('openAnswer', gameId, answerId);
+      console.log('and now we dispatch')
+      this.$store.dispatch('openAnswer', { gameId, answerId });
+    },
+    answerTimeout: function (evt) {
+      console.log('socket answerTimeout');
+      this.$root.$emit('play-audio', 'timeout');
+      this.$store.dispatch('doAnswerTimeout', evt);
     }
   },
   components: {
@@ -103,16 +111,22 @@ export default {
 .default.jumbotron {
   width: 79vw;
 }
+.default {
+}
 .layout {
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  width: 100vw;
+  height: 100vh;
 }
 .sidebar {
   width: 19vw;
 }
-.default {
-}
+
 .controls {
   width: 100vw;
 }

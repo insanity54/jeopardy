@@ -38,9 +38,10 @@ export default {
   font-size: 12pt;
   background-color: red;
   opacity: 0.5;
-  top: 90fvh;
+  top: 90vh;
   left: 0;
   padding: 1em;
   pointer-events: none;
+  z-index: 9999;
 }
 </style>

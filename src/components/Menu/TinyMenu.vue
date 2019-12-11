@@ -70,6 +70,7 @@ export default {
 <style scoped>
 .tiny-menu {
   width: 100vw;
+  z-index: 9000;
 }
 .tiny-menu-content {
   display: flex;

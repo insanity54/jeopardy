@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isBuzzableScreen" class="buzzer-selector">
+  <div class="buzzer-selector">
     <BuzzerButton v-for="player in players" :key="player.id" :player="player"></BuzzerButton>
   </div>
 </template>
@@ -10,12 +10,6 @@ export default {
   name: 'BuzzerSelector',
   components: {
     BuzzerButton
-  },
-  props: {
-    isBuzzableScreen: {
-      type: Boolean,
-      required: true
-    }
   },
   computed: {
     players: function () {

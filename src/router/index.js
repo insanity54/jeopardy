@@ -21,7 +21,8 @@ import HostBuzzerTest from '@/components/Host/HostBuzzerTest';
 import NewHostCreator from '@/components/Host/NewHostCreator';
 import BuzzerTest from '@/components/BuzzerTest/BuzzerTest';
 import Settings from '@/components/Settings/Settings';
-import GameHostControls from '@/components/Controls/GameHostControls';
+import GameHostBoardControls from '@/components/Controls/GameHostBoardControls';
+import GameHostAnswerControls from '@/components/Controls/GameHostAnswerControls';
 import Sidebar from '@/components/Game/Sidebar';
 
 Vue.use(Router);
@@ -103,12 +104,16 @@ export default new Router({
           components: {
             default: GameBoard,
             sidebar: Sidebar,
-            controls: GameHostControls
+            controls: GameHostBoardControls
           }
         },
         {
           path: 'answer',
-          component: AnswerScreen
+          components: {
+            default: AnswerScreen,
+            sidebar: Sidebar,
+            controls: GameHostAnswerControls
+          }
         },
         {
           path: 'category/:categoryIndex',

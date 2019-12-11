@@ -69,7 +69,13 @@ export default {
 </script>
 
 <style>
-
+  .answer-screen {
+    perspective: 1200px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2000;
+  }
 
 
   .zoom-enter-active {
@@ -81,6 +87,8 @@ export default {
   .zoom-enter, .zoom-leave-to {
     transform: scale(0.1);
   }
+
+
 
   .roll-enter-active {
     transition: all 1s ease;
@@ -101,14 +109,5 @@ export default {
   }
   .flip-leave-to {
     transform: rotateY(-180deg);
-  }
-  .answer-screen {
-    top: 0;
-    perspective: 1200px;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: 1;
   }
 </style>

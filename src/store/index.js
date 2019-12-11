@@ -7,6 +7,7 @@ import players from './modules/players';
 import meta from './modules/meta';
 import episode from './modules/episode';
 import buzzer from './modules/buzzer';
+import audio from './modules/audio';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
 Vue.use(Vuex);
@@ -23,6 +24,7 @@ export default new Vuex.Store({
         players,
         meta,
         episode,
+        audio,
         buzzer
     },
     plugins: [

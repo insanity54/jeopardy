@@ -2,12 +2,12 @@
   <div class="result-registrator">
     <div class="button correct" :class="{locked: isCorrectButtonLocked}" @click.prevent="doPlayerCorrect"><i class="material-icons">check_circle_outline</i></div>
     <div class="button incorrect" :class="{locked: isIncorrectButtonLocked}" @click.prevent="doPlayerIncorrect"><i class="material-icons">close</i></div>
-    <div class="button back" @click.prevent="doTimeout"><i class="material-icons">arrow_back_ios</i></div>
+    <div class="button back" @click.prevent="dispatchTimeout"><i class="material-icons">arrow_back_ios</i></div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
+import { mapGetters, mapState, mapActions } from 'vuex';
 export default {
   name: 'ResultRegistrator',
   props: {
@@ -40,12 +40,23 @@ export default {
     },
     item: function () {
       return parseInt(this.$route.query.item);
+    },
+    answerId: function () {
+      return `${this.category}${this.item}`;
     }
   },
   methods: {
+    ...mapActions([
+      'doAnswerTimeout',
+    ]),
+    dispatchTimeout: function () {
+      let payload = { answerId: this.answerId, gameId: this.gameId };
+      this.$socket.emit('answerTimeout', payload);
+      this.doAnswerTimeout(payload);
+    },
     doPlayerCorrect: function () {
       if (this.isCorrectButtonLocked) return;
-      this.maybeIncrCompletedCounter();
+      //this.maybeIncrCompletedCounter();
       this.$store.commit('makeUnavailable', `${this.category}${this.item}`);
       if (this.answer.dailyDouble === true) {
         this.$store.commit('addPoints', { playerId: this.selectedPlayer.id, points: this.game.wager });
@@ -61,26 +72,13 @@ export default {
     doPlayerIncorrect: function () {
       if (this.isIncorrectButtonLocked) return;
       if (this.answer.dailyDouble === true) {
-        this.maybeIncrCompletedCounter();
+        //this.maybeIncrCompletedCounter();
         this.$store.commit('subtractPoints', { playerId: this.selectedPlayer.id, points: this.game.wager });
         this.$store.commit('clearWager');
         this.$router.push(`/game/${this.gameId}`);
       } else {
         this.$store.commit('subtractPoints', { playerId: this.buzzWinner.id, points: this.pointValue });
         this.$store.commit('unsetBuzzWinner');
-      }
-    },
-    doTimeout: function () {
-      this.maybeIncrCompletedCounter();
-      this.$store.commit('makeUnavailable', `${this.answer.category}${this.answer.item}`);
-      this.$store.commit('unsetBuzzWinner');
-      this.$store.commit('lockBuzzer');
-      this.$store.commit('clearWager');
-      this.$router.push(`/game/${this.gameId}/`);
-    },
-    maybeIncrCompletedCounter: function () {
-      if (this.answer.available === true) {
-        this.$store.commit('incrementCompletedAnswerCounter');
       }
     },
   }

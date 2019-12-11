@@ -169,7 +169,7 @@ export default {
       let c = state.game.categories.find((c) => c.revealed === false)
       if (typeof c === 'undefined') return;
       c.revealed = true;
-    }
+    },
   },
   actions: {
     revealAnswers ( context ) {
@@ -194,14 +194,32 @@ export default {
     },
     openAnswer (context, params) {
       let { answerId, gameId } = params;
-      console.log(answerId)
+      let category = answerId[0];
+      let item = answerId[1];
       router.push({
         path: `/game/${gameId}/answer`,
         query: {
-          category: answerId[0],
-          item: answerId[1]
+          category: category,
+          item: item
         }
       });
-    }
+    },
+    /**
+     * the action that happens when no players knew the question.
+     */
+    doAnswerTimeout ({ commit, state }, params) {
+      let { answerId, gameId } = params;
+      let answer = state.game.answer;
+
+      commit('queueAudio', 'timeout');
+      if (answer.available === true) {
+        commit('incrementCompletedAnswerCounter');
+      }
+      commit('makeUnavailable', answerId);
+      commit('unsetBuzzWinner');
+      commit('lockBuzzer');
+      commit('clearWager');
+      router.push(`/game/${gameId}/`);
+    },
   }
 }

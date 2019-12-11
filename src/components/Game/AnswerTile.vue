@@ -55,6 +55,7 @@ export default {
   methods: {
     emitAnswerThenOpen: function () {
       if (this.isPlayerSelected) {
+        this.$store.commit('setActiveAnswer', this.answerId);
         this.$socket.emit('openAnswer', { gameId: this.gameId, answerId: this.answerId });
         this.$store.dispatch('openAnswer', { gameId: this.gameId, answerId: this.answerId });
       }
