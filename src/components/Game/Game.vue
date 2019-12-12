@@ -6,27 +6,26 @@
     </div>
     <h1 class="title" @click="openTitleEditor" v-if="isEditMode">{{ game.name }}</h1>
     <div class="layout">
-      <router-view class="view default-overlay" name="defaultOverlay" />
       <router-view class="view default" :class="{ 'host': isHostRole, 'jumbotron': !isHostRole }" name="default" />
-      <router-view v-if="isJumbotronRole" class="view sidebar" name="sidebar" />
-      <router-view v-if="isHostRole" class="view controls" name="controls" />
+      <router-view v-if="isJumbotronRole" :class="{ 'host': isHostRole, 'jumbotron': !isHostRole }" class="view sidebar" name="sidebar" />
+      <router-view v-if="isHostRole" class="view host controls" name="controls" />
     </div>
-    <Revealer v-if="isHostRole" />
   </div>
 </template>
 
 <script>
-import Revealer from '@/components/Controls/Revealer';
 import AudioPlayer from '@/components/AudioPlayer/AudioPlayer';
 export default {
   name: 'Game',
+  components: {
+    AudioPlayer,
+  },
   data: function () {
     return {
     }
   },
   sockets: {
     revealAnswers: function () {
-      console.log('socket revealAnswers')
       this.$root.$emit('play-audio', 'generate');
       this.$store.dispatch('revealAnswers');
     },
@@ -39,23 +38,30 @@ export default {
     },
     openAnswer: function (evt) {
       let { answerId, gameId } = evt;
-      console.log(`openAnswer socket emission with gameId:${gameId}, answer:${answerId}`)
       this.$store.commit('setActiveAnswer', answerId);
-      console.log('and now we dispatch')
       this.$store.dispatch('openAnswer', { gameId, answerId });
     },
-    answerTimeout: function (evt) {
-      console.log('socket answerTimeout');
+    doAnswerTimeout: function (evt) {
       this.$root.$emit('play-audio', 'timeout');
       this.$store.dispatch('doAnswerTimeout', evt);
+    },
+    doPlayerCorrect: function (evt) {
+      this.$store.dispatch('doPlayerCorrect', evt);
+    },
+    doPlayerIncorrect: function (evt) {
+      this.$store.dispatch('doPlayerIncorrect', evt);
+    },
+    setSelectedPlayer: function (evt) {
+      this.$store.commit('setSelectedPlayer', evt);
+    },
+    submitWager: function (evt) {
+      this.$store.commit('submitWager', evt);
+    },
+    buzzPlayer: function (evt) {
+      this.$store.commit('buzzPlayer', evt);
     }
   },
-  components: {
-    Revealer,
-    AudioPlayer,
-  },
   props: {
-
   },
   computed: {
     game: function () {
@@ -93,9 +99,7 @@ export default {
     }
   },
   created: function () {
-    console.log(`game id is ${this.game.id}`);
     if (this.game.id === '') {
-      console.log('downloading game');
       this.$store.dispatch('downloadGame', this.gameId).then((g) => {
         this.$store.commit('loadGame', g.id);
       });
@@ -105,14 +109,6 @@ export default {
 </script>
 
 <style scoped>
-.default.host {
-  width: 100vw;
-}
-.default.jumbotron {
-  width: 79vw;
-}
-.default {
-}
 .layout {
   position: absolute;
   top: 0;
@@ -123,11 +119,21 @@ export default {
   width: 100vw;
   height: 100vh;
 }
+.default {
+}
+.default.host {
+  width: 100vw;
+  height: 60vh;
+}
+.default.jumbotron {
+  width: 79vw;
+  height: 100vh;
+}
 .sidebar {
   width: 19vw;
 }
-
-.controls {
+.controls.host {
+  height: 40vh;
   width: 100vw;
 }
 .title {

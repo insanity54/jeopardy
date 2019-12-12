@@ -1,6 +1,7 @@
 <template>
-  <div class="buzzer button" :style="{backgroundColor: player.color}" :class="{selected: isBuzzWinner, locked: isButtonLocked}" @click.prevent="clickPlayer(player)">
-    {{ player.name }}
+  <div class="buzzer button" :style="{ backgroundColor: player.color }" :class="{ 'selected': isSelectedPlayer, 'buzzed': isBuzzWinner, 'locked': isBuzzerLocked }" @click.prevent="buzzPlayer">
+    <p><i v-if="isBuzzWinner" class="glyph material-icons">bolt</i></p>
+    <p>{{ player.name }}</p>
   </div>
 </template>
 
@@ -14,29 +15,40 @@ export default {
     }
   },
   computed: {
-    isButtonLocked: function () {
-      if (this.$store.state.buzzer.isLocked) return true;
-      return false;
-    },
     isBuzzWinner: function () {
-      return (this.player.buzzWinner);
+      return (this.player.buzzWinner === true);
+    },
+    isSelectedPlayer: function () {
+      return (this.player.chooser === true);
+    },
+    isBuzzerLocked: function () {
+      return (this.$store.state.buzzer.isLocked === true);
     }
   },
   methods: {
-    buzzPlayer: function (p) {
-      return this.$store.commit('buzzPlayer', p);
-    },
-    clickPlayer: function (p) {
-      if (this.$store.state.game.buzzerLock) return;
-      return this.buzzPlayer(p);
-    },
+    buzzPlayer: function () {
+      if (this.isBuzzerLocked) return;
+      let p = this.player;
+      this.$socket.emit('buzzPlayer', p);
+      this.$store.commit('buzzPlayer', p);
+    }
   }
 }
 </script>
 
 <style scoped>
-.selected {
-  text-decoration: underline overline;
+.glyph {
+  font-size: 12pt;
+}
+.buzzer {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+.buzzed {
+}
+.buzzer.selected {
+  text-decoration: underline;
 }
 div.buzzer.locked {
   background-color: grey !important;

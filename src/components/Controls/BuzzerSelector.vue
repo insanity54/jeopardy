@@ -15,20 +15,8 @@ export default {
     players: function () {
       return this.$store.state.players;
     },
-    selectedPlayer: function () {
-      return this.players.find((p) => {
-        return p.selected === true;
-      })
-    },
-    isSelected: function () {
-      if (this.isAnswerScreen) return (this.selected);
-      return false;
-    }
   },
   methods: {
-    selectPlayer: function (p) {
-      return this.$store.commit('selectPlayer', p);
-    }
   }
 }
 </script>
@@ -37,6 +25,7 @@ export default {
 .buzzer-selector {
   color: white;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   align-items: center;
 }

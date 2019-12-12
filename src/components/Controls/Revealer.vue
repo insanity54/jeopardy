@@ -48,6 +48,7 @@ export default {
 .revealer {
   display: flex;
   flex-direction: row;
+  z-index: 9999;
 }
 .revealer .button:nth-child(1) {
   background-color: purple;

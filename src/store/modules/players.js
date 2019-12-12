@@ -23,19 +23,23 @@ export default {
       let pl = state.find((p) => p.id === playerId)
       return pl.color = color;
     },
+    /**
+     * buzzPlayer
+     * Administratively select the player who has buzzed
+     */
     buzzPlayer(state, player) {
       state.forEach((p) => {
         if (p.id === player.id) p.buzzWinner = true;
         else p.buzzWinner = false;
       });
     },
-    setChooserPlayer(state, player) {
+    setSelectedPlayer(state, player) {
       state.forEach((p) => {
         if (p.id === player.id) {
           p.chooser = true;
         }
         else p.chooser = false;
-      })
+      });
     },
     addPoints(state, payload) {
       let { playerId, points } = payload;

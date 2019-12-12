@@ -1,6 +1,8 @@
 <template>
-  <div class="player-score" :style="{ backgroundColor: player.color }">
-    <p>{{ player.score }} {{ player.name }}</p>
+  <div class="player-score" :style="{ 'backgroundColor': player.color }" :class="{ 'selected': isSelectedPlayer }">
+    <p>{{ player.score }}</p>
+    <i v-if="isBuzzWinner" class="buzz-win-indicator material-icons">bolt</i>
+    <p>{{ player.name }}</p>
   </div>
 </template>
 
@@ -20,15 +22,21 @@ export default {
     },
     isSelectedPlayer: function () {
       return this.player.chooser;
+    },
+    isBuzzWinner: function () {
+      return this.player.buzzWinner;
     }
   },
   methods: {
-    setChooserPlayer: function (p) {
-      return this.$store.commit('setChooserPlayer', p);
+    setSelectedPlayer: function (p) {
+      return this.$store.commit('setSelectedPlayer', p);
     },
+    /**
+     * clickPlayer has the same effect as buzzing
+     */
     clickPlayer: function (p) {
       if (this.isButtonLocked) return;
-      else return this.setChooserPlayer(p);
+      else return this.setSelectedPlayer(p);
     },
   }
 }
@@ -37,10 +45,20 @@ export default {
 <style scoped>
 .player-score {
   display: flex;
-  box-sizing: border-box;
-  margin: 0.2em 1em;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
   padding: 1em;
+  margin: 0.25em 0;
   font-weight: bold;
   text-shadow: 0 0 5px black;
+  width: 100%;
+  box-sizing: border-box;
+}
+.player-score i {
+  font-size: 10pt;
+}
+.selected {
+  text-decoration: underline;
 }
 </style>

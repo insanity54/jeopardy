@@ -27,12 +27,6 @@ export default {
     }
   },
   methods: {
-    selectPlayer: function (p) {
-      return this.$store.commit('selectPlayer', p);
-    },
-    setChooserPlayer: function (p) {
-      return this.$store.commit('setChooserPlayer', p);
-    }
   }
 }
 </script>

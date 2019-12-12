@@ -1,5 +1,5 @@
 <template>
-  <div class="player-button" :style="{backgroundColor: player.color}" :class="{selected: isSelectedPlayer, locked: isButtonLocked}" @click.prevent="clickPlayer(player)">
+  <div class="player-button" :style="{ backgroundColor: player.color }" :class="{ selected: isSelectedPlayer, locked: isButtonLocked }" @click.prevent="clickPlayer">
     <p>{{ player.score }}</p>
     <p>{{ player.name }}</p>
   </div>
@@ -24,31 +24,33 @@ export default {
     }
   },
   methods: {
-    setChooserPlayer: function (p) {
-      return this.$store.commit('setChooserPlayer', p);
+    setSelectedPlayer: function (p) {
+      this.$store.commit('setSelectedPlayer', p);
+      this.$socket.emit('setSelectedPlayer', p);
     },
-    clickPlayer: function (p) {
+    clickPlayer: function () {
       if (this.isButtonLocked) return;
-      else return this.setChooserPlayer(p);
+      else return this.setSelectedPlayer(this.player);
     },
   }
 }
 </script>
 
 <style scoped>
-.player-button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1em;
-  margin: 0 5px;
-  font-weight: bold;
-  text-shadow: 0 0 5px black;
-}
-.selected {
-  outline: 5px solid white;
-}
-div.player.locked {
-  background-color: grey;
-}
+  .player-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+    margin: 0 5px;
+    font-weight: bold;
+    text-shadow: 0 0 5px black;
+  }
+  .selected {
+    text-decoration: underline;
+    text-shadow: 3px 3px black;
+  }
+  div.player.locked {
+    background-color: grey;
+  }
 </style>

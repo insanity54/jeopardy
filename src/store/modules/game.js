@@ -51,6 +51,9 @@ export default {
     },
     completedAnswerCounter: state => {
       return state.game.completedAnswerCounter;
+    },
+    isDailyDouble: state => {
+      return (state.game.answer.dailyDouble === true);
     }
   },
   mutations: {
@@ -210,16 +213,60 @@ export default {
     doAnswerTimeout ({ commit, state }, params) {
       let { answerId, gameId } = params;
       let answer = state.game.answer;
-
       commit('queueAudio', 'timeout');
-      if (answer.available === true) {
-        commit('incrementCompletedAnswerCounter');
-      }
+      if (answer.available === true) commit('incrementCompletedAnswerCounter');
       commit('makeUnavailable', answerId);
       commit('unsetBuzzWinner');
       commit('lockBuzzer');
       commit('clearWager');
       router.push(`/game/${gameId}/`);
     },
+    /**
+     * doPlayerCorrect
+     * the action that happens when a player gets an answer correct
+     */
+    doPlayerCorrect ({ commit, state, getters }, params) {
+      let { answerId, gameId, pointValue } = params;
+      let answer = state.game.answer;
+      console.log(params)
+      if (answer.available === true) commit('incrementCompletedAnswerCounter');
+      commit('makeUnavailable', answerId);
+      if (answer.dailyDouble === true) {
+        commit('addPoints', {
+          playerId: getters.selectedPlayer.id,
+          points: state.game.wager
+        });
+      } else {
+        commit('setSelectedPlayer', getters.buzzWinner);
+        commit('addPoints', { playerId: getters.buzzWinner.id, points: pointValue });
+      }
+      commit('unsetBuzzWinner');
+      commit('lockBuzzer');
+      commit('clearWager');
+      router.push(`/game/${gameId}/`);
+    },
+    /**
+     * doPlayerIncorrect
+     * the action that happens when a player gets an answer wrong
+     */
+    doPlayerIncorrect ({ commit, state, getters }, params) {
+      let { gameId, pointValue } = params;
+      let answer = state.game.answer;
+      if (answer.available === true) commit('incrementCompletedAnswerCounter');
+      if (answer.dailyDouble === true) {
+        console.log(`subtracting ${pointValue} from ${getters.selectedPlayer.name}`)
+        commit('subtractPoints', { playerId: getters.selectedPlayer.id, points: state.game.wager });
+        commit('clearWager');
+        router.push(`/game/${gameId}`);
+      } else {
+        console.log(`subtracting ${pointValue} from ${getters.buzzWinner.name}`)
+        commit('subtractPoints', { playerId: getters.buzzWinner.id, points: pointValue });
+        commit('unsetBuzzWinner');
+      }
+    },
+    doSubmitWager ({ commit }, params) {
+      let { wagerInput } = params;
+      commit('submitWager', wagerInput);
+    }
   }
 }

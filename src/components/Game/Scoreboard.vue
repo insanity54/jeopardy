@@ -1,6 +1,8 @@
 <template>
   <div class="scoreboard">
-    <PlayerScore v-for="player in players" :key="player.id" :player="player"></PlayerScore>
+    <transition-group class="list" name="leet">
+      <PlayerScore v-for="player in sortedPlayers" :key="player.id" :player="player"></PlayerScore>
+    </transition-group>
   </div>
 </template>
 
@@ -30,28 +32,37 @@ export default {
           p.score === 0;
         }
         return p;
-      }).sort((a, b) => a.score - b.score);
+      }).sort((a, b) => b.score - a.score);
     }
   },
   methods: {
     selectPlayer: function (p) {
       return this.$store.commit('selectPlayer', p);
     },
-    setChooserPlayer: function (p) {
-      return this.$store.commit('setChooserPlayer', p);
+    setSelectedPlayer: function (p) {
+      return this.$store.commit('setSelectedPlayer', p);
     }
   }
 }
 </script>
 
 <style>
+.list {
+  width: 100%;
+}
+.leet-move {
+  transition: transform 1s;
+}
 .scoreboard {
   color: white;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: flex-start;
+  z-index: 5000;
+  width: 100%;
+  margin: 5px;
   overflow: hidden;
 }
 </style>

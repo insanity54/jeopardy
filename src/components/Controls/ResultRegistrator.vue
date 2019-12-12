@@ -1,7 +1,8 @@
 <template>
   <div class="result-registrator">
-    <div class="button correct" :class="{locked: isCorrectButtonLocked}" @click.prevent="doPlayerCorrect"><i class="material-icons">check_circle_outline</i></div>
-    <div class="button incorrect" :class="{locked: isIncorrectButtonLocked}" @click.prevent="doPlayerIncorrect"><i class="material-icons">close</i></div>
+    <div class="affected-player">{{ affectedPlayer }}</div>
+    <div class="button correct" :class="{locked: isCorrectButtonLocked}" @click.prevent="dispatchPlayerCorrect"><i class="material-icons">check_circle_outline</i></div>
+    <div class="button incorrect" :class="{locked: isIncorrectButtonLocked}" @click.prevent="dispatchPlayerIncorrect"><i class="material-icons">close</i></div>
     <div class="button back" @click.prevent="dispatchTimeout"><i class="material-icons">arrow_back_ios</i></div>
   </div>
 </template>
@@ -24,6 +25,11 @@ export default {
       'buzzWinner',
       'selectedPlayer',
     ]),
+    affectedPlayer: function () {
+      if (this.answer.dailyDouble) return this.selectedPlayer.name;
+      else if (typeof this.buzzWinner === 'undefined') return '';
+      else return this.buzzWinner.name;
+    },
     isCorrectButtonLocked: function () {
       if (this.answer.dailyDouble === true && this.game.wager ) return false;
       return (this.buzzerLock || (typeof this.buzzWinner === 'undefined'));
@@ -48,44 +54,42 @@ export default {
   methods: {
     ...mapActions([
       'doAnswerTimeout',
+      'doPlayerCorrect',
+      'doPlayerIncorrect'
     ]),
     dispatchTimeout: function () {
       let payload = { answerId: this.answerId, gameId: this.gameId };
-      this.$socket.emit('answerTimeout', payload);
+      this.$socket.emit('doAnswerTimeout', payload);
       this.doAnswerTimeout(payload);
     },
-    doPlayerCorrect: function () {
+    dispatchPlayerCorrect: function () {
       if (this.isCorrectButtonLocked) return;
-      //this.maybeIncrCompletedCounter();
-      this.$store.commit('makeUnavailable', `${this.category}${this.item}`);
-      if (this.answer.dailyDouble === true) {
-        this.$store.commit('addPoints', { playerId: this.selectedPlayer.id, points: this.game.wager });
-      } else {
-        this.$store.commit('setChooserPlayer', this.buzzWinner);
-        this.$store.commit('addPoints', { playerId: this.buzzWinner.id, points: this.pointValue });
-      }
-      this.$store.commit('unsetBuzzWinner');
-      this.$store.commit('lockBuzzer');
-      this.$store.commit('clearWager');
-      this.$router.push(`/game/${this.gameId}/`);
+      let payload = {
+        answerId: this.answer.id,
+        gameId: this.gameId,
+        pointValue: this.pointValue
+      };
+      this.$socket.emit('doPlayerCorrect', payload);
+      this.doPlayerCorrect(payload);
     },
-    doPlayerIncorrect: function () {
+    dispatchPlayerIncorrect: function () {
       if (this.isIncorrectButtonLocked) return;
-      if (this.answer.dailyDouble === true) {
-        //this.maybeIncrCompletedCounter();
-        this.$store.commit('subtractPoints', { playerId: this.selectedPlayer.id, points: this.game.wager });
-        this.$store.commit('clearWager');
-        this.$router.push(`/game/${this.gameId}`);
-      } else {
-        this.$store.commit('subtractPoints', { playerId: this.buzzWinner.id, points: this.pointValue });
-        this.$store.commit('unsetBuzzWinner');
-      }
-    },
+      let payload = { gameId: this.gameId, pointValue: this.pointValue };
+      this.$socket.emit('doPlayerIncorrect', payload);
+      this.doPlayerIncorrect(payload);
+    }
   }
 }
 </script>
 
 <style>
+.affected-player {
+  display: flex;
+  align-items: center;
+  border: 3px dotted yellow;
+  border-radius: 5px;
+  padding: 1em;
+}
 .result-registrator {
   display: flex;
   flex-direction: row;

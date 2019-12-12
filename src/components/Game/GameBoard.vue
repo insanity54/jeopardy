@@ -1,8 +1,8 @@
 <template>
   <transition name="delay">
     <div class="game-board">
-        <CategoryTile v-for="(category, idx) in categories" :key="idx" :index="idx" :category="category"></CategoryTile>
-        <AnswerTile v-for="answer in answers" :key="answer.id" :answer="answer"></AnswerTile>
+      <CategoryTile v-for="(category, idx) in categories" :key="idx" :index="idx" :category="category"></CategoryTile>
+      <AnswerTile v-for="answer in answers" :key="answer.id" :answer="answer"></AnswerTile>
     </div>
   </transition>
 </template>

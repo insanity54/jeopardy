@@ -33,11 +33,13 @@ export default {
 
 <style scoped>
 .role-display {
+  font-weight: bold;
   position: absolute;
   color: white;
   font-size: 12pt;
-  background-color: red;
-  opacity: 0.5;
+  background-color: #111;
+  outline: 1px dashed purple;
+  opacity: 0.8;
   top: 90vh;
   left: 0;
   padding: 1em;

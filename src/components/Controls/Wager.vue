@@ -1,8 +1,8 @@
 <template>
   <div v-if="isDailyDouble && !isWagerPlaced" class="wager">
-    <label for="wager-input">Wager (max {{ wagerMaximum }}):</label>
-    <input id="wager-input" v-model="wagerInput" type="number" :min="wagerMinimum" :max="wagerMaximum" @keydown.enter="doSubmitWager">
-    <div class="button" @click.prevent="doSubmitWager"><i class="material-icons">send</i></div>
+    <label for="wager-input">{{ selectedPlayer.name }} wager (max {{ wagerMaximum }}):</label>
+    <input id="wager-input" v-model="wagerInput" type="number" :min="wagerMinimum" :max="wagerMaximum" @keydown.enter="dispatchWager">
+    <div class="button" @click.prevent="dispatchWager"><i class="material-icons">send</i></div>
     <span class="wager-response" :class="{ good: isGoodWager }">{{ wagerResponse }}</span>
   </div>
 </template>
@@ -75,14 +75,16 @@ export default {
     }
   },
   methods: {
-    doSubmitWager: function () {
+    dispatchWager: function () {
       if (this.wagerInput < this.wagerMinimum)
         return this.wagerResponse = `Wager too low. Must be > ${this.wagerMinimum-1}`;
       if (this.wagerInput > this.wagerMaximum)
         return this.wagerResponse = `Wager too high. Must be < ${this.wagerMaximum+1}`;
       this.wagerResponse = 'OK';
-      return this.$store.commit('submitWager', parseInt(this.wagerInput));
-    }
+      let payload = parseInt(this.wagerInput);
+      this.$socket.emit('submitWager', payload);
+      this.$store.commit('submitWager', payload);
+    },
   }
 }
 </script>

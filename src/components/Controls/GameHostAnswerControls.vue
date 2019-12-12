@@ -1,12 +1,12 @@
 <template>
   <div class="game-host-answer-controls">
     <Wager :wagers="wagers" :answer="answer" :gameType="gameType" :selectedPlayer="selectedPlayer"/>
-    <Spacer/>
-    <Unlocker />
+    <Spacer />
+    <Unlocker v-if="!isDailyDouble" />
     <div class="spacer"></div>
-    <BuzzerSelector />
+    <BuzzerSelector v-if="!isDailyDouble" />
     <div class="spacer"></div>
-    <ResultRegistrator :answer="answer"/>
+    <ResultRegistrator :answer="answer" />
   </div>
 </template>
 
@@ -33,7 +33,8 @@ export default {
       wagers: state => state.game.game.wagers,
     }),
     ...mapGetters([
-      'selectedPlayer'
+      'selectedPlayer',
+      'isDailyDouble'
     ])
   },
   props: {
@@ -47,14 +48,11 @@ export default {
 .game-host-answer-controls {
   color: white;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  position: absolute;
   z-index: 5000;
-  height: 5vh;
-  width: 100vw;
-  top: 94vh;
   user-select: none;
 }
 .button {
