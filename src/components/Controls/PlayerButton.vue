@@ -1,5 +1,5 @@
 <template>
-  <div class="player-button" :style="{ backgroundColor: player.color }" :class="{ selected: isSelectedPlayer, locked: isButtonLocked }" @click.prevent="clickPlayer">
+  <div class="player-button button" :style="{ backgroundColor: player.color }" :class="{ selected: isSelectedPlayer, locked: isButtonLocked }" @click.prevent="clickPlayer">
     <p>{{ player.score }}</p>
     <p>{{ player.name }}</p>
   </div>
@@ -42,7 +42,7 @@ export default {
     flex-direction: column;
     align-items: center;
     padding: 1em;
-    margin: 0 5px;
+    margin: 5px;
     font-weight: bold;
     text-shadow: 0 0 5px black;
   }

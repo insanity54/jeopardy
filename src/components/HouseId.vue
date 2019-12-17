@@ -2,7 +2,7 @@
   <div class="house-id">
     <h1>House ID: <span class="emphasis">{{ houseId }}</span></h1>
     <div class="button" @click="regenerateHouseId"><i class="material-icons">refresh</i>Regenerate</div>
-    <p>The house ID is a unique code which must be the same on the jumbotron and player's phones.</p>
+    <p>The house ID is a unique code which must be the same on all devices in the room.</p>
   </div>
 </template>
 

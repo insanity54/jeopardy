@@ -8,6 +8,10 @@
       <div class="game-badge-game-image">
         <Avatar :data="game.id"/>
       </div>
+      <div class="game-badge-status">
+        <p>{{ error.msg }}</p>
+        <p>{{ success.msg }}</p>
+      </div>
       <div class="game-badge-controls">
         <div class="spacer-small"></div>
         <div @click="goToGame" class="button">
@@ -31,7 +35,7 @@
       </div>
         <div class="game-badge-color-chooser">
         </div>
-      <ErrorHandler :error="error" :success="success"/>
+      <ErrorHandler v-if="false" :error="error" :success="success"/>
     </div>
   </div>
 </template>
@@ -57,7 +61,7 @@ export default {
   },
   data: function () {
     return {
-      error: new Error(),
+      error: new Error('yolo'),
       success: {}
     }
   },
@@ -87,14 +91,22 @@ export default {
   },
   methods: {
     uploadGame: function () {
-      this.prepareZip().then((zipContent) => {
-        axios.post('/api/v1/game/upload', { payload: zipContent } );
-      }).catch((e) => {
-        console.log(e)
+      this.prepareZip()
+      .then((zipContent) => {
+        return axios
+          .post('/api/v1/game/upload', { payload: zipContent } )
+      })
+      .then((idk) => {
+        console.log(idk);
+        this.success = { msg: 'the upload was successful.' };
+      })
+      .catch((e, idk) => {
+        console.log(idk);
         this.error = e;
       })
-      .then(() => {
-        this.success = { msg: 'the upload was successful.' };
+      .finally((res) => {
+        console.log(res);
+        this.success = res;
       })
     },
     prepareZip: function () {
@@ -229,5 +241,8 @@ export default {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+  }
+  .game-badge-controls .button {
+    background-color: purple;
   }
 </style>

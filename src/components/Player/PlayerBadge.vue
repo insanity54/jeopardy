@@ -8,10 +8,10 @@
         <div @click="isEditMode = !isEditMode" class="edit-name-button">
           <i class="material-icons">edit</i>
         </div>
-        <div @click="deletePlayer" class="edit-name-button">
+        <div v-if="!isPlayerPage" @click="deletePlayer" class="edit-name-button">
           <i class="material-icons">delete</i>
         </div>
-        <div v-show="!isPlayerPage" @click="kickPlayer" class="material-icons">
+        <div v-if="!isPlayerPage" @click="kickPlayer" class="material-icons">
           <i class="material-icons">flag</i>
         </div>
       </div>
@@ -20,7 +20,10 @@
       <div class="player-badge-color-chooser">
         <Compact v-model="color" />
       </div>
-      <p>HouseId:{{ houseId }}</p>
+      <div v-if="isPlayerPage">
+        <p>Enter your name and color, then wait for the game to begin.</p>
+        <p class="house-id">{{ houseId }}</p>
+      </div>
       <transition name="fade">
         <div v-if="buzzed" class="buzzer-tester">
           <i class="material-icons">touch_app</i>
@@ -163,5 +166,12 @@ export default {
   }
   .fade-leave-to {
     opacity: 0;
+  }
+  .house-id {
+    margin: 1em 0 0 0;
+    text-transform: uppercase;
+    color: yellow;
+    font-weight: bold;
+    text-shadow: 2px 2px black;
   }
 </style>

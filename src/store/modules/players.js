@@ -10,7 +10,7 @@ export default {
     },
     selectedPlayer: state => {
       return state.find((p) => p.chooser === true);
-    }
+    },
   },
   mutations: {
     SOCKET_updatePlayerColor(state, data) {
@@ -63,9 +63,6 @@ export default {
       let { name, id } = data;
       let pl = state.find((p) => p.id === id)
       return pl.name = name;
-    },
-    SOCKET_createPlayer(state, data) {
-      this.commit('createPlayer', data);
     },
     createPlayer(state, data) {
       state.push({

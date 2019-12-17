@@ -27,9 +27,6 @@
       <p>A: IT’S A CALL TO THE FIRE DEPARTMENT WHEN THERE TRULY IS NO FIRE</p>
       <p>Q: A FALSE ALARM</p>
       <hr>
-      <p>A: IT’S A CALL TO THE FIRE DEPARTMENT WHEN THERE TRULY IS NO FIRE</p>
-      <p>Q: A FALSE ALARM</p>
-      <hr>
       <p>A: THE SENDER OF GIFTS IN “THE TWELVE DAYS OF CHRISTMAS”</p>
       <p>Q: MY TRUE LOVE</p>
       <hr>

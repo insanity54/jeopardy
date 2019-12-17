@@ -3,6 +3,7 @@
     <div class="affected-player">{{ affectedPlayer }}</div>
     <div class="button correct" :class="{locked: isCorrectButtonLocked}" @click.prevent="dispatchPlayerCorrect"><i class="material-icons">check_circle_outline</i></div>
     <div class="button incorrect" :class="{locked: isIncorrectButtonLocked}" @click.prevent="dispatchPlayerIncorrect"><i class="material-icons">close</i></div>
+    <div class="button timeout" :class="{locked: isIncorrectButtonLocked}" @click.prevent="dispatchPlayerTimeout"><i class="material-icons">alarm</i></div>
     <div class="button back" @click.prevent="dispatchTimeout"><i class="material-icons">arrow_back_ios</i></div>
   </div>
 </template>
@@ -32,7 +33,7 @@ export default {
     },
     isCorrectButtonLocked: function () {
       if (this.answer.dailyDouble === true && this.game.wager ) return false;
-      return (this.buzzerLock || (typeof this.buzzWinner === 'undefined'));
+      return (typeof this.buzzWinner === 'undefined');
     },
     isIncorrectButtonLocked: function () {
       return this.isCorrectButtonLocked;
@@ -55,12 +56,20 @@ export default {
     ...mapActions([
       'doAnswerTimeout',
       'doPlayerCorrect',
-      'doPlayerIncorrect'
+      'doPlayerIncorrect',
+      'doPlayerTimeout',
     ]),
     dispatchTimeout: function () {
       let payload = { answerId: this.answerId, gameId: this.gameId };
       this.$socket.emit('doAnswerTimeout', payload);
+      this.$socket.emit('lockBuzzer');
       this.doAnswerTimeout(payload);
+    },
+    dispatchPlayerTimeout: function () {
+      let payload = { answerId: this.answerId, gameId: this.gameId, pointValue: this.pointValue };
+      this.$socket.emit('doPlayerTimeout', payload);
+      this.$socket.emit('unlockBuzzer');
+      this.doPlayerTimeout(payload);
     },
     dispatchPlayerCorrect: function () {
       if (this.isCorrectButtonLocked) return;
@@ -76,6 +85,7 @@ export default {
       if (this.isIncorrectButtonLocked) return;
       let payload = { gameId: this.gameId, pointValue: this.pointValue };
       this.$socket.emit('doPlayerIncorrect', payload);
+      this.$socket.emit('unlockBuzzer');
       this.doPlayerIncorrect(payload);
     }
   }
@@ -102,6 +112,9 @@ export default {
 }
 .back {
   background-color: maroon;
+}
+.timeout {
+  background-color: purple;
 }
 .locked {
   background-color: grey;

@@ -7,7 +7,15 @@ export default {
     houseId: '',
     role: 'jumbotron',
     playerId: '',
-    isDebugMode: true
+    isDebugMode: false
+  },
+  getters: {
+    isHostRole: state => {
+      return (state.role === 'host');
+    },
+    isJumbotronRole: state => {
+      return (state.role === 'jumbotron');
+    }
   },
   mutations: {
     generateHouseId(state) {

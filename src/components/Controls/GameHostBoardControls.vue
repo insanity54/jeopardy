@@ -36,7 +36,7 @@ export default {
 .game-host-board-controls {
   color: white;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 10;

@@ -1,15 +1,16 @@
 <template>
-  <div class="answer">
+  <div class="answer" :class="{'host': isHostRole }">
     <div v-if="!isEditMode" class="live">
-      <span v-if="!isImageAnswer">{{ answer.answerText }}</span>
-      <img v-if="isImageAnswer" :src="answer.image.url"/>
+      <img class="image" v-if="isImageAnswer" :src="answer.image.url"/>
+      <p class="a text" v-if="!isImageAnswer || isHostRole">{{ answer.answerText }}</p>
+      <p class="question text" v-if="isHostRole">{{ answer.questionText }}</p>
     </div>
     <AnswerEditor v-if="isEditMode" :answer="answer"/>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import AnswerEditor from '@/components/AnswerEditor/AnswerEditor.vue';
 export default {
   name: 'Answer',
@@ -24,6 +25,10 @@ export default {
       isEditMode: state => state.meta.edit,
       gameId: state => state.game.game.id,
     }),
+    ...mapGetters([
+      'isHostRole',
+      'isJumbotronRole'
+    ]),
     isImageAnswer: function () {
       return (typeof this.answer.image.url !== 'undefined') ? true : false;
     }
@@ -84,14 +89,22 @@ export default {
     overflow: hidden;
     position: absolute;
   }
-  .answer > span {
-    margin: 0 1em 0 1em;
-  }
-  .answer > .live {
-    width: 80%;
+  .answer {
+    width: 100%;
   }
   .answer img {
     width: 100%;
   }
-
+  .host .image {
+    width: 35%;
+  }
+  .question.text {
+    color: green;
+    margin: 1em 0 0 0;
+  }
+  @media screen and (max-width: 600px) {
+    .text {
+      font-size: 12pt;
+    }
+  }
 </style>

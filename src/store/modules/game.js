@@ -213,13 +213,30 @@ export default {
     doAnswerTimeout ({ commit, state }, params) {
       let { answerId, gameId } = params;
       let answer = state.game.answer;
-      commit('queueAudio', 'timeout');
       if (answer.available === true) commit('incrementCompletedAnswerCounter');
       commit('makeUnavailable', answerId);
       commit('unsetBuzzWinner');
       commit('lockBuzzer');
       commit('clearWager');
       router.push(`/game/${gameId}/`);
+    },
+    /**
+     * the action that happens when a player does not answer the question fast enough
+     */
+    doPlayerTimeout ({ commit, state, getters }, params) {
+      let { answerId, pointValue } = params;
+      let answer = state.game.answer;
+      if (answer.available === true) commit('incrementCompletedAnswerCounter');
+
+      commit('makeUnavailable', answerId);
+      if (answer.dailyDouble === true) {
+        commit('subtractPoints', { playerId: getters.selectedPlayer.id, points: state.game.wager });
+        commit('clearWager');
+      } else {
+        commit('subtractPoints', { playerId: getters.buzzWinner.id, points: pointValue });
+        commit('unsetBuzzWinner');
+        commit('unlockBuzzer');
+      }
     },
     /**
      * doPlayerCorrect
@@ -262,6 +279,7 @@ export default {
         console.log(`subtracting ${pointValue} from ${getters.buzzWinner.name}`)
         commit('subtractPoints', { playerId: getters.buzzWinner.id, points: pointValue });
         commit('unsetBuzzWinner');
+        commit('unlockBuzzer');
       }
     },
     doSubmitWager ({ commit }, params) {

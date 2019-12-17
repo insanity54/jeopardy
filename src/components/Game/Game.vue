@@ -1,7 +1,7 @@
 <template>
   <div class="game">
     <AudioPlayer v-if="isJumbotronRole"/>
-    <div v-if="game.id === ''" class="no-game-error">
+    <div v-if="!isGameInVuex" class="no-game-error">
       <p>So sorry, the game {{ gameId }} does not exist on this device.</p>
     </div>
     <h1 class="title" @click="openTitleEditor" v-if="isEditMode">{{ game.name }}</h1>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import AudioPlayer from '@/components/AudioPlayer/AudioPlayer';
 export default {
   name: 'Game',
@@ -45,6 +46,10 @@ export default {
       this.$root.$emit('play-audio', 'timeout');
       this.$store.dispatch('doAnswerTimeout', evt);
     },
+    doPlayerTimeout: function (evt) {
+      this.$root.$emit('play-audio', 'timeout');
+      this.$store.dispatch('doPlayerTimeout', evt);
+    },
     doPlayerCorrect: function (evt) {
       this.$store.dispatch('doPlayerCorrect', evt);
     },
@@ -59,16 +64,23 @@ export default {
     },
     buzzPlayer: function (evt) {
       this.$store.commit('buzzPlayer', evt);
+    },
+    buzzWinner: function (evt) {
+      this.$store.commit('buzzPlayer', evt);
     }
   },
   props: {
   },
   computed: {
+    ...mapGetters([
+      'isHostRole',
+      'isJumbotronRole'
+    ]),
+    isGameInVuex: function () {
+      return (this.game.id !== '');
+    },
     game: function () {
       return this.$store.state.game.game;
-    },
-    isHostRole: function () {
-      return (this.$store.state.meta.role === 'host');
     },
     gameId: function () {
       return this.$route.params.gameId;
@@ -84,10 +96,7 @@ export default {
     },
     transitionStyle: function () {
       return 'fade';
-    },
-    isJumbotronRole: function () {
-      return (this.$store.state.meta.role === 'jumbotron');
-    },
+    }
   },
   methods: {
     openTitleEditor: function() {
@@ -99,7 +108,8 @@ export default {
     }
   },
   created: function () {
-    if (this.game.id === '') {
+    if (!this.isGameInVuex) {
+      console.log(`downloading game ${this.gameId}`);
       this.$store.dispatch('downloadGame', this.gameId).then((g) => {
         this.$store.commit('loadGame', g.id);
       });
@@ -109,44 +119,59 @@ export default {
 </script>
 
 <style scoped>
-.layout {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100vw;
-  height: 100vh;
-}
-.default {
-}
-.default.host {
-  width: 100vw;
-  height: 60vh;
-}
-.default.jumbotron {
-  width: 79vw;
-  height: 100vh;
-}
-.sidebar {
-  width: 19vw;
-}
-.controls.host {
-  height: 40vh;
-  width: 100vw;
-}
-.title {
-  cursor: pointer;
-}
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s linear;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
-.game {
-  color: white;
-  user-select: none;
-}
+  .layout {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100vw;
+    height: 100vh;
+  }
+  .default {
+  }
+  .default.host {
+    width: 100vw;
+    height: 60vh;
+  }
+  .default.jumbotron {
+    width: 79vw;
+    height: 100vh;
+  }
+  .sidebar {
+    width: 19vw;
+  }
+  .controls.host {
+    width: 100vw;
+  }
+  @media screen and (min-width: 601px) {
+    .controls.host {
+      height: 30vh;
+    }
+    .default.host {
+      height: 70vh;
+    }
+  }
+  @media screen and (max-width: 600px) {
+    .controls.host {
+      height: 60vh;
+    }
+    .default.host {
+      height: 40vh;
+    }
+  }
+  .title {
+    cursor: pointer;
+  }
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 0.5s linear;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+  .game {
+    color: white;
+    user-select: none;
+  }
 </style>

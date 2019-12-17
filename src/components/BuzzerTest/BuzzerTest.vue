@@ -36,14 +36,13 @@ export default {
   },
   sockets: {
     buzzWinner: function (evt) {
-      console.log('winner seen');
       this.winner = evt;
     },
     buzz: function (evt) {
       this.$store.commit('buzz', evt);
       this.scroll();
     },
-    lockBuzzer: function () {
+    unlockBuzzer: function () {
       this.winner = {};
     }
   },
@@ -52,7 +51,7 @@ export default {
       return this.$store.state.buzzer.buzzLog;
     },
     seen: function () {
-      return this.buzzLog.map((l) => l.id).filter(this.onlyUnique);
+      return this.buzzLog.map((l) => l.id).filter(this.onlyUnique).sort((a,b) => a+b);
     },
     isBuzzerLocked: function () {
       return this.$store.state.buzzer.isLocked;

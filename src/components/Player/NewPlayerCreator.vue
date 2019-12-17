@@ -1,9 +1,9 @@
 <template>
-  <div class="new-player-creator" :style="{backgroundColor: playerColor}">
+  <div class="new-player-creator" :style="{ backgroundColor: playerColor }">
     <p>Welcome, New Player!</p>
     <h1>{{ playerName }}</h1>
     <label for="player-name-input">Player Name:</label>
-    <input id="player-name-input" v-model="playerName" type=text/>
+    <input id="player-name-input" v-model="playerName" type=text />
     <label>Player Color:</label>
     <Compact v-model="playerColor" />
     <p>name: {{ playerName }}</p>

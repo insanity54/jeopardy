@@ -31,6 +31,9 @@
         <label for="debug">Debug Mode</label>
       </div>
     </div>
+    <h2>Workarounds</h2>
+    <p>Hopefully I won't need this area</p>
+    <br>
     <h2>Version</h2>
     <p>{{ version }}</p>
   </div>
@@ -88,13 +91,13 @@ export default {
   justify-content: center;
   align-items: center;
   color: white;
-  margin: 50px 0;
+  margin: 2em 0;
 }
 .settings-item {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 1em;
+  margin: 0.3em;
 }
 </style>

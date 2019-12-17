@@ -1,7 +1,7 @@
 <template>
   <div class="player-score" :style="{ 'backgroundColor': player.color }" :class="{ 'selected': isSelectedPlayer }">
     <p>{{ player.score }}</p>
-    <i v-if="isBuzzWinner" class="buzz-win-indicator material-icons">bolt</i>
+    <i v-if="isBuzzWinner" class="buzz-win-indicator material-icons">offline_bolt</i>
     <p>{{ player.name }}</p>
   </div>
 </template>
@@ -43,6 +43,12 @@ export default {
 </script>
 
 <style scoped>
+.buzz-win-indicator {
+  text-shadow: 0 0 0 white;
+  color: black;
+  animation: spin 1s linear infinite;
+  perspective: 1000px;
+}
 .player-score {
   display: flex;
   flex-direction: row;
@@ -60,5 +66,16 @@ export default {
 }
 .selected {
   text-decoration: underline;
+}
+/* greetz https://codepen.io/kkhenriquez/pen/PGvmjm */
+
+
+@keyframes spin {
+  from {
+    transform: rotateY(360deg);
+  }
+  to {
+    transform: rotateY(0deg);
+  }
 }
 </style>
