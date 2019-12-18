@@ -7,7 +7,8 @@ export default {
     houseId: '',
     role: 'jumbotron',
     playerId: '',
-    isDebugMode: false
+    isDebugMode: false,
+    isGameStarted: false,
   },
   getters: {
     isHostRole: state => {
@@ -38,6 +39,9 @@ export default {
     },
     setPlayerId(state, playerId) {
       state.playerId = playerId;
+    },
+    setGameStarted(state, payload) {
+      state.isGameStarted = payload;
     }
   }
 }

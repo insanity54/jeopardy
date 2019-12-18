@@ -140,9 +140,11 @@ export default {
     goToGame: function () {
       if (this.isEditMode) this.$store.commit('leaveEditMode');
       this.$store.commit('loadGame', this.game.id);
+      this.$store.commit('setGameStarted', true);
       this.$router.push(this.gameLink);
       this.$socket.emit('shareGame', this.game);
       this.$socket.emit('routeToScreen', { screenName: 'game', id: this.game.id });
+      this.$socket.emit('setGameStarted', true);
     },
     restartGame: function () {
       this.$store.commit('restartGame', this.game.id);

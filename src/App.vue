@@ -18,13 +18,8 @@ export default {
   sockets: {
     routeToScreen: function (data) {
       let { screenName, id } = data;
-      if (this.role === 'player') {
-        if (screenName === 'players') this.$router.push(`/player/${this.playerId}`);
-        if (
-          screenName === 'buzzerTest' ||
-          screenName === 'game'
-        ) this.$router.push(`/player/${this.playerId}/buzzer`);
-      }
+      console.log(`screenName:${screenName}, id:${id}`);
+      if (this.role === 'player') return;
       else if (this.role === 'jumbotron') {
         if (screenName === 'players') this.$router.push('/players');
         else if (screenName === 'buzzerTest') this.$router.push('/buzzerTest');
@@ -42,6 +37,9 @@ export default {
     },
     createPlayer: function (player) {
       this.$store.commit('createPlayer', player);
+    },
+    setGameStarted: function (evt) {
+      this.$store.commit('setGameStarted', evt);
     }
   },
   computed: {

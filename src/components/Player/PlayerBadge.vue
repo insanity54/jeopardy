@@ -2,7 +2,7 @@
   <div class="player-badge" :style="{backgroundColor: player.color}">
     <div class="player-badge-heading">
       <span v-if="!isEditMode" class="player-name">{{ player.name }}</span>
-      <input v-if="isEditMode" class="" v-model="playerName" type="text">
+      <input v-if="isEditMode" class="" v-model="playerName" type="text" @keydown.enter="toggleEditMode">
       <div class="spacer-small"></div>
       <div class="player-badge-controls">
         <div @click="isEditMode = !isEditMode" class="edit-name-button">
@@ -21,9 +21,12 @@
         <Compact v-model="color" />
       </div>
       <div v-if="isPlayerPage">
-        <p>Enter your name and color, then wait for the game to begin.</p>
-        <p class="house-id">{{ houseId }}</p>
+        <p class="join">Set your name and color, then press the join button below.</p>
+        <div class="button join" @click="joinGame">
+          Join Game <i class="material-icons">send</i>
+        </div>
       </div>
+
       <transition name="fade">
         <div v-if="buzzed" class="buzzer-tester">
           <i class="material-icons">touch_app</i>
@@ -55,6 +58,14 @@ export default {
     }
   },
   methods: {
+    joinGame: function () {
+      // not *really* joining a game.
+      // It is more accurately setting the player as ready.
+      this.$router.push(`/player/${this.player.id}/buzzer`);
+    },
+    toggleEditMode: function () {
+      this.isEditMode = !this.isEditMode
+    },
     kickPlayer: function () {
       this.$socket.emit('kickPlayer', { id: this.player.id });
       this.$store.commit('deletePlayer', { id: this.player.id });
@@ -110,6 +121,16 @@ export default {
 </script>
 
 <style scoped>
+  p.join {
+    margin: 2em;
+  }
+  .button.join {
+    margin: 3em 0;
+    background-color: rgb(0, 105, 217);
+    text-shadow: none;
+    color: white;
+  }
+
   @media screen and (max-width: 500px) {
     .player-badge {
       width: 90vw;
@@ -144,6 +165,7 @@ export default {
   .player-badge-content {
     display: flex;
     flex-direction: column;
+    align-items: center;
   }
   .player-badge-color-chooser {
     display: flex;

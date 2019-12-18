@@ -3,6 +3,9 @@
     <div class="settings-heading">
       <h1>Settings</h1>
     </div>
+    <h2>House ID</h2>
+    <input type="text" v-model="houseId">
+    <br>
     <h2>App Role</h2>
     <p>Jumbotron role is used as the large screen at the front of the room</p>
     <p>Player role is the mode used for each contestant. Meant to run on a smart phone.</p>
@@ -32,7 +35,11 @@
       </div>
     </div>
     <h2>Workarounds</h2>
-    <p>Hopefully I won't need this area</p>
+    <div class="lag-compensation">
+      <label for="lc">Lag compensation (in milliseconds)</label>
+      <input v-model="lagCompensation" id="lc" type="number">
+    </div>
+    <div class="button" @click="syncPlayerData">Syncronize Player Data</div>
     <br>
     <h2>Version</h2>
     <p>{{ version }}</p>
@@ -55,6 +62,17 @@ export default {
     version() {
       return global.__JEPURDEE_VERSION__;
     },
+    lagCompensation: {
+      get: function () {
+        return this.$store.state.buzzer.lagCompensation;
+      },
+      set: function (value) {
+        let n = parseInt(value);
+        if (typeof n !== 'number') return;
+        if (n < 0) return;
+        this.$store.dispatch('setLagCompensation', { delay: n });
+      }
+    },
     role: {
       get: function () {
         return this.$store.state.meta.role;
@@ -71,8 +89,22 @@ export default {
         this.$store.commit('setDebugMode', value);
       }
     },
+    houseId: {
+      get: function () {
+        return this.$store.state.meta.houseId;
+      },
+      set: function (value) {
+        this.$store.commit('setHouseId', value);
+      }
+    }
   },
   methods: {
+    syncPlayerData: function () {
+      // @TODO emit socket with player data
+    }
+  },
+  created: function () {
+    this.$store.dispatch('getLagCompensation');
   }
 }
 </script>
