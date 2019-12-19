@@ -1,3 +1,6 @@
+import Vue from 'vue';
+import { arrayUnique } from '../../util/util';
+
 export default {
   state: [
   ],
@@ -13,6 +16,18 @@ export default {
     },
   },
   mutations: {
+    syncPlayerData(state, players) {
+      console.log(`syncing players`);
+      console.log(state);
+      console.log(players);
+      state.splice(0); // reset array size before modifying
+      let s = arrayUnique([...state, ...players]);
+      s.forEach((p, i) => {
+        console.log(`setting i:${i} to player:${p.name}`)
+        Vue.set(state, i, p)
+      });
+      console.log(s)
+    },
     SOCKET_updatePlayerColor(state, data) {
       let { color, playerId } = data;
       let pl = state.find((p) => p.id === playerId)

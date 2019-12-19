@@ -40,6 +40,9 @@ export default {
     },
     setGameStarted: function (evt) {
       this.$store.commit('setGameStarted', evt);
+    },
+    syncPlayerData: function (evt) {
+      if (this.role === 'jumbotron') this.$store.commit('syncPlayerData', evt);
     }
   },
   computed: {

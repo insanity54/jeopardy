@@ -67,7 +67,7 @@ export default {
     },
     buzzWinner: function (evt) {
       this.$store.commit('buzzPlayer', evt);
-    }
+    },
   },
   props: {
   },

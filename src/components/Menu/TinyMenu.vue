@@ -62,7 +62,6 @@ export default {
       this.$router.push('/players');
     },
     gotoBuzzerTest: function () {
-      this.$socket.emit('unlockBuzzer');
       this.$socket.emit('routeToScreen', { screenName: 'buzzerTest' });
       this.$router.push('/host/buzzerTest');
     },

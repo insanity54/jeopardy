@@ -39,7 +39,7 @@
       <label for="lc">Lag compensation (in milliseconds)</label>
       <input v-model="lagCompensation" id="lc" type="number">
     </div>
-    <div class="button" @click="syncPlayerData">Syncronize Player Data</div>
+    <div class="button sync" @click="syncPlayerData">Synchronize Player Data</div>
     <br>
     <h2>Version</h2>
     <p>{{ version }}</p>
@@ -100,7 +100,7 @@ export default {
   },
   methods: {
     syncPlayerData: function () {
-      // @TODO emit socket with player data
+      this.$socket.emit('syncPlayerData', this.$store.state.players);
     }
   },
   created: function () {
@@ -111,6 +111,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.button.sync {
+  background-color: blue;
+  padding: 0.5em;
+}
 .settings {
   color: white;
 }
