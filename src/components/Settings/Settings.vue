@@ -7,9 +7,9 @@
     <input type="text" v-model="houseId">
     <br>
     <h2>App Role</h2>
-    <p>Jumbotron role is used as the large screen at the front of the room</p>
+    <!-- <p>Jumbotron role is used as the large screen at the front of the room</p>
     <p>Player role is the mode used for each contestant. Meant to run on a smart phone.</p>
-    <p>Host role is the mode for the game show host. This mode reveals questions and lets the game show host start and stop games.</p>
+    <p>Host role is the mode for the game show host. This mode reveals questions and lets the game show host start and stop games.</p> -->
     <div class="settings-list">
       <div class="settings-item">
         <input type="radio" id="jumbotron" value="jumbotron" v-model="role">
@@ -39,6 +39,13 @@
       <label for="lc">Lag compensation (in milliseconds)</label>
       <input v-model="lagCompensation" id="lc" type="number">
     </div>
+    <div class="score-adjust">
+      <h3>Score adjustment</h3>
+      <div class="" v-for="p in players" :key="p.id">
+        <span :style="{textShadow: '1px 1px 1px black', backgroundColor: p.color}">{{ p.name }}</span> <span>{{ p.score }}</span>
+        <input @change="updatePlayerScore(p.id, $event.target.value)" :value="p.score"/>
+      </div>
+    </div>
     <div class="button sync" @click="syncPlayerData">Synchronize Player Data</div>
     <br>
     <h2>Version</h2>
@@ -59,6 +66,9 @@ export default {
   components: {
   },
   computed: {
+    players() {
+      return this.$store.state.players;
+    },
     version() {
       return global.__JEPURDEE_VERSION__;
     },
@@ -101,7 +111,10 @@ export default {
   methods: {
     syncPlayerData: function () {
       this.$socket.emit('syncPlayerData', this.$store.state.players);
-    }
+    },
+    updatePlayerScore: function (playerId, score) {
+      this.$store.commit('updatePlayerScore', { id: playerId, score: score });
+    },
   },
   created: function () {
     this.$store.dispatch('getLagCompensation');

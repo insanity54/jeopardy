@@ -1,9 +1,9 @@
 <template>
   <div class="result-registrator">
-    <div class="affected-player">{{ affectedPlayer }}</div>
+    <div class="affected-player" @click.prevent="startAnswerTimer">{{ affectedPlayer }}</div>
     <div class="button correct" :class="{locked: isCorrectButtonLocked}" @click.prevent="dispatchPlayerCorrect"><i class="material-icons">check_circle_outline</i></div>
     <div class="button incorrect" :class="{locked: isIncorrectButtonLocked}" @click.prevent="dispatchPlayerIncorrect"><i class="material-icons">close</i></div>
-    <div class="button timeout" :class="{locked: isIncorrectButtonLocked}" @click.prevent="dispatchPlayerTimeout"><i class="material-icons">alarm</i></div>
+    <div class="button timeout" :class="{locked: isIncorrectButtonLocked}" @click.prevent="dispatchPlayerTimeout"><i class="material-icons">alarm</i>{{ secondsSinceBuzzPlayerSelection }}</div>
     <div class="button back" @click.prevent="dispatchTimeout"><i class="material-icons">arrow_back_ios</i></div>
   </div>
 </template>
@@ -13,6 +13,13 @@ import { mapGetters, mapState, mapActions } from 'vuex';
 export default {
   name: 'ResultRegistrator',
   props: {
+  },
+  data: function () {
+    return {
+      answerTimer: null,
+      tac: null,
+      timeSinceUnlock: 0,
+    }
   },
   computed: {
     ...mapState({
@@ -26,6 +33,9 @@ export default {
       'buzzWinner',
       'selectedPlayer',
     ]),
+    secondsSinceBuzzPlayerSelection: function () {
+      return Math.round(this.timeSinceUnlock / 1000);
+    },
     affectedPlayer: function () {
       if (this.answer.dailyDouble) return this.selectedPlayer.name;
       else if (typeof this.buzzWinner === 'undefined') return '';
@@ -69,6 +79,7 @@ export default {
       let payload = { answerId: this.answerId, gameId: this.gameId, pointValue: this.pointValue };
       this.$socket.emit('doPlayerTimeout', payload);
       this.$socket.emit('unlockBuzzer');
+      clearInterval(this.answerTimer);
       this.doPlayerTimeout(payload);
     },
     dispatchPlayerCorrect: function () {
@@ -87,7 +98,21 @@ export default {
       this.$socket.emit('doPlayerIncorrect', payload);
       this.$socket.emit('unlockBuzzer');
       this.doPlayerIncorrect(payload);
+    },
+    updateTimer: function () {
+      if (this.isCorrectButtonLocked) {
+        this.timeSinceUnlock = 0;
+        return;
+      }
+      this.timeSinceUnlock = (10000 - (Date.now() - this.tac));
+    },
+    startAnswerTimer: function () {
+      this.tac = Date.now();
+      this.answerTimer = window.setInterval(this.updateTimer, 250);
     }
+  },
+  destroyed: function () {
+    clearInterval(this.answerTimer);
   }
 }
 </script>

@@ -8,6 +8,7 @@
 import lazer from '@/assets/lazer.ogg';
 import generate from '@/assets/generate.ogg';
 import timeout from '@/assets/timeout.ogg';
+import final from '@/assets/final.ogg';
 export default {
   name: 'AudioPlayer',
   props: {
@@ -31,6 +32,12 @@ export default {
           id: 'timeout',
           name: 'timeout',
           file: new Audio(timeout),
+          isPlaying: false
+        },
+        {
+          id: 'final',
+          name: 'final',
+          file: new Audio(final),
           isPlaying: false
         }
       ]

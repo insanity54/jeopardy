@@ -224,7 +224,7 @@ export default {
      * the action that happens when a player does not answer the question fast enough
      */
     doPlayerTimeout ({ commit, state, getters }, params) {
-      let { answerId, pointValue } = params;
+      let { answerId, pointValue, gameId } = params;
       let answer = state.game.answer;
       if (answer.available === true) commit('incrementCompletedAnswerCounter');
 
@@ -232,6 +232,7 @@ export default {
       if (answer.dailyDouble === true) {
         commit('subtractPoints', { playerId: getters.selectedPlayer.id, points: state.game.wager });
         commit('clearWager');
+        router.push(`/game/${gameId}/`);
       } else {
         commit('subtractPoints', { playerId: getters.buzzWinner.id, points: pointValue });
         commit('unsetBuzzWinner');

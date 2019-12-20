@@ -99,7 +99,7 @@ export default {
     width: 35%;
   }
   .question.text {
-    color: green;
+    color: purple;
     margin: 1em 0 0 0;
   }
   @media screen and (max-width: 600px) {

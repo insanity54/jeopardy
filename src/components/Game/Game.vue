@@ -33,6 +33,10 @@ export default {
     revealCategory: function () {
       this.$store.commit('revealCategory');
     },
+    startFinalTimer: function () {
+      console.log('yolo!')
+      this.$root.$emit('play-audio', 'final');
+    },
     restartGame: function () {
       this.$store.commit('restartGame', this.$store.state.game.id);
       this.$store.commit('resetScores');
@@ -109,7 +113,6 @@ export default {
   },
   created: function () {
     if (!this.isGameInVuex) {
-      console.log(`downloading game ${this.gameId}`);
       this.$store.dispatch('downloadGame', this.gameId).then((g) => {
         this.$store.commit('loadGame', g.id);
       });

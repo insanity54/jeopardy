@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from '@/components/Home';
 import Game from '@/components/Game/Game';
-import GameBoard from '@/components/Game/GameBoard';
+import GameBoardOrFinal from '@/components/Game/GameBoardOrFinal';
 import AnswerScreen from '@/components/Game/AnswerScreen';
 import GameCreator from '@/components/Game/GameCreator';
 import GameList from '@/components/GameList/GameList';
@@ -21,7 +21,7 @@ import HostBuzzerTest from '@/components/Host/HostBuzzerTest';
 import NewHostCreator from '@/components/Host/NewHostCreator';
 import BuzzerTest from '@/components/BuzzerTest/BuzzerTest';
 import Settings from '@/components/Settings/Settings';
-import GameHostBoardControls from '@/components/Controls/GameHostBoardControls';
+import GameHostBoardOrFinalControls from '@/components/Controls/GameHostBoardOrFinalControls';
 import GameHostAnswerControls from '@/components/Controls/GameHostAnswerControls';
 import Sidebar from '@/components/Game/Sidebar';
 
@@ -102,9 +102,9 @@ export default new Router({
         {
           path: '/',
           components: {
-            default: GameBoard,
+            default: GameBoardOrFinal,
             sidebar: Sidebar,
-            controls: GameHostBoardControls
+            controls: GameHostBoardOrFinalControls
           }
         },
         {
