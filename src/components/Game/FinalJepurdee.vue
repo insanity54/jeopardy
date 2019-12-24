@@ -1,15 +1,16 @@
 <template>
   <div class="final-jepurdee">
     <div class="category">
-      US History
+      <span v-if="finalCategory.revealed">{{ finalCategory.name }}</span>
     </div>
     <div class="answer">
-      Dating back to the revolution, it's the oldest continuously occupied military post in the united states
+      <span v-if="finalAnswer.revealed">{{ finalAnswer.answerText }}</span>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   name: 'FinalJepurdee',
   components: {
@@ -17,13 +18,17 @@ export default {
   props: {
   },
   computed: {
+    ...mapGetters([
+      'finalAnswer',
+      'finalCategory'
+    ]),
   },
   methods: {
   }
 }
 </script>
 
-<style>
+<style scoped>
   .final-jepurdee {
     display: flex;
     flex-direction: column;
@@ -31,7 +36,7 @@ export default {
     height: 100%;
   }
   .category {
-    height: 10%;
+    height: 25%;
     cursor: default;
     display: flex;
     flex-direction: row;
@@ -43,13 +48,14 @@ export default {
     text-shadow: 2px 2px black;
     font-weight: bold;
     padding: 0.5em 5px 0.5em 5px;
+    font-size: 3rem;
   }
   .answer {
-    height: 90%;
+    height: 75%;
     width: 100%;
     color: white;
     font-family: Georgia;
-    font-size: 3em;
+    font-size: 3rem;
     text-transform: uppercase;
     display: flex;
     flex-direction: column;
@@ -59,5 +65,15 @@ export default {
     text-shadow: 2px 2px black;
     user-select: none;
     overflow: hidden;
+  }
+  @media (max-width: 600px) {
+    .category {
+      font-size: 12pt;
+    }
+  }
+  @media (max-width: 600px) {
+    .answer {
+      font-size: 12pt;
+    }
   }
 </style>

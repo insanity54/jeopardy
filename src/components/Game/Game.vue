@@ -26,20 +26,33 @@ export default {
     }
   },
   sockets: {
+    setFinalWager: function (payload) {
+      this.$store.commit('setFinalWager', payload);
+    },
+    setFinalQuestion: function (payload) {
+      this.$store.commit('setFinalQuestion', payload);
+    },
     revealAnswers: function () {
-      this.$root.$emit('play-audio', 'generate');
+      if (this.isFinalJepurdee) {
+        this.$root.$emit('play-audio', 'reveal');
+        this.$store.commit('advanceFinalState');
+      } else {
+        this.$root.$emit('play-audio', 'generate');
+      }
       this.$store.dispatch('revealAnswers');
     },
     revealCategory: function () {
+      if (this.isFinalJepurdee) {
+        this.$root.$emit('play-audio', 'reveal');
+        this.$store.commit('advanceFinalState');
+      }
       this.$store.commit('revealCategory');
     },
     startFinalTimer: function () {
-      console.log('yolo!')
       this.$root.$emit('play-audio', 'final');
     },
     restartGame: function () {
       this.$store.commit('restartGame', this.$store.state.game.id);
-      this.$store.commit('resetScores');
     },
     openAnswer: function (evt) {
       let { answerId, gameId } = evt;
@@ -72,13 +85,17 @@ export default {
     buzzWinner: function (evt) {
       this.$store.commit('buzzPlayer', evt);
     },
+    revealPlayerFinal: function (evt) {
+      this.$store.dispatch('revealPlayerFinal', evt);
+    }
   },
   props: {
   },
   computed: {
     ...mapGetters([
       'isHostRole',
-      'isJumbotronRole'
+      'isJumbotronRole',
+      'isFinalJepurdee'
     ]),
     isGameInVuex: function () {
       return (this.game.id !== '');

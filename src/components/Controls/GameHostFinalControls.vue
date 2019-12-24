@@ -1,33 +1,20 @@
 <template>
   <div class="game-host-final-controls">
-    <Revealer />
-    <Spacer />
     <FinalLifecycleControls />
+    <FinalWagerDisplay />
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
-import Spacer from './Spacer';
 import FinalLifecycleControls from './FinalLifecycleControls';
-import Revealer from './Revealer';
+import FinalWagerDisplay from './FinalWagerDisplay';
 export default {
-  name: 'GameFinalControls',
+  name: 'GameHostFinalControls',
   components: {
     FinalLifecycleControls,
-    Revealer,
-    Spacer
+    FinalWagerDisplay
   },
   computed: {
-    ...mapState({
-      answer: state => state.game.game.answer,
-      gameType: state => state.game.game.type,
-      wagers: state => state.game.game.wagers,
-    }),
-    ...mapGetters([
-      'selectedPlayer',
-      'isDailyDouble'
-    ])
   },
   props: {
   },

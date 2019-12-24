@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import GameHostBoardControls from './GameHostBoardControls';
 import GameHostFinalControls from './GameHostFinalControls';
 export default {
@@ -15,22 +16,14 @@ export default {
     GameHostFinalControls,
   },
   computed: {
-    gameType: function () {
-      return this.$store.state.game.game.gameType
-    },
-    isFinalJepurdee: function () {
-      return (this.gameType === 'final');
-    },
-    isDoubleJepurdee: function () {
-      return (this.gameType === 'double');
-    },
-    isSingleJepurdee: function () {
-      return (this.gameType === 'single');
-    }
+    ...mapGetters([
+      'isFinalJepurdee',
+      'isDoubleJepurdee',
+      'isSingleJepurdee'
+    ]),
   },
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
 </style>

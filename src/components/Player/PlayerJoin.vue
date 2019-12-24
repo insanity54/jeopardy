@@ -2,7 +2,7 @@
   <div class="player-join">
     <h1>Welcome, player!</h1>
     <p>Please enter the house ID. The house ID is shown on the jumbotron in <span class="bold">Bold Yellow Text</span></p>
-    <div class="house-id-form"><input v-model="houseId" /><i class="material-icons" @click="joinWithHouseId">send</i></div>
+    <div class="house-id-form"><input type="number" v-model="houseId" @keydown.enter="joinWithHouseId" /><i class="material-icons" @click="joinWithHouseId">send</i></div>
   </div>
 </template>
 
@@ -71,18 +71,23 @@ export default {
       typeof playerId !== 'undefined' && playerId !== '') ? true : false;
     let isHouseId = (
       typeof houseId !== 'undefined' && houseId !== '') ? true : false;
+    let isPlayerInVuex = (() => {
+      let vuexPlayer = this.$store.state.players.find((p) => p.id === playerId);
+      console.log(`playerId is ${playerId}, houseId is ${houseId}. vuexPlayer:${vuexPlayer}`);
+      return (typeof vuexPlayer === 'undefined') ? false : true;
+    })()
 
 
     // scenario 1 - returning player (playerId and houseId)
     // redirect to player page
-    if (isReturningPlayer && isHouseId) {
-      console.log(`playerId is ${playerId}, houseId is ${houseId}`)
+    if (isReturningPlayer && isHouseId && isPlayerInVuex) {
       return this.$router.replace(`/player/${playerId}`)
     }
 
     // scenario 2 - new player with houseId
     // redirect to player creation
     else if (isHouseId) {
+      this.$store.commit('deleteAllPlayers'); // clear players obj for safety
       return this.$router.replace('/player/new');
     }
 

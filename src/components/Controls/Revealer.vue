@@ -1,59 +1,55 @@
 <template>
   <div v-if="!isEditMode" class="revealer">
-    <div v-if="isUnrevealedAnswers" @click="doRevealAnswers" class="button">
-      <i class="material-icons">flip</i>Reveal Answers
+    <div v-if="isFinalJepurdee">
+      <CategoryRevealer />
+      <AnswerRevealer v-if="isAllCategoriesRevealed" />
     </div>
-    <div v-if="isUnrevealedCategories" @click="doRevealCategory" class="button">
-      <i class="material-icons">flip</i>Reveal Category
+    <div v-else>
+      <AnswerRevealer />
+      <CategoryRevealer />
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import AnswerRevealer from './AnswerRevealer';
+import CategoryRevealer from './CategoryRevealer';
 export default {
   name: 'Revealer',
   components: {
+    AnswerRevealer,
+    CategoryRevealer
   },
   data: function () {
     return {
     }
   },
   computed: {
+    ...mapGetters([
+      'isFinalJepurdee',
+      'finalAnswer',
+      'finalCategory',
+      'answers',
+      'categories',
+      'isAllCategoriesRevealed',
+      'isAllAnswersRevealed'
+    ]),
     isEditMode: function () {
       return this.$store.state.meta.edit;
-    },
-    isUnrevealedAnswers: function () {
-      return (this.$store.state.game.game.answers.find(a => a.revealed === false)) ? true : false;
-    },
-    isUnrevealedCategories: function() {
-      return (this.$store.state.game.game.categories.find(c => c.revealed === false)) ? true : false;
     }
   },
   props: {
   },
   methods: {
-    doRevealAnswers: function () {
-      this.$socket.emit('revealAnswers');
-      this.$store.dispatch('revealAnswers');
-    },
-    doRevealCategory: function () {
-      this.$socket.emit('revealCategory');
-      this.$store.commit('revealCategory');
-    },
   }
 }
 </script>
 
-<style>
+<style scoped>
 .revealer {
   display: flex;
   flex-direction: row;
   z-index: 9999;
-}
-.revealer .button:nth-child(1) {
-  background-color: purple;
-}
-.revealer .button:nth-child(2) {
-  background-color: green;
 }
 </style>

@@ -9,6 +9,7 @@ import lazer from '@/assets/lazer.ogg';
 import generate from '@/assets/generate.ogg';
 import timeout from '@/assets/timeout.ogg';
 import final from '@/assets/final.ogg';
+import reveal from '@/assets/reveal.ogg';
 export default {
   name: 'AudioPlayer',
   props: {
@@ -39,6 +40,12 @@ export default {
           name: 'final',
           file: new Audio(final),
           isPlaying: false
+        },
+        {
+          id: 'reveal',
+          name: 'reveal',
+          file: new Audio(reveal),
+          isPlaying: false
         }
       ]
     }
@@ -49,6 +56,7 @@ export default {
     play (audio) {
       console.log(`playing audio ${audio.name}`)
       audio.isPlaying = true;
+      audio.file.load();
       audio.file.play();
       audio.file.addEventListener('ended', () => {
         audio.isPlaying = false;

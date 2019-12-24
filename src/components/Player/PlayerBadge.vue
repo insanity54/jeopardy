@@ -4,7 +4,7 @@
       <span v-if="!isEditMode" class="player-name">{{ player.name }}</span>
       <input v-if="isEditMode" class="" v-model="playerName" type="text" @keydown.enter="toggleEditMode">
       <div class="spacer-small"></div>
-      <div class="player-badge-controls">
+      <div v-if="!isJumbotronRole" class="player-badge-controls">
         <div @click="isEditMode = !isEditMode" class="edit-name-button">
           <i class="material-icons">edit</i>
         </div>
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="player-badge-content">
-      <div class="player-badge-color-chooser">
+      <div v-if="!isJumbotronRole" class="player-badge-color-chooser">
         <Compact v-model="color" />
       </div>
       <div v-if="isPlayerPage">
@@ -38,7 +38,7 @@
 
 <script>
 import { Compact } from 'vue-color';
-
+import { mapGetters } from 'vuex';
 export default {
   name: 'PlayerBadge',
   components: {
@@ -79,6 +79,10 @@ export default {
     },
   },
   computed: {
+    ...mapGetters([
+      'isHostRole',
+      'isJumbotronRole'
+    ]),
     isPlayerPage: function () {
       // whether or not component is rendered on /player/:id page
       if (!this.$route.params.playerId) return false;

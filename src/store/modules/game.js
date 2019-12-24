@@ -13,7 +13,7 @@ export default {
       pointMultiplier: '', // 100 for single, 200 for double
       categories: '',
       answers: '',
-      completedAnswerCounter: '',
+      completedAnswerCounter: 0,
       gameType: '', // single, double, or final.
       answer: '',
       wager: null
@@ -22,6 +22,25 @@ export default {
     ],
   },
   getters: {
+    isAllCategoriesRevealed: (state, getters) => {
+      if (getters.isFinalJepurdee) {
+        return (getters.finalCategory.revealed === true) ? true : false;
+      }
+      return (getters.categories.find(c => c.revealed === false)) ? false : true;
+    },
+    isAllAnswersRevealed: (state, getters) => {
+      if (getters.isFinalJepurdee) {
+        return (getters.finalAnswer.revealed === true) ? true : false;
+      } else {
+        return (getters.answers.find(a => a.revealed === false)) ? false : true;
+      }
+    },
+    finalAnswer: state => {
+      return state.game.answers[0];
+    },
+    finalCategory: state => {
+      return state.game.categories[0];
+    },
     game: state => {
       return state.game;
     },
@@ -54,6 +73,18 @@ export default {
     },
     isDailyDouble: state => {
       return (state.game.answer.dailyDouble === true);
+    },
+    isFinalJepurdee: state => {
+      return (state.game.gameType === 'final');
+    },
+    isDoubleJepurdee: state => {
+      return (state.game.gameType === 'double');
+    },
+    isSingleJepurdee: state => {
+      return (state.game.gameType === 'single');
+    },
+    gameType: state => {
+      return state.game.gameType;
     }
   },
   mutations: {

@@ -1,4 +1,4 @@
-import faker from 'faker';
+// import faker from 'faker';
 
 
 export function uuidv4 () {
@@ -28,8 +28,8 @@ export function extension (filename) {
 
 
 export function humanReadableId () {
-  let randomWords = `${faker.random.word()}-${faker.random.word()}`;
-  return randomWords.toLowerCase().replace(/ /g, '-').replace(/\(/g, '').replace(/\)/g, '');
+  let fourDigitCode = Array(4).fill().map(() => randomIntFromInterval(0, 9))
+  return fourDigitCode.join('');
 }
 
 // greetz https://stackoverflow.com/a/1584377/1004931

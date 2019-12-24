@@ -55,6 +55,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  @font-face {
+    font-family: 'Good Dog Plain';
+    src: url('~@/assets/GOODDP__.TTF');
+  }
   .home {
     height: 100vh;
     display: flex;
@@ -74,7 +78,8 @@ export default {
   }
   .header h1 {
     color: white;
-    font-size: 70px;
+    font-size: 80px;
+    font-family: 'Good Dog Plain';
   }
   .dookie {
     font-style: italic;

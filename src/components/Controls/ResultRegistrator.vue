@@ -97,6 +97,7 @@ export default {
       let payload = { gameId: this.gameId, pointValue: this.pointValue };
       this.$socket.emit('doPlayerIncorrect', payload);
       this.$socket.emit('unlockBuzzer');
+      clearInterval(this.answerTimer);
       this.doPlayerIncorrect(payload);
     },
     updateTimer: function () {

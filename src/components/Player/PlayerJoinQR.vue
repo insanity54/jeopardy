@@ -49,5 +49,6 @@ export default {
 .house-id {
   color: yellow;
   font-weight: bold;
+  font-size: 50pt;
 }
 </style>

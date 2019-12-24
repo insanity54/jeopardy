@@ -113,7 +113,8 @@ export default {
       this.$socket.emit('syncPlayerData', this.$store.state.players);
     },
     updatePlayerScore: function (playerId, score) {
-      this.$store.commit('updatePlayerScore', { id: playerId, score: score });
+      let s = parseInt(score);
+      this.$store.commit('updatePlayerScore', { id: playerId, score: s });
     },
   },
   created: function () {

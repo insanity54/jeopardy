@@ -149,6 +149,8 @@ export default {
     restartGame: function () {
       this.$store.commit('restartGame', this.game.id);
       this.$store.commit('resetScores');
+      this.$store.commit('setFinalState', 'intro');
+      this.$socket.emit('setFinalState', 'intro');
       this.$socket.emit('restartGame');
     },
     goToGameEditor: function() {

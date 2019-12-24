@@ -11,6 +11,7 @@ import TitleEditor from '@/components/Game/TitleEditor';
 import PlayerList from '@/components/Player/PlayerList';
 import EpisodeList from '@/components/EpisodeList/EpisodeList';
 import PlayerBadge from '@/components/Player/PlayerBadge';
+import PlayerTitle from '@/components/Player/PlayerTitle';
 import PlayerJoin from '@/components/Player/PlayerJoin';
 import NewPlayerCreator from '@/components/Player/NewPlayerCreator';
 import Kicked from '@/components/Player/Kicked';
@@ -24,6 +25,9 @@ import Settings from '@/components/Settings/Settings';
 import GameHostBoardOrFinalControls from '@/components/Controls/GameHostBoardOrFinalControls';
 import GameHostAnswerControls from '@/components/Controls/GameHostAnswerControls';
 import Sidebar from '@/components/Game/Sidebar';
+import FinalInput from '@/components/Player/FinalInput';
+import FinalRevealPage from '@/components/Game/FinalRevealPage';
+import Reset from '@/components/Player/Reset';
 
 Vue.use(Router);
 
@@ -32,6 +36,10 @@ export default new Router({
   routes: [{
       path: '/',
       component: Home
+    },
+    {
+      path: '/reset',
+      component: Reset
     },
     {
       path: '/buzzerTest',
@@ -55,7 +63,16 @@ export default new Router({
     },
     {
       path: '/players',
-      component: PlayerList
+      component: Game,
+      children: [
+        {
+          path: '/',
+          components: {
+            default: PlayerList,
+            sidebar: Sidebar
+          }
+        }
+      ]
     },
     {
       path: '/episodes',
@@ -74,13 +91,37 @@ export default new Router({
       component: PlayerController,
       children: [{
           path: '/',
-          component: PlayerBadge,
-          props: true
+          components: {
+            default: PlayerBadge,
+            heading: PlayerTitle,
+          },
+          props: {
+            default: true,
+            heading: true
+          }
         },
         {
           path: 'buzzer',
-          component: PlayerBuzzer
+          components: {
+            default: PlayerBuzzer,
+            heading: PlayerTitle,
+          },
+          props: {
+            default: true,
+            heading: true
+          }
         },
+        {
+          path: 'final',
+          components: {
+            default: FinalInput,
+            heading: PlayerTitle,
+          },
+          props: {
+            default: true,
+            heading: true
+          }
+        }
       ]
     },
     {
@@ -123,6 +164,24 @@ export default new Router({
           path: 'title/',
           component: TitleEditor
         },
+        {
+          path: 'reveal/',
+          components: {
+            default: FinalRevealPage,
+            sidebar: Sidebar
+          },
+        },
+        {
+          path: 'reveal/:playerId',
+          components: {
+            default: FinalRevealPage,
+            sidebar: Sidebar
+          },
+          props: {
+            default: true,
+            sidebar: false
+          }
+        }
       ]
     },
   ]

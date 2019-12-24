@@ -18,15 +18,24 @@ export default {
   sockets: {
     routeToScreen: function (data) {
       let { screenName, id } = data;
-      console.log(`screenName:${screenName}, id:${id}`);
-      if (this.role === 'player') return;
+      if (this.role === 'player') {
+        if (screenName === 'final') {
+          this.$router.push(`/player/${this.playerId}/final`);
+        }
+        else return;
+      }
       else if (this.role === 'jumbotron') {
         if (screenName === 'players') this.$router.push('/players');
         else if (screenName === 'buzzerTest') this.$router.push('/buzzerTest');
         else if (screenName === 'game') {
           this.$store.commit('loadGame', id);
           this.$router.push(`/game/${id}`);
+        } else if (screenName === 'reveal') {
+          this.$router.push(`/game/${id}/reveal`);
+        } else if (screenName === 'final') {
+          this.$router.push(`/game/${id}`);
         }
+        else return;
       }
     },
     unlockBuzzer: function () {
@@ -42,7 +51,17 @@ export default {
       this.$store.commit('setGameStarted', evt);
     },
     syncPlayerData: function (evt) {
-      if (this.role === 'jumbotron') this.$store.commit('syncPlayerData', evt);
+      this.$store.commit('syncPlayerData', evt);
+    },
+    unlockFinal: function (evt) {
+      this.$store.commit('unlockFinal', evt);
+    },
+    advanceFinalState: function (evt) {
+      this.$store.commit('advanceFinalState', evt);
+    },
+    setFinalState: function (evt) {
+      console.log(`setting ${evt}`);
+      this.$store.commit('setFinalState', evt);
     }
   },
   computed: {

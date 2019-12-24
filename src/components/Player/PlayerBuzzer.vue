@@ -1,8 +1,5 @@
 <template>
   <div class="player-buzzer">
-    <div class="player-buzzer-heading" :style="{ backgroundColor: player.color }">
-      <h1>{{ player.name }}</h1>
-    </div>
     <div class="player-buzzer-content" :style="{ backgroundColor: indicatorColor }">
       <div v-if="isPenalized" class="buzzer-penalty">
         <div class="buzzer-penalty-progress-bar"></div>
@@ -13,12 +10,13 @@
         <span>Buzz</span>
       </div>
     </div>
+    <div v-if="isFinalUnlocked" class="nav-final">
+      <div class="button" @click="routeToFinal"><i class="material-icons">local_play</i>Go to Final Jepurdee</div>
+    </div>
   </div>
 </template>
 
 <script>
-// import { Compact } from 'vue-color';
-
 export default {
   name: 'PlayerBuzzer',
   components: {
@@ -32,7 +30,36 @@ export default {
   },
   props: {
   },
+  computed: {
+    isFinalUnlocked: function () {
+      return (this.$store.state.meta.isFinalUnlocked === true);
+    },
+    unlockLog: function () {
+      return this.$store.state.buzzer.unlockLog;
+    },
+    lastUnlockEpoch: function () {
+      return this.unlockLog[this.$store.state.buzzer.unlockLog.length-1];
+    },
+    isBuzzerLock: function () {
+      return this.$store.state.buzzer.isLocked;
+    },
+    indicatorColor: function () {
+      return (this.isBuzzerLock) ? 'black' : '#33ff33';
+    },
+    playerColor: function () {
+      return this.player.color;
+    },
+    pid: function () {
+      return this.$route.params.playerId;
+    },
+    player: function () {
+      return this.$store.state.players.find((p) => p.id === this.pid);
+    },
+  },
   methods: {
+    routeToFinal: function () {
+      this.$router.push(`/player/${this.pid}/final`);
+    },
     doPenalty: function () {
       this.isPenalized = true;
       clearTimeout(this.penaltyTimer);
@@ -55,33 +82,14 @@ export default {
       }
     }
   },
-  computed: {
-    unlockLog: function () {
-      return this.$store.state.buzzer.unlockLog;
-    },
-    lastUnlockEpoch: function () {
-      return this.unlockLog[this.$store.state.buzzer.unlockLog.length-1]
-    },
-    isBuzzerLock: function () {
-      return this.$store.state.buzzer.isLocked;
-    },
-    indicatorColor: function () {
-      return (this.isBuzzerLock) ? 'black' : '#33ff33';
-    },
-    playerColor: function () {
-      return this.player.color
-    },
-    pid: function () {
-      return this.$route.params.playerId;
-    },
-    player: function () {
-      return this.$store.state.players.find((p) => p.id === this.pid);
-    },
-  },
 }
 </script>
 
 <style scoped>
+  .nav-final {
+    color: white;
+    background-color: green;
+  }
   .player-buzzer {
     width: 100vw;
     height: 100vh;

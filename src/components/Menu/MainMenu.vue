@@ -36,11 +36,11 @@ export default {
   methods: {
     gotoPlayers: function() {
       this.$socket.emit('routeToScreen', { screenName: 'players' });
-      this.$router.push('/host/players');
+      this.$router.push('/players');
     },
     gotoBuzzerTest: function () {
       this.$socket.emit('routeToScreen', { screenName: 'buzzerTest' });
-      this.$router.push('/host/buzzerTest');
+      this.$router.push('/buzzerTest');
     },
     gotoGames: function() {
       this.$socket.emit('lockBuzzer');

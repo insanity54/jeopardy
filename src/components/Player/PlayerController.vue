@@ -1,6 +1,7 @@
 <template>
   <div class="player-controller">
-    <router-view />
+    <router-view class="heading" name="heading"/>
+    <router-view class="default" name="default"/>
   </div>
 </template>
 
@@ -72,6 +73,12 @@ export default {
 </script>
 
 <style scoped>
+  .default {
+    height: 90vh;
+  }
+  .heading {
+    height: 10vh;
+  }
   .player-controller {
     color: orange;
   }

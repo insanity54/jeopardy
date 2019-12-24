@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import { arrayUnique } from '../../util/util';
+import router from '../../router'
 
 export default {
   state: [
@@ -14,8 +15,26 @@ export default {
     selectedPlayer: state => {
       return state.find((p) => p.chooser === true);
     },
+    finalPlayers: state => {
+      return state.filter((p) => p.score > 0);
+    }
   },
   mutations: {
+    incrRevealState(state, playerId) {
+      let p = state.find((p) => p.id === playerId);
+      if (p.finalRevealState === 'none') p.finalRevealState = 'answer';
+      else if (p.finalRevealState === 'answer') p.finalRevealState = 'wager';
+    },
+    setFinalWager(state, payload) {
+      let { playerId, finalWager } = payload;
+      let p = state.find((p) => p.id === playerId);
+      p.finalWager = finalWager;
+    },
+    setFinalQuestion(state, payload) {
+      let { playerId, finalQuestion } = payload;
+      let p = state.find((p) => p.id === playerId);
+      p.finalQuestion = finalQuestion;
+    },
     syncPlayerData(state, players) {
       state.splice(0); // reset array size before modifying
       let s = arrayUnique([...state, ...players]);
@@ -88,6 +107,9 @@ export default {
         buzzWinner: false,
         chooser: false,
         color: data.color,
+        finalRevealState: 'none',
+        finalWager: 0,
+        finalQuestion: 0,
       });
     },
     SOCKET_deletePlayer(state, data) {
@@ -98,10 +120,24 @@ export default {
       let i = state.findIndex((p) => p.id === id);
       state.splice(i, 1);
     },
+    deleteAllPlayers(state) {
+      state.splice(0);
+    },
     resetScores(state) {
       state.forEach((p) => {
         p.score = 0;
       })
     }
+  },
+  actions: {
+    revealPlayerFinal ({ commit, state }, payload) {
+      let { gameId, playerId } = payload;
+      let p = state.find((p) => p.id === playerId);
+      console.log(p.finalRevealState);
+      if (p.finalRevealState === 'none') {
+        router.push(`/game/${gameId}/reveal/${playerId}`);
+      }
+      commit('incrRevealState', playerId);
+    },
   }
 }
