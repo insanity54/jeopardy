@@ -12,7 +12,7 @@ export default {
       pointUnit: '', // dollars
       pointMultiplier: '', // 100 for single, 200 for double
       categories: '',
-      answers: '',
+      answers: [],
       completedAnswerCounter: 0,
       gameType: '', // single, double, or final.
       answer: '',

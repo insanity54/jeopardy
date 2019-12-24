@@ -130,14 +130,13 @@ export default {
     }
   },
   actions: {
-    revealPlayerFinal ({ commit, state }, payload) {
+    revealPlayerFinal ({ state }, payload) {
       let { gameId, playerId } = payload;
       let p = state.find((p) => p.id === playerId);
       console.log(p.finalRevealState);
       if (p.finalRevealState === 'none') {
         router.push(`/game/${gameId}/reveal/${playerId}`);
       }
-      commit('incrRevealState', playerId);
     },
   }
 }

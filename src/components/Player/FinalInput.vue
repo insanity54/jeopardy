@@ -19,7 +19,7 @@
       <div v-if="isFinalStateCategory && !isWagerSent" class="wager group">
         <label for="wager">Enter your wager between {{ wagerMinimum }} and {{ wagerMaximum }}</label>
         <div class="input-row">
-          <input ref="wager" id="wager" type="number" :enabled="!isAllAnswersRevealed" v-model.number="finalWager" @keydown.enter="sendWager" @focus="$event.target.select()"/>
+          <input ref="wager" id="wager" type="number" :enabled="!isFinalStateReveal" v-model.number="finalWager" @keydown.enter="sendWager" @focus="$event.target.select()"/>
           <div class="button send" :class="{ 'disabled': !isValidWager }" @click="sendWager"><i class="material-icons">send</i>Commit Wager</div>
         </div>
         <div class="errors">
@@ -62,8 +62,6 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'isAllCategoriesRevealed',
-      'isAllAnswersRevealed',
       'isFinalStateIntro',
       'isFinalStateCategory',
       'isFinalStateAnswer',

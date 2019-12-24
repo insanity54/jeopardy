@@ -34,6 +34,14 @@ export default {
 </script>
 
 <style scoped>
+  @media screen and (min-width: 601px) {
+    .player-title-heading h1 {
+      font-size: 30pt;
+    }
+    .player-title-heading {
+      padding: 0;
+    }
+  }
   .player-title-heading {
     box-sizing: border-box;
     padding: 1em;
